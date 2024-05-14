@@ -84,6 +84,52 @@ class DetailsClass:
         self.btn_clear=Button(self.root,text="Clear",font=("goudy old style",15,"bold"),bg="grey")
         self.btn_clear.place(x=510,y=400,width=110,height=40)
 
+        #=======search panel=====
+        self.var_search=StringVar()
+        lbl_search_roll=Label(self.root,text="Roll No.",font=("goudy old style",15,"bold"),bg="white").place(x=720,y=60)
+        txt_search_roll=Entry(self.root,textvariable=self.var_search,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=870,y=60)
+        btn_search=Button(self.root,text="Search",font=("goudy old style",15,"bold"),bg="#03a9f4",fg="white",cursor="hand2",command=self.search)
+        #=====content========
+        self.C_Frame=Frame(self.root,bd=2,relief=RIDGE)
+        self.C_Frame.place(x=720,y=100,width=470,height=340)
+
+        scrolly=Scrollbar(self.C_Frame,orient=VERTICAL)
+        scrollx=Scrollbar(self.C_Frame,orient=HORIZONTAL)
+        self.CourseTable=ttk.Treeview(self.C_Frame,columns=("roll","name","email","gender","dob","contact","admission","course","state","city","pin","address").xscroll)
+
+        scrollx.pack(side=BOTTOM,fill=x)
+        scrolly.pack(side=RIGHT,fill=Y)
+        scrollx.config(command=self.CourseTable.xview)
+        scrolly.config(command=self.CourseTable.yview)
+
+        self.CourseTable.heading("roll",text="Roll No.")
+        self.CourseTable.heading("name",text="Name")
+        self.CourseTable.heading("email",text="Email")
+        self.CourseTable.heading("gender",text="Gender")
+        self.CourseTable.heading("dob",text="D.O.B")
+        self.CourseTable.heading("contact",text="Contact")
+        self.CourseTable.heading("admission",text="Admission")
+        self.CourseTable.heading("course",text="Course")
+        self.CourseTable.heading("state",text="State")
+        self.CourseTable.heading("city",text="City")
+        self.CourseTable.heading("pin",text="PIN")
+        self.CourseTable.heading("address",text="Address")
+        self.CourseTable["show"]="headings"
+        self.CourseTable.heading("roll",width=100)
+        self.CourseTable.heading("name",width=100)
+        self.CourseTable.heading("email",width=100)
+        self.CourseTable.heading("gender",width=100)
+        self.CourseTable.heading("dob",width=100)
+        self.CourseTable.heading("contact",width=100)
+        self.CourseTable.heading("admission",width=100)
+        self.CourseTable.heading("course",width=100)
+        self.CourseTable.heading("state",width=100)
+        self.CourseTable.heading("city",width=100)
+        self.CourseTable.heading("pin",width=100)
+        self.CourseTable.heading("address",width=100)
+        self.CourseTable.pack(fill=BOTH,expand=1)
+        self.CourseTable.bind("<ButtonRelease-1>",self.get_data)
+        self.show()
 
 
 
