@@ -33,9 +33,18 @@ class DetailsClass:
         lbl_name=Label(self.root,text="Name",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=100)                     
         lbl_email=Label(self.root,text="Email",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=140)
         lbl_gender=Label(self.root,text="Gender",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=180)
+           
         lbl_state=Label(self.root,text="State",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=220)
-        lbl_address=Label(self.root,text="Address",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=260)
+        txt_state=Entry(self.root,textvariable=self.var_state,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=150,y=220,width=150)
+        
+        lbl_city=Label(self.root,text="City",font=("goudy old style",15,"bold"),bg="white").place(x=310,y=220)
+        txt_city=Entry(self.root,textvariable=self.var_state,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=380,y=220,width=150)
+        
+        lbl_pin=Label(self.root,text="Pin",font=("goudy old style",15,"bold"),bg="white").place(x=500,y=220)
+        txt_pin=Entry(self.root,textvariable=self.var_state,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=560,y=220,width=120)
 
+        lbl_address=Label(self.root,text="Address",font=("goudy old style",15,"bold"),bg="white").place(x=500,y=220)
+        
         #====entry fields====
         self.txt_roll=Entry(self.root,textvariable=self.var_roll,font=("goudy old style",15,"bold"),bg="lightyellow")
         self.txt_roll.place(x=150,y=60,width=200)
@@ -64,6 +73,16 @@ class DetailsClass:
         #====text address=====
         self.txt_address=Text(self.root,font=("goudy old style",15,"bold"),bg="lightyellow")
         self.txt_address.place(x=150,y=260,width=540,height=100)
+
+        #=====buttons=======
+        self.btn_add=Button(self.root,text="Save",font=("goudy old style",15,"bold"),bg="blue")
+        self.btn_add.place(x=150,y=400,width=110,height=40)
+        self.btn_update=Button(self.root,text="Update",font=("goudy old style",15,"bold"),bg="green")
+        self.btn_update.place(x=270,y=400,width=110,height=40)
+        self.btn_delete=Button(self.root,text="Delete",font=("goudy old style",15,"bold"),bg="red")
+        self.btn_delete.place(x=390,y=400,width=110,height=40)
+        self.btn_clear=Button(self.root,text="Clear",font=("goudy old style",15,"bold"),bg="grey")
+        self.btn_clear.place(x=510,y=400,width=110,height=40)
 
 
 
