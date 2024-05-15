@@ -15,12 +15,13 @@ class resultClass:
         title = Label(self.root,text="Add Student Result",font =("times new roman",20,"bold"),bg ="pink",fg ="#262626").place(x=10,y=15,width=1260,height=50)
 
         #====variables====
-        self.var_roll = StringVar
+        self.var_roll = StringVar()
         self.var_name = StringVar()
         self.var_course = StringVar()
         self.var_marks = StringVar()
         self.var_full_marks = StringVar()
         self.roll_list = []
+        
 
         #===widgets===
         lbl_select = Label(self.root, text="Select Student", font=("times new roman", 20, "bold"), bg="white").place(x=50, y=100)
@@ -42,6 +43,35 @@ class resultClass:
         #=====button======
         btn_add = Button(self.root,text="Submit",font=("times new roman",15),bg="lightgreen",activebackground="lightgreen",cursor="hand2").place(x=300,y=420,width=120,height=35)
         btn_add = Button(self.root,text="Clear",font=("times new roman",15),bg="lightgrey",activebackground="lightgrey",cursor="hand2").place(x=430,y=420,width=120,height=35)
+
+        #==========================================================
+    def fetch_roll(self):
+        conn = sqlite3.connect(database="GradeMaster.db")
+        cur = conn.cursor()
+        try:
+            cur.execute("SELECT roll FROM student")
+            rows = cur.fetchall()
+            if len(rows) > 0:
+                for row in rows:
+                    self.roll_list.append(row[0])
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error due to {str(ex)}")
+
+
+    def search(self):
+        conn = sqlite3.connect(database="GradeMaster.db")
+        cur = conn.cursor()
+        try:
+            cur.execute("SELECT name, course FROM student WHERE roll =?", (self.var_roll.get(),))
+            row = cur.fetchone()
+            if row is not None:
+                self.var_name.set(row[0])
+                self.var_course.set(row[1])
+            else:
+                messagebox.showerror("Error", "No record found", parent=self.root)
+
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error due to {str(ex)}")
 
 
 
