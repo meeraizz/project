@@ -32,14 +32,16 @@ class resultClass:
         self.txt_student = ttk.Combobox(self.root, textvariable=self.var_roll, values=self.roll_list, font=("times new roman", 15, "bold"), state='readonly', justify=CENTER)
         self.txt_student.place(x=280,y=100,width=200)
         self.txt_student.set("Select")
-        btn_search=Button(self.root,text='Search',font=("times new roman",15,"bold"),bg="#03a9f4",fg="white",cursor="hand2").place(x=500,y=100,width=120,height=28)
+        btn_search=Button(self.root,text='Search',font=("times new roman",15,"bold"),bg="#03a9f4",fg="white",cursor="hand2").place(x=500,y=100,width=100,height=28)
 
-        txt_name=Entry(self.root,textvariable=self.var_name,font=("times new roman",20,"bold"),bg="lightyellow").place(x=280,y=160,width=320)
-        txt_course=Entry(self.root,textvariable=self.var_course,font=("times new roman",20,"bold"),bg="lightyellow").place(x=280,y=220,width=320)
+        txt_name=Entry(self.root,textvariable=self.var_name,font=("times new roman",20,"bold"),bg="lightyellow",state='readonly').place(x=280,y=160,width=320)
+        txt_course=Entry(self.root,textvariable=self.var_course,font=("times new roman",20,"bold"),bg="lightyellow",state='readonly').place(x=280,y=220,width=320)
         txt_marks=Entry(self.root,textvariable=self.var_marks,font=("times new roman",20,"bold"),bg="lightyellow").place(x=280,y=280,width=320)
         txt_full_marks=Entry(self.root,textvariable=self.var_full_marks,font=("times new roman",20,"bold"),bg="lightyellow").place(x=280,y=340,width=320)
 
-
+        #=====button======
+        btn_add=Button(self.root,text="Submit",font=("times new roman",15),bg="lightgreen",activebackground="lightgreen",cursor="hand2").place(x=300,y=420,width=120,height=35)
+        btn_add=Button(self.root,text="Clear",font=("times new roman",15),bg="lightgrey",activebackground="lightgrey",cursor="hand2").place(x=430,y=420,width=120,height=35)
 
 
 
