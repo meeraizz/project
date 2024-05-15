@@ -73,6 +73,32 @@ class resultClass:
         except Exception as ex:
             messagebox.showerror("Error", f"Error due to {str(ex)}")
 
+def add(self):
+    conn = sqlite3.connect(database="GradeMaster.db")
+    cur = conn.cursor()
+    try:
+        if self.var_name.get() == "":
+            messagebox.showerror("Error", "Please first search student record", parent=self.root)
+        else:
+            cur.execute("SELECT * FROM result WHERE roll=? AND course=?", (self.var_roll.get(), self.var_course.get()))
+            row = cur.fetchone()
+            if row is not None:
+                messagebox.showerror("Error", "Result already present", parent=self.root)
+            else:
+                per = (int(self.var_marks.get()) * 100 / int(self.var_full_marks.get()))
+                cur.execute("INSERT INTO result (roll, name, course, marks_ob, full_marks, per) VALUES (?, ?, ?, ?, ?, ?)", (
+                    self.var_roll.get(),
+                    self.var_name.get(),
+                    self.var_course.get(),
+                    self.var_marks.get(),
+                    self.var_full_marks.get(),
+                    str(per)
+                ))
+                conn.commit()
+                messagebox.showinfo("Success", "Result Added Successfully", parent=self.root)
+                self.show()
+    except Exception as ex:
+        messagebox.showerror("Error", f"Error due to {str(ex)}")
 
 
 
