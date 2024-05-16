@@ -12,7 +12,7 @@ username_label = tkinter.Label(window, text="Username", bg='#333333',fg="FFFFFF"
 username_entry = tkinter.Entry(window, font=("Arial", 16))
 password_entry = tkinter.Entry(window, show="*", font=("Arial", 16))
 password_label = tkinter.Label(window, text="Password", bg='#333333', fg="FFFFFF", font=("Arial", 16))
-login_button = tkinter.Button(window, text="Login", bg="FF3399", fg="FFFFFF")
+login_button = tkinter.Button(window, text="Login", bg="#FF3399", fg="#FFFFFF", font=("Arial", 16))
 
 login_label.grid(row=0, column=0, columnspan=2)
 username_label.grid(row=1, column=0)
