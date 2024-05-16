@@ -12,7 +12,7 @@ class DetailsClass:
         self.root.focus_force()
 
         #=====title======
-        title=Label(self.root,text="Manage Student Details", font=("times new roman",20,"bold"),bg="#033054",fg="white").place(x=0,y=0,relwidth=1,height=45)
+        title=Label(self.root,text="Manage Student Details", font=("times new roman",20,"bold"),bg="#FF8096",fg="white").place(x=0,y=0,relwidth=1,height=45)
 
         #=====variables====
         self.var_roll=StringVar()
