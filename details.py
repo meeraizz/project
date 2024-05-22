@@ -139,11 +139,11 @@ class DetailsClass:
         self.var_id.set("")
         self.var_name.set("")
         self.var_email.set("")
-        self.var_gender.set("")
+        self.var_gender.set("Select")
         self.var_dob.set("")
         self.var_contact.set("")
         self.var_a_date.set("")
-        self.var_course.set("")
+        self.var_course.set("Select")
         self.var_state.set("")
         self.var_city.set("")
         self.var_pin.set("")                   
@@ -200,7 +200,7 @@ class DetailsClass:
             if self.var_id.get()=="":
                 messagebox.showerror("Error","ID Number should be required",parent=self.root)
             else:
-                cur.execute("select * from student where roll=?",(self.var_id.get(),))
+                cur.execute("select * from student where id=?",(self.var_id.get(),))
                 row=cur.fetchone()
                 if row!=None:
                     messagebox.showerror("Error","ID No. already present",parent=self.root)
@@ -221,6 +221,7 @@ class DetailsClass:
                     ))
                     con.commit()
                     messagebox.showinfo("Success","Student Added Successfully",parent=self.root)
+                    self.clear()
                     self.show()
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to {str(ex)}")
@@ -253,6 +254,7 @@ class DetailsClass:
                     ))
                     con.commit()
                     messagebox.showinfo("Success","Student Update Successfully",parent=self.root)
+                    self.clear()
                     self.show()
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to {str(ex)}")
@@ -273,11 +275,11 @@ class DetailsClass:
         con=sqlite3.connect(database="rms.db")
         cur=con.cursor()
         try:
-            cur.execute(f"select name from course")
+            cur.execute("select name from course")
             rows=cur.fetchall()
             if len(rows)>0:
-                for row in rows:
-                    self.course_list.append(row[0])
+                self.course_list = [row[0] for row in rows]
+                self.txt_course['values'] = self.course_list
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to {str(ex)}")
 
