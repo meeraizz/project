@@ -38,12 +38,12 @@ class DetailsClass:
         txt_state=Entry(self.root,textvariable=self.var_state,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=150,y=220,width=150)
         
         lbl_city=Label(self.root,text="City",font=("goudy old style",15,"bold"),bg="white").place(x=310,y=220)
-        txt_city=Entry(self.root,textvariable=self.var_state,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=380,y=220,width=150)
+        txt_city=Entry(self.root,textvariable=self.var_city,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=380,y=220,width=150)
         
-        lbl_pin=Label(self.root,text="Pin",font=("goudy old style",15,"bold"),bg="white").place(x=500,y=220)
-        txt_pin=Entry(self.root,textvariable=self.var_state,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=560,y=220,width=120)
+        lbl_pin=Label(self.root,text="Pin",font=("goudy old style",15,"bold"),bg="white").place(x=540,y=220)
+        txt_pin=Entry(self.root,textvariable=self.var_pin,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=580,y=220,width=100)
 
-        lbl_address=Label(self.root,text="Address",font=("goudy old style",15,"bold"),bg="white").place(x=500,y=220)
+        lbl_address=Label(self.root,text="Address",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=260)
         
         #====entry fields====
         self.txt_id=Entry(self.root,textvariable=self.var_id,font=("goudy old style",15,"bold"),bg="lightyellow")
@@ -73,7 +73,7 @@ class DetailsClass:
         
         #====text address=====
         self.txt_address=Text(self.root,font=("goudy old style",15,"bold"),bg="lightyellow")
-        self.txt_address.place(x=150,y=260,width=540,height=100)
+        self.txt_address.place(x=150,y=260,width=530,height=100)
 
         #=====buttons=======
         self.btn_add=Button(self.root,text="Save",font=("goudy old style",15,"bold"),bg="blue",fg="white",cursor="hand2",command=self.add)
