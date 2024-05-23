@@ -202,7 +202,7 @@ class DetailsClass:
             else:
                 cur.execute("select * from student where id=?",(self.var_id.get(),))
                 row=cur.fetchone()
-                if row!=None:
+                if row is not None:
                     messagebox.showerror("Error","ID No. already present",parent=self.root)
                 else:
                     cur.execute("insert into student (id,name,email,gender,dob,contact,admission,course,state,city,pin,address) values(?,?,?,?,?,?,?,?,?,?,?,?)", (
@@ -221,7 +221,6 @@ class DetailsClass:
                     ))
                     con.commit()
                     messagebox.showinfo("Success","Student Added Successfully",parent=self.root)
-                    self.clear()
                     self.show()
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to {str(ex)}")
@@ -235,7 +234,7 @@ class DetailsClass:
             else:
                 cur.execute("select * from student where id=?",(self.var_id.get(),))
                 row=cur.fetchone()
-                if row!=None:
+                if row is None:
                     messagebox.showerror("Error","Select student from list",parent=self.root)
                 else:
                     cur.execute("update student set name=?,email=?,gender=?,dob=?,contact=?,admission=?,course=?,state=?,city=?,pin=?,address where id=?",(
@@ -254,7 +253,6 @@ class DetailsClass:
                     ))
                     con.commit()
                     messagebox.showinfo("Success","Student Update Successfully",parent=self.root)
-                    self.clear()
                     self.show()
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to {str(ex)}")
@@ -279,7 +277,7 @@ class DetailsClass:
             rows=cur.fetchall()
             if len(rows)>0:
                 self.course_list = [row[0] for row in rows]
-                self.txt_course['values'] = self.course_list
+                self.txt_course.config(values=self.course_list)
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to {str(ex)}")
 
@@ -290,7 +288,7 @@ class DetailsClass:
             cur.execute("select * from student where id=?",(self.var_search.get(),))
             row=cur.fetchone()
             # print(row)
-            if row !=None:
+            if row is not None:
                 self.CourseTable.delete(*self.CourseTable.get_children())
                 self.CourseTable.insert(" ",END,values=row)   
             else:
