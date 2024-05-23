@@ -237,7 +237,7 @@ class DetailsClass:
                 if row is None:
                     messagebox.showerror("Error","Select student from list",parent=self.root)
                 else:
-                    cur.execute("update student set name=?,email=?,gender=?,dob=?,contact=?,admission=?,course=?,state=?,city=?,pin=?,address where id=?",(
+                    cur.execute("update student set name=?,email=?,gender=?,dob=?,contact=?,admission=?,course=?,state=?,city=?,pin=?,address=? where id=?",(
                         self.var_name.get(),
                         self.var_email.get(),
                         self.var_gender.get(),
