@@ -4,6 +4,8 @@ import sqlite3
 def create_db():
     con = sqlite3.connect(database="GradeMaster.db")
     cur = con.cursor()
+
+    # Create the course table
     cur.execute("""
         CREATE TABLE IF NOT EXISTS course (
             cid INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -13,21 +15,37 @@ def create_db():
             description TEXT
         )
     """)
-    con.commit()
-    con.close()
 
-# Function to insert data into the course table
-def insert_course(name, duration, charges, description):
-    con = sqlite3.connect(database="GradeMaster.db")
-    cur = con.cursor()
-    cur.execute("INSERT INTO course (name, duration, charges, description) VALUES (?, ?, ?, ?)", 
-                (name, duration, charges, description))
-    con.commit()
-    con.close()
+    # Create the student table
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS student (
+            roll INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            email TEXT,
+            gender TEXT,
+            dob TEXT,
+            contact TEXT,
+            admission TEXT
+        )
+    """)
 
-# Create the course table
+
+# Call the function to create the database and tables
 create_db()
 
+
+
+#Function to insert data into the course table
+#def insert_course(name, duration, charges, description):
+ #  cur = con.cursor()
+ # cur.execute("INSERT INTO course (name, duration, charges, description) VALUES (?, ?, ?, ?)", 
+   #             (name, duration, charges, description))
+    #con.commit()
+    #con.close()
+
+# Create the course table
+#create_db()
+
 # Insert data into the course table
-insert_course('Maths I', '3 months', 'RM300', 'Basic Maths')
-insert_course('Physics I', '4 months', 'RM400', 'Basic Physics')
+#insert_course('Maths I', '3 months', 'RM300', 'Basic Maths')
+#insert_course('Physics I', '4 months', 'RM400', 'Basic Physics')
