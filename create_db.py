@@ -29,6 +29,20 @@ def create_db():
         )
     """)
 
+    # Create the result table
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS result (
+            rid INTEGER PRIMARY KEY AUTOINCREMENT,
+            roll TEXT,
+            name TEXT,
+            course TEXT,
+            marks_obt TEXT,
+            full_marks TEXT,
+            per TEXT
+        )
+    """)
+
+
 
 # Call the function to create the database and tables
 create_db()
