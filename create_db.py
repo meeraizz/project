@@ -42,6 +42,31 @@ def create_db():
         )
     """)
 
+    # Create the teacher table
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS teacher (
+            tid INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            email TEXT,
+            contact TEXT,
+            profile_picture TEXT
+        )
+    """)
+
+    # Create the teacher_course table
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS teacher_course (
+            tcid INTEGER PRIMARY KEY AUTOINCREMENT,
+            teacher_id INTEGER,
+            course_id INTEGER,
+            FOREIGN KEY (teacher_id) REFERENCES teacher (tid),
+            FOREIGN KEY (course_id) REFERENCES course (cid)
+        )
+    """)
+
+    con.commit()
+    con.close()
+
 
 
 # Call the function to create the database and tables
