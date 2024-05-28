@@ -74,17 +74,19 @@ create_db()
 
 
 
+
+
 #Function to insert data into the course table
-#def insert_course(name, duration, charges, description):
- #  cur = con.cursor()
- # cur.execute("INSERT INTO course (name, duration, charges, description) VALUES (?, ?, ?, ?)", 
-   #             (name, duration, charges, description))
-    #con.commit()
-    #con.close()
+def insert_student(name, duration, charges, description):
+    cur = con.cursor()
+    cur.execute("INSERT INTO course (name, duration, charges, description) VALUES (?, ?, ?, ?)", 
+                (name, duration, charges, description))
+    con.commit()
+    con.close()
 
-# Create the course table
-#create_db()
+ #Create the course table
+create_db()
 
-# Insert data into the course table
-#insert_course('Maths I', '3 months', 'RM300', 'Basic Maths')
-#insert_course('Physics I', '4 months', 'RM400', 'Basic Physics')
+ #Insert data into the course table
+insert_course('Maths I', '3 months', 'RM300', 'Basic Maths')
+insert_course('Physics I', '4 months', 'RM400', 'Basic Physics')

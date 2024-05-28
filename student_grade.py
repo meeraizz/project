@@ -47,7 +47,7 @@ class resultClass:
         #==========================================================
     def fetch_roll(self):
         conn = sqlite3.connect(database="GradeMaster.db")
-        cur = conn.cursor()
+        cur = con.cursor()
         try:
             cur.execute("SELECT roll FROM student")
             rows = cur.fetchall()
