@@ -1,6 +1,6 @@
 import sqlite3
 import tkinter as tk
-import tkinter as ttk
+from tkinter import ttk
 from tkinter import messagebox, ttk
 
 def create_db():
