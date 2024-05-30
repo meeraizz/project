@@ -19,6 +19,17 @@ def create_db():
         address TEXT
     )
     """)
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS course (
+        cid INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT, 
+        duration TEXT, 
+        charges TEXT, 
+        description TEXT
+    )
+    """)
+
     con.commit()
     con.close()
 
