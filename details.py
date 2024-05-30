@@ -21,7 +21,7 @@ class DetailsClass:
 
     def create_widgets(self):
         #=====title======
-        title=Label(self.main_frame, text="Manage Student Details", font=("consolas",20,"bold"), bg="#FF8096", fg="white")
+        title=Label(self.main_frame, text="Manage Student Details", font=("consolas",23,"bold"), bg="#FFB3D2", fg="black")
         title.pack(fill=X)  # Fill the width of the main frame
 
         #=====variables====
