@@ -1,7 +1,7 @@
 import sqlite3
 
 def create_db():
-    con = sqlite3.connect("rms.db")
+    con = sqlite3.connect("GradeMaster.db")
     cur = con.cursor()
     cur.execute("""
     CREATE TABLE IF NOT EXISTS student (

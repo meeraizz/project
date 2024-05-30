@@ -152,7 +152,7 @@ class DetailsClass:
         self.var_search.set("")
 
     def delete(self):
-        con=sqlite3.connect(database="rms.db")
+        con=sqlite3.connect(database="GradeMaster.db")
         cur=con.cursor()
         try:
             if self.var_id.get()=="":
@@ -194,7 +194,7 @@ class DetailsClass:
         self.txt_address.insert(END,row[11])
 
     def add(self):
-        con=sqlite3.connect(database="rms.db")
+        con=sqlite3.connect(database="GradeMaster.db")
         cur=con.cursor()
         try:
             if self.var_id.get()=="":
@@ -226,7 +226,7 @@ class DetailsClass:
             messagebox.showerror("Error",f"Error due to {str(ex)}")
 
     def update(self):
-        con=sqlite3.connect(database="rms.db")
+        con=sqlite3.connect(database="GradeMaster.db")
         cur=con.cursor()
         try:
             if self.var_id.get()=="":
@@ -258,7 +258,7 @@ class DetailsClass:
             messagebox.showerror("Error",f"Error due to {str(ex)}")
 
     def show(self):
-        con=sqlite3.connect(database="rms.db")
+        con=sqlite3.connect(database="GradeMaster.db")
         cur=con.cursor()
         try:
             cur.execute("select * from student")
@@ -270,7 +270,7 @@ class DetailsClass:
             messagebox.showerror("Error",f"Error due to {str(ex)}")
 
     def fetch_course(self):
-        con=sqlite3.connect(database="rms.db")
+        con=sqlite3.connect(database="GradeMaster.db")
         cur=con.cursor()
         try:
             cur.execute("select name from course")
@@ -282,7 +282,7 @@ class DetailsClass:
             messagebox.showerror("Error",f"Error due to {str(ex)}")
 
     def search(self):
-        con=sqlite3.connect(database="rms.db")
+        con=sqlite3.connect(database="GradeMaster.db")
         cur=con.cursor()
         try:
             cur.execute("select * from student where id=?",(self.var_search.get(),))
