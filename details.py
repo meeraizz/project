@@ -56,8 +56,7 @@ class DetailsClass:
         lbl_address=Label(self.root,text="Address",font=("consolas",15,"bold"),bg="#fff0f3").place(x=10,y=260)
         
         #====entry fields====
-        self.txt_id=Entry(self.root,textvariable=self.var_id,font=("consolas",15,"bold"),bg="lightyellow")
-        self.txt_id.place(x=150,y=60,width=200)
+        self.txt_id=Entry(self.root,textvariable=self.var_id,font=("consolas",15,"bold"),bg="lightyellow").place(x=150,y=60,width=200)
         txt_name=Entry(self.root,textvariable=self.var_name,font=("consolas",15,"bold"),bg="lightyellow").place(x=150,y=100,width=200)
         txt_email=Entry(self.root,textvariable=self.var_email,font=("consolas",15,"bold"),bg="lightyellow").place(x=150,y=140,width=200)
         self.txt_gender=ttk.Combobox(self.root,textvariable=self.var_gender,values=("Select","Male","Female"),font=("consolas",15,"bold"),state='readonly',justify=CENTER)

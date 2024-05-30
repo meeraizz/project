@@ -64,7 +64,7 @@ class ReportClass:
             try:
                 if self.var_search.get()=="":
                      messagebox.showerror("Error","ID No. should be required",parent=self.root)
-                cur.execute("select * from teacher where id=?",(self.var_search.get(),))
+                cur.execute("select * from grade where id=?",(self.var_search.get(),))
                 row=cur.fetchone()
                 # print(row)
                 if row!=None:
@@ -97,14 +97,14 @@ class ReportClass:
             if self.var_id.get=="":
                 messagebox.showerror("Error","Search Student Result First",parent=self.root)
             else:
-                cur.execute("select * from teacher where rid=?",(self.var_id,))
+                cur.execute("select * from grade where rid=?",(self.var_id,))
                 row=cur.fetchone()
                 if row==None:
                     messagebox.showerror("Error","Invalid Student Result",parent=self.root)
                 else:
                     op=messagebox.askyesno("Confirm","Do you really want to delete?",parent=self.root)
                     if op==True:
-                        cur.execute("delete from teacher where rid=?",(self.var_id,))
+                        cur.execute("delete from grade where rid=?",(self.var_id,))
                         con.commit()
                         messagebox.showinfo("Delete","Result deleted Successfully",parent=self.root)
                         self.clear()
