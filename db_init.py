@@ -41,6 +41,19 @@ def create_db():
         per TEXT
     )
     """)
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS teacher (
+        tid INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        email TEXT,
+        contact TEXT,
+        profile_picture TEXT
+    )
+    """)
+
+
+
     
 
     con.commit()
