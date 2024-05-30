@@ -76,13 +76,13 @@ class DetailsClass:
         self.txt_address.place(x=150,y=260,width=530,height=100)
 
         #=====buttons=======
-        self.btn_add=Button(self.root,text="Save",font=("goudy old style",15,"bold"),bg="blue",fg="white",cursor="hand2",command=self.add)
+        self.btn_add=Button(self.root,text="Save",font=("goudy old style",15,"bold"),bg="#FF0090",fg="white",cursor="hand2",command=self.add)
         self.btn_add.place(x=150,y=400,width=110,height=40)
-        self.btn_update=Button(self.root,text="Update",font=("goudy old style",15,"bold"),bg="green",fg="white",cursor="hand2",command=self.update)
+        self.btn_update=Button(self.root,text="Update",font=("goudy old style",15,"bold"),bg="#FF66CC",fg="white",cursor="hand2",command=self.update)
         self.btn_update.place(x=270,y=400,width=110,height=40)
-        self.btn_delete=Button(self.root,text="Delete",font=("goudy old style",15,"bold"),bg="red",fg="white",cursor="hand2",command=self.delete)
+        self.btn_delete=Button(self.root,text="Delete",font=("goudy old style",15,"bold"),bg="#DE3163",fg="white",cursor="hand2",command=self.delete)
         self.btn_delete.place(x=390,y=400,width=110,height=40)
-        self.btn_clear=Button(self.root,text="Clear",font=("goudy old style",15,"bold"),bg="grey",fg="white",cursor="hand2",command=self.clear)
+        self.btn_clear=Button(self.root,text="Clear",font=("goudy old style",15,"bold"),bg="#F19CBB",fg="white",cursor="hand2",command=self.clear)
         self.btn_clear.place(x=510,y=400,width=110,height=40)
 
         #=======search panel=====
