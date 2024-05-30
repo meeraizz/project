@@ -2,17 +2,27 @@ from tkinter import *
 from PIL import Image, ImageTk    #pip install pillow
 from tkinter import ttk,messagebox
 import sqlite3
+import customtkinter
 
 class DetailsClass:
     def __init__(self,root):
         self.root=root
         self.root.title("Grade Master")
-        self.root.geometry("1200x480+80+170")
+        self.root.geometry("1000x400+60+150")
         self.root.config(bg="white")
         self.root.focus_force()
 
+        # Create a main frame to contain all widgets
+        self.main_frame = Frame(self.root, bg="white")
+        self.main_frame.pack(fill=BOTH, expand=True)  # Fill and expand to the whole window
+
+        # Call method to create and layout all widgets
+        self.create_widgets()
+
+    def create_widgets(self):
         #=====title======
-        title=Label(self.root,text="Manage Student Details", font=("goudy old style",20,"bold"),bg="#FF8096",fg="white").place(x=0,y=0,relwidth=1,height=45)
+        title=Label(self.main_frame, text="Manage Student Details", font=("consolas",20,"bold"), bg="#FF8096", fg="white")
+        title.pack(fill=X)  # Fill the width of the main frame
 
         #=====variables====
         self.var_id=StringVar()
@@ -29,67 +39,67 @@ class DetailsClass:
 
         #=====widgets======
         #=======column 1=========
-        lbl_id=Label(self.root,text="ID No.", font=("goudy old style",15,"bold"),bg="white").place(x=10,y=60)
-        lbl_name=Label(self.root,text="Name",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=100)                     
-        lbl_email=Label(self.root,text="Email",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=140)
-        lbl_gender=Label(self.root,text="Gender",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=180)
+        lbl_id=Label(self.root,text="ID No.", font=("consolas",15,"bold"),bg="white").place(x=10,y=60)
+        lbl_name=Label(self.root,text="Name",font=("consolas",15,"bold"),bg="white").place(x=10,y=100)                     
+        lbl_email=Label(self.root,text="Email",font=("consolas",15,"bold"),bg="white").place(x=10,y=140)
+        lbl_gender=Label(self.root,text="Gender",font=("consolas",15,"bold"),bg="white").place(x=10,y=180)
            
-        lbl_state=Label(self.root,text="State",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=220)
-        txt_state=Entry(self.root,textvariable=self.var_state,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=150,y=220,width=150)
+        lbl_state=Label(self.root,text="State",font=("consolas",15,"bold"),bg="white").place(x=10,y=220)
+        txt_state=Entry(self.root,textvariable=self.var_state,font=("consolas",15,"bold"),bg="lightyellow").place(x=150,y=220,width=150)
         
-        lbl_city=Label(self.root,text="City",font=("goudy old style",15,"bold"),bg="white").place(x=310,y=220)
-        txt_city=Entry(self.root,textvariable=self.var_city,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=380,y=220,width=150)
+        lbl_city=Label(self.root,text="City",font=("consolas",15,"bold"),bg="white").place(x=310,y=220)
+        txt_city=Entry(self.root,textvariable=self.var_city,font=("consolas",15,"bold"),bg="lightyellow").place(x=380,y=220,width=150)
         
-        lbl_pin=Label(self.root,text="Pin",font=("goudy old style",15,"bold"),bg="white").place(x=540,y=220)
-        txt_pin=Entry(self.root,textvariable=self.var_pin,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=580,y=220,width=100)
+        lbl_pin=Label(self.root,text="Pin",font=("consolas",15,"bold"),bg="white").place(x=540,y=220)
+        txt_pin=Entry(self.root,textvariable=self.var_pin,font=("consolas",15,"bold"),bg="lightyellow").place(x=580,y=220,width=100)
 
-        lbl_address=Label(self.root,text="Address",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=260)
+        lbl_address=Label(self.root,text="Address",font=("consolas",15,"bold"),bg="white").place(x=10,y=260)
         
         #====entry fields====
-        self.txt_id=Entry(self.root,textvariable=self.var_id,font=("goudy old style",15,"bold"),bg="lightyellow")
+        self.txt_id=Entry(self.root,textvariable=self.var_id,font=("consolas",15,"bold"),bg="lightyellow")
         self.txt_id.place(x=150,y=60,width=200)
-        txt_name=Entry(self.root,textvariable=self.var_name,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=150,y=100,width=200)
-        txt_email=Entry(self.root,textvariable=self.var_email,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=150,y=140,width=200)
-        self.txt_gender=ttk.Combobox(self.root,textvariable=self.var_gender,values=("Select","Male","Female"),font=("goudy old style",15,"bold"),state='readonly',justify=CENTER)
+        txt_name=Entry(self.root,textvariable=self.var_name,font=("consolas",15,"bold"),bg="lightyellow").place(x=150,y=100,width=200)
+        txt_email=Entry(self.root,textvariable=self.var_email,font=("consolas",15,"bold"),bg="lightyellow").place(x=150,y=140,width=200)
+        self.txt_gender=ttk.Combobox(self.root,textvariable=self.var_gender,values=("Select","Male","Female"),font=("consolas",15,"bold"),state='readonly',justify=CENTER)
         self.txt_gender.place(x=150,y=180,width=200)
         self.txt_gender.current(0)
 
        #=======column 2=========
-        lbl_dob=Label(self.root,text="D.O.B", font=("goudy old style",15,"bold"),bg="white").place(x=360,y=60)
-        lbl_contact=Label(self.root,text="Contact",font=("goudy old style",15,"bold"),bg="white").place(x=360,y=100)                     
-        lbl_admission=Label(self.root,text="Admission",font=("goudy old style",15,"bold"),bg="white").place(x=360,y=140)
-        lbl_course=Label(self.root,text="Course",font=("goudy old style",15,"bold"),bg="white").place(x=360,y=180)
+        lbl_dob=Label(self.root,text="D.O.B", font=("consolas",15,"bold"),bg="white").place(x=360,y=60)
+        lbl_contact=Label(self.root,text="Contact",font=("consolas",15,"bold"),bg="white").place(x=360,y=100)                     
+        lbl_admission=Label(self.root,text="Admission",font=("consolas",15,"bold"),bg="white").place(x=360,y=140)
+        lbl_course=Label(self.root,text="Course",font=("consolas",15,"bold"),bg="white").place(x=360,y=180)
 
         #====entry fields 2====
         self.course_list=[]
         #function_call to update the list
         self.fetch_course()
-        txt_dob=Entry(self.root,textvariable=self.var_dob,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=480,y=60,width=200)
-        txt_contact=Entry(self.root,textvariable=self.var_contact,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=480,y=100,width=200)
-        txt_admission=Entry(self.root,textvariable=self.var_a_date,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=480,y=140,width=200)
-        self.txt_course=ttk.Combobox(self.root,textvariable=self.var_course,values=(" "),font=("goudy old style",15,"bold"),state='readonly',justify=CENTER)
+        txt_dob=Entry(self.root,textvariable=self.var_dob,font=("consolas",15,"bold"),bg="lightyellow").place(x=480,y=60,width=200)
+        txt_contact=Entry(self.root,textvariable=self.var_contact,font=("consolas",15,"bold"),bg="lightyellow").place(x=480,y=100,width=200)
+        txt_admission=Entry(self.root,textvariable=self.var_a_date,font=("consolas",15,"bold"),bg="lightyellow").place(x=480,y=140,width=200)
+        self.txt_course=ttk.Combobox(self.root,textvariable=self.var_course,values=(" "),font=("consolas",15,"bold"),state='readonly',justify=CENTER)
         self.txt_course.place(x=480,y=180,width=200,)
         self.txt_course.set("Select")
         
         #====text address=====
-        self.txt_address=Text(self.root,font=("goudy old style",15,"bold"),bg="lightyellow")
+        self.txt_address=Text(self.root,font=("consolas",15,"bold"),bg="lightyellow")
         self.txt_address.place(x=150,y=260,width=530,height=100)
 
         #=====buttons=======
-        self.btn_add=Button(self.root,text="Save",font=("goudy old style",15,"bold"),bg="#FF0090",fg="white",cursor="hand2",command=self.add)
+        self.btn_add=Button(self.root,text="Save",font=("consolas",15,"bold"),bg="#FF0090",fg="white",cursor="hand2",command=self.add)
         self.btn_add.place(x=150,y=400,width=110,height=40)
-        self.btn_update=Button(self.root,text="Update",font=("goudy old style",15,"bold"),bg="#FF66CC",fg="white",cursor="hand2",command=self.update)
+        self.btn_update=Button(self.root,text="Update",font=("consolas",15,"bold"),bg="#FF66CC",fg="white",cursor="hand2",command=self.update)
         self.btn_update.place(x=270,y=400,width=110,height=40)
-        self.btn_delete=Button(self.root,text="Delete",font=("goudy old style",15,"bold"),bg="#DE3163",fg="white",cursor="hand2",command=self.delete)
+        self.btn_delete=Button(self.root,text="Delete",font=("consolas",15,"bold"),bg="#DE3163",fg="white",cursor="hand2",command=self.delete)
         self.btn_delete.place(x=390,y=400,width=110,height=40)
-        self.btn_clear=Button(self.root,text="Clear",font=("goudy old style",15,"bold"),bg="#F19CBB",fg="white",cursor="hand2",command=self.clear)
+        self.btn_clear=Button(self.root,text="Clear",font=("consolas",15,"bold"),bg="#F19CBB",fg="white",cursor="hand2",command=self.clear)
         self.btn_clear.place(x=510,y=400,width=110,height=40)
 
         #=======search panel=====
         self.var_search=StringVar()
-        lbl_search_id=Label(self.root,text="ID No.",font=("goudy old style",15,"bold"),bg="white").place(x=720,y=60)
-        txt_search_id=Entry(self.root,textvariable=self.var_search,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=870,y=60,width=180)
-        btn_search=Button(self.root,text="Search",font=("goudy old style",15,"bold"),bg="#03a9f4",fg="white",cursor="hand2",command=self.search).place(x=1070,y=60,width=120,height=28)
+        lbl_search_id=Label(self.root,text="ID No.",font=("consolas",15,"bold"),bg="white").place(x=720,y=60)
+        txt_search_id=Entry(self.root,textvariable=self.var_search,font=("consolas",15,"bold"),bg="lightyellow").place(x=870,y=60,width=180)
+        btn_search=Button(self.root,text="Search",font=("consolas",15,"bold"),bg="#03a9f4",fg="white",cursor="hand2",command=self.search).place(x=1070,y=60,width=120,height=28)
 
         #=====content========
         self.C_Frame=Frame(self.root,bd=2,relief=RIDGE)
@@ -298,6 +308,6 @@ class DetailsClass:
 
 
 if __name__=="__main__":
-    root=Tk()
+    root=customtkinter.CTk()
     obj=DetailsClass(root)
     root.mainloop()        
