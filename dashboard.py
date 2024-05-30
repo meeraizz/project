@@ -4,6 +4,7 @@ from tkinter import ttk, messagebox
 import sqlite3
 import customtkinter
 from student_grade import gradeclass
+from teacher_profile import teacherprofile
 
 class GradeMaster:
     def __init__(self, root):
@@ -31,7 +32,7 @@ class GradeMaster:
         btn_student = Button(M_Frame, text="Student", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_student)
         btn_student.place(x=340, y=10, width=270, height=60)
 
-        btn_teacher = Button(M_Frame, text="Teacher", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2")
+        btn_teacher = Button(M_Frame, text="Teacher", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_teacher)
         btn_teacher.place(x=640, y=10, width=270, height=60)
 
         btn_grade = Button(M_Frame, text="Grade", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_grade)
@@ -70,8 +71,13 @@ class GradeMaster:
 
     def add_grade(self):
         self.new_win = Toplevel(self.root)
-        self.new_win.geometry("1200x480+80+170")  # Set the desired size of the new window
+        self.new_win.geometry("1200x480+80+170")
         self.new_obj = gradeclass(self.new_win)
+    
+    def add_teacher(self):
+        self.new_win = Toplevel(self.root)
+        self.new_win.geometry("1200x480+80+170")
+        self.new_obj = teacherprofile(self.new_win)
 
 
 if __name__ == "__main__":
