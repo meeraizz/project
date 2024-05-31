@@ -5,7 +5,7 @@ import sqlite3
 import customtkinter
 from student_grade import gradeclass
 from teacher_profile import teacherprofile
-from details import DetailsClasss
+from details import DetailsClass
 
 class GradeMaster:
     def __init__(self, root):
