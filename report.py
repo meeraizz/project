@@ -21,41 +21,41 @@ class ReportClass:
 
     def create_widgets(self):
         #=====title======
-        title=Label(self.main_frame, text="View Student Results", font=("consolas",23,"bold"), bg="#FFB3D2", fg="black")
+        title=Label(self.main_frame, text="View Student Results", font=("king",23,"bold"), bg="#FFB3D2", fg="black")
         title.pack(fill=X)  # Fill the width of the main frame
 
         #======search======
         self.var_search=StringVar()
         self.var_id=""
 
-        lbl_search=Label(self.root,text="Search by ID No.", font=("consolas", 20, "bold"), bg="#fff0f3").place(x=280,y=100)
-        txt_search=Entry(self.root,textvariable=self.var_search, font=("consolas", 20), bg="lightyellow").place(x=530,y=100,width=170)
-        btn_search=Button(self.root,text="Search",font=("consolas",15,"bold"),bg="#03a9f4",fg="#fff0f3",cursor="hand2",command=self.search).place(x=720,y=100,width=100,height=35)
-        btn_clear=Button(self.root,text="Clear",font=("consolas",15,"bold"),bg="#F19CBB",fg="#fff0f3",cursor="hand2", command=self.clear).place(x=840,y=100,width=100,height=35)
+        lbl_search=Label(self.root,text="Search by ID No.", font=("king", 20, "bold"), bg="#fff0f3").place(x=280,y=100)
+        txt_search=Entry(self.root,textvariable=self.var_search, font=("king", 20), bg="lightyellow").place(x=530,y=100,width=170)
+        btn_search=Button(self.root,text="Search",font=("king",15,"bold"),bg="#03a9f4",fg="#fff0f3",cursor="hand2",command=self.search).place(x=720,y=100,width=100,height=35)
+        btn_clear=Button(self.root,text="Clear",font=("king",15,"bold"),bg="#F19CBB",fg="#fff0f3",cursor="hand2", command=self.clear).place(x=840,y=100,width=100,height=35)
 
         #=====result_labels======
-        lbl_id=Label(self.root, text="ID No", font=("consolas",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=150,y=230,width=150,height=50)
-        lbl_name=Label(self.root, text="Name", font=("consolas",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=300,y=230,width=150,height=50)
-        lbl_course=Label(self.root, text="Course", font=("consolas",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=450,y=230,width=150,height=50)
-        lbl_marks=Label(self.root, text="Marks Obtained", font=("consolas",14,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=600,y=230,width=150,height=50)
-        lbl_full=Label(self.root, text="Total Marks", font=("consolas",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=750,y=230,width=150,height=50)
-        lbl_per=Label(self.root, text="Percentage", font=("consolas",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=900,y=230,width=150,height=50)
+        lbl_id=Label(self.root, text="ID No", font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=150,y=230,width=150,height=50)
+        lbl_name=Label(self.root, text="Name", font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=300,y=230,width=150,height=50)
+        lbl_course=Label(self.root, text="Course", font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=450,y=230,width=150,height=50)
+        lbl_marks=Label(self.root, text="Marks Obtained", font=("king",14,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=600,y=230,width=150,height=50)
+        lbl_full=Label(self.root, text="Total Marks", font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=750,y=230,width=150,height=50)
+        lbl_per=Label(self.root, text="Percentage", font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=900,y=230,width=150,height=50)
 
-        self.id=Label(self.root, font=("consolas",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE)
+        self.id=Label(self.root, font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE)
         self.id.place(x=150,y=280,width=150,height=50)
-        self.name=Label(self.root, font=("consolas",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE)
+        self.name=Label(self.root, font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE)
         self.name.place(x=300,y=280,width=150,height=50)
-        self.course=Label(self.root, font=("consolas",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE)
+        self.course=Label(self.root, font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE)
         self.course.place(x=450,y=280,width=150,height=50)
-        self.marks=Label(self.root, font=("consolas",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE)
+        self.marks=Label(self.root, font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE)
         self.marks.place(x=600,y=280,width=150,height=50)
-        self.full=Label(self.root, font=("consolas",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE)
+        self.full=Label(self.root, font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE)
         self.full.place(x=750,y=280,width=150,height=50)
-        self.per=Label(self.root, font=("consolas",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE)
+        self.per=Label(self.root, font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE)
         self.per.place(x=900,y=280,width=150,height=50)
 
         #======button delete=====
-        btn_delete=Button(self.root,text="Delete",font=("consolas",15,"bold"),bg="#DE3163",fg="#fff0f3",cursor="hand2", command=self.delete).place(x=500,y=350,width=150,height=35)
+        btn_delete=Button(self.root,text="Delete",font=("king",15,"bold"),bg="#DE3163",fg="#fff0f3",cursor="hand2", command=self.delete).place(x=500,y=350,width=150,height=35)
 
 #=========================================================
     def search(self):
