@@ -5,6 +5,7 @@ import sqlite3
 import customtkinter
 from student_grade import gradeclass
 from teacher_profile import teacherprofile
+from details import DetailsClass
 
 class GradeMaster:
     def __init__(self, root):
@@ -67,7 +68,7 @@ class GradeMaster:
 
     def add_student(self):
         self.new_win = Toplevel(self.root)
-        self.new_obj = StudentClass(self.new_win)
+        self.new_obj = DetailsClass(self.new_win)
 
     def add_grade(self):
         self.new_win = Toplevel(self.root)
@@ -78,7 +79,6 @@ class GradeMaster:
         self.new_win = Toplevel(self.root)
         self.new_win.geometry("1200x480+80+170")
         self.new_obj = teacherprofile(self.new_win)
-
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
