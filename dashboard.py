@@ -6,6 +6,7 @@ import customtkinter
 from student_grade import gradeclass
 from teacher_profile import teacherprofile
 from details import DetailsClass
+from report import ReportClass
 
 class GradeMaster:
     def __init__(self, root):
@@ -39,7 +40,7 @@ class GradeMaster:
         btn_grade = Button(M_Frame, text="Grade", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_grade)
         btn_grade.place(x=940, y=10, width=270, height=60)
 
-        btn_result = Button(M_Frame, text="Result", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2")
+        btn_result = Button(M_Frame, text="Result", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_result)
         btn_result.place(x=1240, y=10, width=270, height=60)
 
         btn_logout = Button(M_Frame, text="Logout", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2")
@@ -80,6 +81,10 @@ class GradeMaster:
         self.new_win.geometry("1200x480+80+170")
         self.new_obj = teacherprofile(self.new_win)
 
+    def add_result(self):
+        self.new_win = Toplevel(self.root)
+        self.new_win.geometry("1200x480+80+170")
+        self.new_obj = ReportClass(self.new_win)
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
