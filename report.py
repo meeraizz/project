@@ -32,13 +32,13 @@ class ReportClass:
         btn_search = Button(self.root, text="Search", font=("king", 15, "bold"), bg="#03a9f4", fg="#fff0f3", cursor="hand2", command=self.search).place(x=720, y=100, width=100, height=35)
         btn_clear = Button(self.root, text="Clear", font=("king", 15, "bold"), bg="#F19CBB", fg="#fff0f3", cursor="hand2", command=self.clear).place(x=840, y=100, width=100, height=35)
 
-        # =====result_labels======
-        lbl_id = Label(self.root, text="ID No.", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=300, y=180, width=150, height=50)
-        lbl_name = Label(self.root, text="Name", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=300, y=230, width=150, height=50)
-        lbl_course = Label(self.root, text="Course", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=300, y=280, width=150, height=50)
-        lbl_marks = Label(self.root, text="Marks", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=450, y=280, width=150, height=50)
-        lbl_grades = Label(self.root, text="Grades", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=600, y=280, width=150, height=50)
-        lbl_gpa = Label(self.root, text="GPA", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=750, y=280, width=150, height=50)
+        #=====result_labels======
+        lbl_id=Label(self.root, text="ID No", font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=150,y=230,width=150,height=50)
+        lbl_name=Label(self.root, text="Name", font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=300,y=230,width=150,height=50)
+        lbl_course=Label(self.root, text="Course", font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=450,y=230,width=150,height=50)
+        lbl_marks=Label(self.root, text="Marks Obtained", font=("king",14,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=600,y=230,width=150,height=50)
+        lbl_full=Label(self.root, text="Total Marks", font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=750,y=230,width=150,height=50)
+        lbl_per=Label(self.root, text="Percentage", font=("king",15,"bold"),bg="#fff0f3",bd=2,relief=GROOVE).place(x=900,y=230,width=150,height=50)
 
         self.id = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.id.place(x=450, y=180, width=450, height=50)
