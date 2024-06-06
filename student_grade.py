@@ -22,7 +22,9 @@ class gradeclass:
         self.var_marks = StringVar()
         self.var_full_marks = StringVar()
         self.id_list = []
+        self.course_list = []
         self.fetch_id()
+        self.fetch_course()
 
         # ===widgets===
         lbl_select = Label(self.root, text="Select Student", font=("times new roman", 25, "bold"), bg="#fff0f3").place(x=600, y=150)
@@ -36,9 +38,12 @@ class gradeclass:
         self.txt_student.set("Select")
         btn_search = Button(self.root, text='Search', font=("King", 20), bg="#e0d2ef", fg="black", cursor="hand2", command=self.search).place(x=1100, y=150, width=150, height=45)
 
+        self.txt_course = ttk.Combobox(self.root, textvariable=self.var_course, values=self.course_list,font=("king", 20, "bold"), state='readonly', justify=CENTER)
+        self.txt_course.place(x=880, y=310, width=370, height=45)
+        self.txt_course.set("Select")
+
         txt_name = Entry(self.root, textvariable=self.var_name, font=("times new roman", 20, "bold"), bg="lightyellow", state='readonly').place(x=880, y=230, width=370, height=45)
-        txt_course = Entry(self.root, textvariable=self.var_course, font=("times new roman", 20, "bold"), bg="lightyellow", state='readonly').place(x=880, y=310, width=370, height=45)
-        txt_marks = Entry(self.root, textvariable=self.var_marks, font=("times new roman", 20, "bold"), bg="lightyellow").place(x=880, y=390, width=370, height=45)
+        entry_marks = Entry(self.root, textvariable=self.var_marks, font=("times new roman", 20, "bold"), bg="lightyellow").place(x=880, y=390, width=370, height=45)
         txt_full_marks = Entry(self.root, textvariable=self.var_full_marks, font=("times new roman", 20, "bold"), bg="lightyellow").place(x=880, y=470, width=370, height=45)
 
         # =====button======
@@ -46,6 +51,18 @@ class gradeclass:
         btn_clear = Button(self.root, text="Clear", font=("King", 20), bg="#ffb3d2", activebackground="lightgrey", cursor="hand2", command = self.clear).place(x=1100, y=540, width=150, height=45)
 
         # ==========================================================
+
+    def fetch_course(self):
+        conn = sqlite3.connect(database="GradeMaster.db")
+        cur = conn.cursor()
+        try:
+            cur.execute("SELECT name FROM course")
+            rows = cur.fetchall()
+            if len(rows) > 0:
+                for row in rows:
+                    self.course_list.append(row[0])
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error due to {str(ex)}")
 
     def clear(self):
         self.var_id.set("")

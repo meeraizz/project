@@ -4,6 +4,7 @@ from tkinter import ttk, messagebox, filedialog
 from PIL import Image, ImageTk
 from io import BytesIO
 import customtkinter
+import os
 
 
 class teacherprofiletcview:
