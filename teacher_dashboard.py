@@ -5,7 +5,7 @@ import sqlite3
 import customtkinter
 from student_grade import gradeclass
 from teacher_profile_tcview import teacherprofiletcview
-from details_tcview import DetailsClass
+from details_tcview import DetailsClass_tc
 from report import ReportClass
 
 class GradeMaster:
@@ -29,20 +29,20 @@ class GradeMaster:
         M_Frame.place(x=10, y=70, width=1860, height=100)
 
         btn_course = Button(M_Frame, text="Course", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_course)
-        btn_course.place(x=40, y=10, width=270, height=60)
+        btn_course.place(x=200, y=10, width=270, height=60)
 
         btn_student = Button(M_Frame, text="Student", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_student)
-        btn_student.place(x=340, y=10, width=270, height=60)
+        btn_student.place(x=500, y=10, width=270, height=60)
 
         btn_teacher = Button(M_Frame, text="Teacher", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_teacher)
-        btn_teacher.place(x=640, y=10, width=270, height=60)
+        btn_teacher.place(x=800, y=10, width=270, height=60)
 
         btn_grade = Button(M_Frame, text="Grade", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_grade)
-        btn_grade.place(x=940, y=10, width=270, height=60)
+        btn_grade.place(x=1100, y=10, width=270, height=60)
 
 
         btn_logout = Button(M_Frame, text="Logout", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2")
-        btn_logout.place(x=1240, y=10, width=270, height=60)
+        btn_logout.place(x=1400, y=10, width=270, height=60)
 
         # ===content_windows===
         self.bg_img = Image.open("images/bg.jpg")
@@ -67,7 +67,7 @@ class GradeMaster:
 
     def add_student(self):
         self.new_win = Toplevel(self.root)
-        self.new_obj = DetailsClass(self.new_win)
+        self.new_obj = DetailsClass_tc(self.new_win)
 
     def add_grade(self):
         self.new_win = Toplevel(self.root)

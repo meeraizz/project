@@ -43,9 +43,16 @@ class gradeclass:
 
         # =====button======
         btn_add = Button(self.root, text="Submit", font=("King", 20), bg="#e0d2ef", activebackground="lightgreen", cursor="hand2", command=self.add).place(x=880, y=540, width=150, height=45)
-        btn_clear = Button(self.root, text="Clear", font=("King", 20), bg="#ffb3d2", activebackground="lightgrey", cursor="hand2").place(x=1100, y=540, width=150, height=45)
+        btn_clear = Button(self.root, text="Clear", font=("King", 20), bg="#ffb3d2", activebackground="lightgrey", cursor="hand2", command = self.clear).place(x=1100, y=540, width=150, height=45)
 
         # ==========================================================
+
+    def clear(self):
+        self.var_id.set("")
+        self.var_name.set("")
+        self.var_course.set("")
+        self.var_marks.set("")
+        self.var_full_marks.set("")
 
     def fetch_id(self):
         conn = sqlite3.connect(database="GradeMaster.db")
