@@ -10,8 +10,6 @@ class teacherprofile:
         self.root.geometry("1200x480+80+170")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
-
-
         
         #========== Title===========
         title = Label(self.root, text="Teacher Profile", font=("King", 30, "bold"), bg="#ff80b4", fg="#262626")
@@ -57,7 +55,6 @@ class teacherprofile:
         #=====Buttons========
         btn_search = Button(self.root, text='Search', font=("King", 20), bg="#e0d2ef", fg="black", cursor="hand2", command=self.search)
         btn_search.place(x=1100, y=150, width=150, height=45)
-
 
         # Fetch teacher data from database and populate combo box
         self.fetch_teachers()
@@ -111,9 +108,6 @@ class teacherprofile:
         if selected_teacher_name:
             index = self.txt_teacher.current()
             self.var_teacher_tid.set(self.tid_list[index])
-
-
-
 
 if __name__ == "__main__":
     root = customtkinter.CTk()

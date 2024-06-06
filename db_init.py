@@ -35,9 +35,15 @@ def create_db():
         cid INTEGER PRIMARY KEY AUTOINCREMENT,
         id TEXT,
         name TEXT,
-        course TEXT,
-        marks TEXT,
-        grades TEXT,
+        course1 TEXT,
+        course2 TEXT,
+        course3 TEXT,
+        marks1 INTEGER ,
+        marks2 INTEGER ,
+        marks3 INTEGER ,
+        grade1 TEXT,
+        grade2 TEXT,
+        grade3 TEXT,
         gpa TEXT
     )
     """)

@@ -26,7 +26,7 @@ class GradeMaster:
 
         # ===Menu===
         M_Frame = LabelFrame(self.root, text="Menu", font=("King", 15), bg="#fff0f3")
-        M_Frame.place(x=90, y=70, width=1680, height=100)
+        M_Frame.place(x=40, y=70, width=1860, height=100)
 
         btn_course = Button(M_Frame, text="Course", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_course)
         btn_course.place(x=200, y=10, width=270, height=60)
