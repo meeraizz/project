@@ -196,18 +196,6 @@ class DetailsClass:
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to {str(ex)}")
 
-    def show(self):
-        con=sqlite3.connect(database="GradeMaster.db")
-        cur=con.cursor()
-        try:
-            cur.execute("select * from student")
-            rows=cur.fetchall()
-            self.CourseTable.delete(*self.CourseTable.get_children())
-            for row in rows:
-                self.CourseTable.insert('',END,values=row)
-        except Exception as ex:
-            messagebox.showerror("Error",f"Error due to {str(ex)}")
-
     def fetch_course(self):
         con=sqlite3.connect(database="GradeMaster.db")
         cur=con.cursor()
@@ -217,21 +205,6 @@ class DetailsClass:
             if len(rows)>0:
                 self.course_list = [row[0] for row in rows]
                 self.txt_course.config(values=self.course_list)
-        except Exception as ex:
-            messagebox.showerror("Error",f"Error due to {str(ex)}")
-
-    def search(self):
-        con=sqlite3.connect(database="GradeMaster.db")
-        cur=con.cursor()
-        try:
-            cur.execute("select * from student where id=?",(self.var_search.get(),))
-            row=cur.fetchone()
-            # print(row)
-            if row is not None:
-                self.CourseTable.delete(*self.CourseTable.get_children())
-                self.CourseTable.insert(" ",END,values=row)   
-            else:
-               messagebox.showerror("Error","No record found",parent=self.root)
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to {str(ex)}")
 
