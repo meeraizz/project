@@ -71,6 +71,23 @@ class DetailsClass_tc:
 
     #============================================
 
+    def search(self):
+        con = sqlite3.connect(database="Grademaster.db")
+        cur = con.cursor()
+        try:
+            cur.execute("select * from student where id=?", (self.var_search.get(),))
+            rows = cur.fetchall()
+            if rows:
+                self.CourseTable.delete(*self.CourseTable.get_children())
+                for row in rows:
+                    self.CourseTable.insert("", END, values=row)
+            else:
+                messagebox.showerror("Error", "No record found", parent=self.root)
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error due to {str(ex)}")
+        finally:
+            con.close()
+
 
     def get_data(self,ev):
         self.txt_id.config(state='readonly')
@@ -113,21 +130,6 @@ class DetailsClass_tc:
             rows=cur.fetchall()
             if len(rows)>0:
                 self.course_list = [row[0] for row in rows]
-        except Exception as ex:
-            messagebox.showerror("Error",f"Error due to {str(ex)}")
-
-    def search(self):
-        con=sqlite3.connect(database="Grademaster.db")
-        cur=con.cursor()
-        try:
-            cur.execute("select * from student where id=?",(self.var_search.get(),))
-            row=cur.fetchone()
-            # print(row)
-            if row is not None:
-                self.CourseTable.delete(*self.CourseTable.get_children())
-                self.CourseTable.insert(" ",END,values=row)   
-            else:
-               messagebox.showerror("Error","No record found",parent=self.root)
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to {str(ex)}")
 
