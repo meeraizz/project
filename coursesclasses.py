@@ -61,7 +61,7 @@ class EnrollClass:
         self.load_enrollments()
 
     def fetch_students(self):
-        conn = sqlite3.connect('Grademaster.db')
+        conn = sqlite3.connect('GradeMaster.db')
         cursor = conn.cursor()
         cursor.execute("SELECT student_id, student_name FROM Students")
         rows = cursor.fetchall()
@@ -70,7 +70,7 @@ class EnrollClass:
         conn.close()
 
     def fetch_courses(self):
-        conn = sqlite3.connect('Grademaster.db')
+        conn = sqlite3.connect('GradeMaster.db')
         cursor = conn.cursor()
         cursor.execute("SELECT id, course_name FROM Courses")
         rows = cursor.fetchall()
@@ -87,7 +87,7 @@ class EnrollClass:
         student_id = student.split(":")[0]
         course_id = course.split(":")[0]
 
-        conn = sqlite3.connect('Grademaster.db')
+        conn = sqlite3.connect('GradeMaster.db')
         cursor = conn.cursor()
         cursor.execute("INSERT INTO Enrollments (student_id, class_id) VALUES (?, ?)", (student_id, course_id))
         conn.commit()
@@ -99,7 +99,7 @@ class EnrollClass:
     def load_enrollments(self):
         for row in self.tree.get_children():
             self.tree.delete(row)
-        conn = sqlite3.connect('Grademaster.db')
+        conn = sqlite3.connect('GradeMaster.db')
         cursor = conn.cursor()
         cursor.execute('''
             SELECT Students.student_id, Students.student_name, Courses.id, Courses.course_name

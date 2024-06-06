@@ -4,7 +4,7 @@ from tkinter import messagebox, ttk
 import customtkinter
 
 def create_db():
-    conn = sqlite3.connect('Grademaster.db')
+    conn = sqlite3.connect('GradeMaster.db')
     cursor = conn.cursor()
     
     # Create tables
