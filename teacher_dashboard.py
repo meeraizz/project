@@ -3,7 +3,7 @@ from PIL import Image, ImageTk
 from tkinter import ttk, messagebox
 import sqlite3
 import customtkinter
-from student_grade_tcview import gradeclasstc
+from student_grade import gradeclass
 from teacher_profile_tcview import teacherprofiletcview
 from details_tcview import DetailsClass_tc
 from report import ReportClass
@@ -72,7 +72,7 @@ class GradeMaster:
     def add_grade(self):
         self.new_win = Toplevel(self.root)
         self.new_win.geometry("1200x480+80+170")
-        self.new_obj = gradeclasstc(self.new_win)
+        self.new_obj = gradeclass(self.new_win)
     
     def add_teacher(self):
         self.new_win = Toplevel(self.root)
