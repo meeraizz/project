@@ -3,11 +3,12 @@ from tkinter import ttk, messagebox
 import sqlite3
 import customtkinter
 
-class gradeclass:
+
+class gradeclasstc:
     def __init__(self, root):
         self.root = root
         self.root.title("Grade Master")
-        self.root.geometry("1500x700+80+170")
+        self.root.geometry("1850x750+50+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
@@ -23,7 +24,9 @@ class gradeclass:
         self.var_full_marks = StringVar(value="100") 
         self.id_list = []
         self.course_list = []
+        self.course_list = []
         self.fetch_id()
+        self.fetch_course()
         self.fetch_course()
 
         # ===widgets===
@@ -38,6 +41,10 @@ class gradeclass:
         self.txt_student.set("Select")
         btn_search = Button(self.root, text='Search', font=("King", 20), bg="#e0d2ef", fg="black", cursor="hand2", command=self.search).place(x=1100, y=150, width=150, height=45)
 
+        self.txt_course = ttk.Combobox(self.root, textvariable=self.var_course, values=self.course_list,font=("king", 20, "bold"), state='readonly', justify=CENTER)
+        self.txt_course.place(x=880, y=310, width=370, height=45)
+        self.txt_course.set("Select")
+
         txt_name = Entry(self.root, textvariable=self.var_name, font=("king", 20, "bold"), bg="lightyellow", state='readonly').place(x=880, y=230, width=370, height=45)
         self.txt_course = ttk.Combobox(self.root, textvariable=self.var_course, values=self.course_list,font=("king", 20, "bold"), state='readonly', justify=CENTER)
         self.txt_course.place(x=880, y=310, width=370, height=45)
@@ -47,9 +54,28 @@ class gradeclass:
 
         # =====button======
         btn_save = Button(self.root, text="Save", font=("King", 20), bg="#e0d2ef", activebackground="lightgreen", cursor="hand2", command=self.save).place(x=880, y=540, width=150, height=45)
-        btn_clear = Button(self.root, text="Clear", font=("King", 20), bg="#ffb3d2", activebackground="lightgrey", cursor="hand2").place(x=1100, y=540, width=150, height=45)
+        btn_clear = Button(self.root, text="Clear", font=("King", 20), bg="#ffb3d2", activebackground="lightgrey", cursor="hand2", command = self.clear).place(x=1100, y=540, width=150, height=45)
 
         # ==========================================================
+
+    def fetch_course(self):
+        conn = sqlite3.connect(database="GradeMaster.db")
+        cur = conn.cursor()
+        try:
+            cur.execute("SELECT name FROM course")
+            rows = cur.fetchall()
+            if len(rows) > 0:
+                for row in rows:
+                    self.course_list.append(row[0])
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error due to {str(ex)}")
+
+    def clear(self):
+        self.var_id.set("")
+        self.var_name.set("")
+        self.var_course.set("")
+        self.var_marks.set("")
+        self.var_full_marks.set("")
 
     def fetch_id(self):
         conn = sqlite3.connect(database="GradeMaster.db")
@@ -124,6 +150,6 @@ class gradeclass:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    obj = gradeclass(root)
+    obj = gradeclasstc(root)
     obj.fetch_id()  
     root.mainloop()
