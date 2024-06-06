@@ -2,6 +2,7 @@ import sqlite3
 from tkinter import *
 from tkinter import ttk, messagebox, filedialog
 from PIL import Image, ImageTk
+from io import BytesIO
 import customtkinter
 import os
 
@@ -56,13 +57,14 @@ class teacherprofiletcview:
         self.txt_course.place(x=880, y=480, width=370, height=100)
 
         self.profile_frame = Frame(self.root, bg="white", bd=2, relief=RIDGE)
-        self.profile_frame.place(x=1300, y=150, width=160, height=160)
+        self.profile_frame.place(x=1300, y=150, width=200, height=220)
         self.profile_picture = Label(self.profile_frame, bg="white")
         self.profile_picture.pack(fill=BOTH, expand=True)
+        
 
         #=====Buttons========
         btn_upload = Button(self.root, text="Upload Image", font=("times new roman", 15, "bold"), bg="#ff80b4", fg="#262626", command=self.upload_image)
-        btn_upload.place(x=1300, y=320, width=160, height=35)
+        btn_upload.place(x=1320, y=400, width=170, height=35)
         
         btn_clear = Button(self.root, text="Clear", font=("times new roman", 20, "bold"), bg="#ff80b4", fg="#262626", command=self.clear_data)
         btn_clear.place(x=880, y=600, width=150, height=40)
@@ -73,15 +75,30 @@ class teacherprofiletcview:
         #===== Load existing data if any =====
         self.load_tid_list()
 
+
+
     def upload_image(self):
         file_path = filedialog.askopenfilename(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg")])
         if file_path:
             self.var_profile_picture.set(file_path)
             img = Image.open(file_path)
             img = img.resize((160, 160), Image.ANTIALIAS)
-            img = ImageTk.PhotoImage(img)
-            self.profile_picture.config(image=img)
-            self.profile_picture.image = img
+
+            # Convert the resized image to bytes
+            img_bytes = BytesIO()
+            img.save(img_bytes, format='JPEG')
+            img_bytes.seek(0)
+
+            # Create an ImageTk object from the bytes and resize it to fit inside the frame
+            self.img = Image.open(img_bytes)
+            self.img.thumbnail((200, 220), Image.ANTIALIAS)
+            self.img = ImageTk.PhotoImage(self.img)
+
+            # Update the existing Label widget with the resized image
+            self.profile_picture.config(image=self.img)
+            self.profile_picture.image = self.img
+
+
 
     def clear_data(self):
         self.var_teacher_tid.set("")
