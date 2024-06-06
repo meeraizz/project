@@ -76,30 +76,15 @@ class teacherprofiletcview:
         #===== Load existing data if any =====
         self.load_tid_list()
 
-
-
     def upload_image(self):
         file_path = filedialog.askopenfilename(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg")])
         if file_path:
             self.var_profile_picture.set(file_path)
             img = Image.open(file_path)
-            img = img.resize((160, 160), Image.ANTIALIAS)
-
-            # Convert the resized image to bytes
-            img_bytes = BytesIO()
-            img.save(img_bytes, format='JPEG')
-            img_bytes.seek(0)
-
-            # Create an ImageTk object from the bytes and resize it to fit inside the frame
-            self.img = Image.open(img_bytes)
-            self.img.thumbnail((200, 220), Image.ANTIALIAS)
-            self.img = ImageTk.PhotoImage(self.img)
-
-            # Update the existing Label widget with the resized image
+            img = img.resize((200, 220), Image.ANTIALIAS)
+            self.img = ImageTk.PhotoImage(img)
             self.profile_picture.config(image=self.img)
             self.profile_picture.image = self.img
-
-
 
     def clear_data(self):
         self.var_teacher_tid.set("")
@@ -157,10 +142,10 @@ class teacherprofiletcview:
                 self.var_profile_picture.set(row[4])
                 if row[4] and os.path.exists(row[4]):
                     img = Image.open(row[4])
-                    img = img.resize((160, 160), Image.ANTIALIAS)
-                    img = ImageTk.PhotoImage(img)
-                    self.profile_picture.config(image=img)
-                    self.profile_picture.image = img
+                    img = img.resize((200, 220), Image.ANTIALIAS)
+                    self.img = ImageTk.PhotoImage(img)
+                    self.profile_picture.config(image=self.img)
+                    self.profile_picture.image = self.img
                 else:
                     self.profile_picture.config(image="")
             else:
