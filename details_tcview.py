@@ -70,44 +70,7 @@ class DetailsClass_tc:
         self.fetch_course()
 
     #============================================
-    def clear(self):
-        self.var_id.set("")
-        self.var_name.set("")
-        self.var_email.set("")
-        self.var_gender.set("Select")
-        self.var_dob.set("")
-        self.var_contact.set("")
-        self.var_a_date.set("")
-        self.var_course.set("Select")
-        self.var_state.set("")
-        self.var_city.set("")
-        self.var_pin.set("")                   
-        self.txt_address.delete("1.0",END)
-        self.txt_id.config(state=NORMAL)
-        self.var_search.set("")
 
-    def delete(self):
-        con=sqlite3.connect(database="Grademaster.db")
-        cur=con.cursor()
-        try:
-            if self.var_id.get()=="":
-                messagebox.showerror("Error","ID No. should be required",parent=self.root)
-            else:
-                cur.execute("select * from student where id=?",(self.var_id.get(),))
-                row=cur.fetchone()
-                if row==None:
-                    messagebox.showerror("Error","Please select student from the list first",parent=self.root)
-                else:
-                    op=messagebox.askyesno("Confirm","Do you really want to delete?",parent=self.root)
-                    if op==True:
-                        cur.execute("delete from student where id=?",(self.var_id.get(),))
-                        con.commit()
-                        messagebox.showinfo("Delete","Student deleted Successfully",parent=self.root)
-                        self.clear()
-                        self.show()
-                        
-        except Exception as ex:
-            messagebox.showerror("Error",f"Error due to {str(ex)}")
 
     def get_data(self,ev):
         self.txt_id.config(state='readonly')
@@ -128,69 +91,7 @@ class DetailsClass_tc:
         self.txt_address.delete("1.0",END)
         self.txt_address.insert(END,row[11])
 
-    def add(self):
-        con=sqlite3.connect(database="Grademaster.db")
-        cur=con.cursor()
-        try:
-            if self.var_id.get()=="":
-                messagebox.showerror("Error","ID Number should be required",parent=self.root)
-            else:
-                cur.execute("select * from student where id=?",(self.var_id.get(),))
-                row=cur.fetchone()
-                if row is not None:
-                    messagebox.showerror("Error","ID No. already present",parent=self.root)
-                else:
-                    cur.execute("insert into student (id,name,email,gender,dob,contact,admission,course,state,city,pin,address) values(?,?,?,?,?,?,?,?,?,?,?,?)", (
-                        self.var_id.get(),
-                        self.var_name.get(),
-                        self.var_email.get(),
-                        self.var_gender.get(),
-                        self.var_dob.get(),
-                        self.var_contact.get(),
-                        self.var_a_date.get(),
-                        self.var_course.get(),
-                        self.var_state.get(),
-                        self.var_city.get(),
-                        self.var_pin.get(),                    
-                        self.txt_address.get("1.0",END)
-                    ))
-                    con.commit()
-                    messagebox.showinfo("Success","Student Added Successfully",parent=self.root)
-                    self.show()
-        except Exception as ex:
-            messagebox.showerror("Error",f"Error due to {str(ex)}")
 
-    def update(self):
-        con=sqlite3.connect(database="Grademaster.db")
-        cur=con.cursor()
-        try:
-            if self.var_id.get()=="":
-                messagebox.showerror("Error","ID No. should be required",parent=self.root)
-            else:
-                cur.execute("select * from student where id=?",(self.var_id.get(),))
-                row=cur.fetchone()
-                if row is None:
-                    messagebox.showerror("Error","Select student from list",parent=self.root)
-                else:
-                    cur.execute("update student set name=?,email=?,gender=?,dob=?,contact=?,admission=?,course=?,state=?,city=?,pin=?,address=? where id=?",(
-                        self.var_name.get(),
-                        self.var_email.get(),
-                        self.var_gender.get(),
-                        self.var_dob.get(),
-                        self.var_contact.get(),
-                        self.var_a_date.get(),
-                        self.var_course.get(),
-                        self.var_state.get(),
-                        self.var_city.get(),
-                        self.var_pin.get(),                    
-                        self.txt_address.get("1.0",END),
-                        self.var_id.get(),                    
-                    ))
-                    con.commit()
-                    messagebox.showinfo("Success","Student Update Successfully",parent=self.root)
-                    self.show()
-        except Exception as ex:
-            messagebox.showerror("Error",f"Error due to {str(ex)}")
 
     def show(self):
         con=sqlite3.connect(database="Grademaster.db")
@@ -212,7 +113,6 @@ class DetailsClass_tc:
             rows=cur.fetchall()
             if len(rows)>0:
                 self.course_list = [row[0] for row in rows]
-                self.txt_course.config(values=self.course_list)
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to {str(ex)}")
 
