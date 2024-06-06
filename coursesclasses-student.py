@@ -72,7 +72,7 @@ class StudentView:
         for row in self.tree.get_children():
             self.tree.delete(row)
 
-        conn = sqlite3.connect('Grademaster.db')
+        conn = sqlite3.connect('GradeMaster.db')
         cursor = conn.cursor()
         cursor.execute('''
             SELECT Classes.class_name, Classes.teacher_name
