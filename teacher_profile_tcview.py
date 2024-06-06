@@ -22,8 +22,9 @@ class teacherprofiletcview:
         self.var_teacher_name = StringVar()
         self.var_teacher_email = StringVar()
         self.var_teacher_contact = StringVar()
+        self.var_teacher_course = StringVar()
         self.var_profile_picture = StringVar()
-        self.tid_list = []  # Initialize tid_list
+        self.tid_list = []
 
         #============Widgets==========
         lbl_tid = Label(self.root, text="Teacher ID", font=("times new roman", 25, "bold"), bg="#fff0f3")
@@ -31,7 +32,7 @@ class teacherprofiletcview:
         self.cmb_tid = ttk.Combobox(self.root, textvariable=self.var_teacher_tid, font=("times new roman", 25, "bold"), state='readonly')
         self.cmb_tid.place(x=880, y=150, width=240, height=45)
         
-        # Add the Search button
+        #==========Search button========
         btn_search = Button(self.root, text="Search", font=("times new roman", 20, "bold"), bg="#ff80b4", fg="#262626", command=self.fetch_teacher_details)
         btn_search.place(x=1130, y=150, width=120, height=45)
 
@@ -51,22 +52,23 @@ class teacherprofiletcview:
         self.txt_contact = Entry(self.root, textvariable=self.var_teacher_contact, font=("times new roman", 25, "bold"), bg="lightyellow")
         self.txt_contact.place(x=880, y=390, width=370, height=45)
         
+        self.txt_course = Entry(self.root, textvariable=self.var_teacher_course, font=("times new roman", 25, "bold"), bg="lightyellow")
+        self.txt_course.place(x=880, y=480, width=370, height=100)
+
         self.profile_frame = Frame(self.root, bg="white", bd=2, relief=RIDGE)
         self.profile_frame.place(x=1300, y=150, width=160, height=160)
         self.profile_picture = Label(self.profile_frame, bg="white")
         self.profile_picture.pack(fill=BOTH, expand=True)
-        self.course_listbox = Listbox(self.root, font=("times new roman", 15), bg="lightyellow")
-        self.course_listbox.place(x=880, y=480, width=370, height=190)
 
         #=====Buttons========
         btn_upload = Button(self.root, text="Upload Image", font=("times new roman", 15, "bold"), bg="#ff80b4", fg="#262626", command=self.upload_image)
         btn_upload.place(x=1300, y=320, width=160, height=35)
         
         btn_clear = Button(self.root, text="Clear", font=("times new roman", 20, "bold"), bg="#ff80b4", fg="#262626", command=self.clear_data)
-        btn_clear.place(x=880, y=700, width=150, height=40)
+        btn_clear.place(x=880, y=600, width=150, height=40)
         
         btn_submit = Button(self.root, text="Submit", font=("times new roman", 20, "bold"), bg="#ff80b4", fg="#262626", command=self.submit_data)
-        btn_submit.place(x=1100, y=700, width=150, height=40)
+        btn_submit.place(x=1100, y=600, width=150, height=40)
 
         #===== Load existing data if any =====
         self.load_tid_list()
@@ -86,19 +88,31 @@ class teacherprofiletcview:
         self.var_teacher_name.set("")
         self.var_teacher_email.set("")
         self.var_teacher_contact.set("")
+        self.var_teacher_course.set("")
         self.var_profile_picture.set("")
         self.profile_picture.config(image="")
 
     def submit_data(self):
         con = sqlite3.connect('GradeMaster.db')
         cur = con.cursor()
-
-        cur.execute("INSERT INTO teacher (name, email, contact, profile_picture) VALUES (?, ?, ?, ?)",
-                    (self.var_teacher_name.get(), self.var_teacher_email.get(), self.var_teacher_contact.get(), self.var_profile_picture.get()))
+        cur.execute("""CREATE TABLE IF NOT EXISTS teacher (
+                        tid INTEGER PRIMARY KEY AUTOINCREMENT,
+                        name TEXT,
+                        email TEXT,
+                        contact TEXT,
+                        course TEXT,
+                        profile_picture TEXT)""")
+        if self.var_teacher_tid.get():
+            cur.execute("UPDATE teacher SET name=?, email=?, contact=?, course=?, profile_picture=? WHERE tid=?",
+                        (self.var_teacher_name.get(), self.var_teacher_email.get(), self.var_teacher_contact.get(), self.var_teacher_course.get(), self.var_profile_picture.get(), self.var_teacher_tid.get()))
+            messagebox.showinfo("Success", "Teacher profile updated successfully")
+        else:
+            cur.execute("INSERT INTO teacher (name, email, contact, course, profile_picture) VALUES (?, ?, ?, ?, ?)",
+                        (self.var_teacher_name.get(), self.var_teacher_email.get(), self.var_teacher_contact.get(), self.var_teacher_course.get(), self.var_profile_picture.get()))
+            messagebox.showinfo("Success", "Teacher profile submitted successfully")
         con.commit()
         con.close()
-        messagebox.showinfo("Success", "Teacher profile submitted successfully")
-        self.load_tid_list()  # Refresh the ID list after adding new entry
+        self.load_tid_list()  # Refresh the ID list
 
     def load_tid_list(self):
         con = sqlite3.connect('GradeMaster.db')
@@ -114,16 +128,17 @@ class teacherprofiletcview:
         if tid:
             con = sqlite3.connect('GradeMaster.db')
             cur = con.cursor()
-            cur.execute("SELECT name, email, contact, profile_picture FROM teacher WHERE tid=?", (tid,))
+            cur.execute("SELECT name, email, contact, course, profile_picture FROM teacher WHERE tid=?", (tid,))
             row = cur.fetchone()
             con.close()
             if row:
                 self.var_teacher_name.set(row[0])
                 self.var_teacher_email.set(row[1])
                 self.var_teacher_contact.set(row[2])
-                self.var_profile_picture.set(row[3])
-                if row[3] and os.path.exists(row[3]):
-                    img = Image.open(row[3])
+                self.var_teacher_course.set(row[3])
+                self.var_profile_picture.set(row[4])
+                if row[4] and os.path.exists(row[4]):
+                    img = Image.open(row[4])
                     img = img.resize((160, 160), Image.ANTIALIAS)
                     img = ImageTk.PhotoImage(img)
                     self.profile_picture.config(image=img)
