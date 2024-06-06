@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 from PIL import Image, ImageTk
 import sqlite3
+import customtkinter
 
 # Create a connection to the database and a cursor
 conn = sqlite3.connect('Grademaster.db')
