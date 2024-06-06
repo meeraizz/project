@@ -4,7 +4,7 @@ import sqlite3
 import customtkinter
 
 
-class gradeclass:
+class gradeclasstc:
     def __init__(self, root):
         self.root = root
         self.root.title("Grade Master")
@@ -126,6 +126,6 @@ class gradeclass:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    obj = gradeclass(root)
+    obj = gradeclasstc(root)
     obj.fetch_id()  
     root.mainloop()

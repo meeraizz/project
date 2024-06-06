@@ -3,7 +3,7 @@ from PIL import Image, ImageTk
 from tkinter import ttk, messagebox
 import sqlite3
 import customtkinter
-from student_grade import gradeclass
+from student_grade_tcview import gradeclasstc
 from teacher_profile_tcview import teacherprofiletcview
 from details_tcview import DetailsClass_tc
 from report import ReportClass
