@@ -36,7 +36,7 @@ class ReportClass:
         lbl_id = Label(self.root, text="ID No.", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=300, y=180, width=150, height=50)
         lbl_name = Label(self.root, text="Name", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=300, y=230, width=150, height=50)
         lbl_course = Label(self.root, text="Course", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=300, y=280, width=150, height=50)
-        lbl_marks = Label(self.root, text="Marks", font=("king", 14, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=450, y=280, width=150, height=50)
+        lbl_marks = Label(self.root, text="Marks", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=450, y=280, width=150, height=50)
         lbl_grades = Label(self.root, text="Grades", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=600, y=280, width=150, height=50)
         lbl_gpa = Label(self.root, text="GPA", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=750, y=280, width=150, height=50)
 
@@ -53,11 +53,14 @@ class ReportClass:
         self.course3 = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.course3.place(x=300, y=430, width=150, height=50)
 
-        self.marks1 = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        self.marks1_var = StringVar()
+        self.marks2_var = StringVar()
+        self.marks3_var = StringVar()
+        self.marks1 = Label(self.root, textvariable=self.marks1_var,font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.marks1.place(x=450, y=330, width=150, height=50)
-        self.marks2 = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        self.marks2 = Label(self.root, textvariable=self.marks2_var,font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.marks2.place(x=450, y=380, width=150, height=50)
-        self.marks3 = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        self.marks3 = Label(self.root, textvariable=self.marks3_var,font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.marks3.place(x=450, y=430, width=150, height=50)
 
         self.grades1 = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
@@ -88,23 +91,27 @@ class ReportClass:
                     self.id.config(text=rows[0][1])
                     self.name.config(text=rows[0][2])
                     
-                    if len(rows) > 0:
-                        self.course1.config(text=rows[0][3])
-                        self.marks1.config(text=str(rows[0][4]))
-                        self.grades1.config(text=rows[0][7])
-                    if len(rows) > 1:
-                        self.course2.config(text=rows[1][3])
-                        self.marks2.config(text=str(rows[1][4]))
-                        self.grades2.config(text=rows[1][7])
-                    if len(rows) > 2:
-                        self.course3.config(text=rows[2][3])
-                        self.marks3.config(text=str(rows[2][4]))
-                        self.grades3.config(text=rows[2][7])
+                    for i, row in enumerate(rows):
+                        if i == 0:
+                            self.course1.config(text=row[3])
+                            self.marks1_var.set(str(row[4]))
+                            self.grades1.config(text=row[7])
+                        elif i == 1:
+                            self.course2.config(text=row[3])
+                            self.marks2_var.set(str(row[4]))
+                            self.grades2.config(text=row[7])
+                        elif i == 2:
+                            self.course3.config(text=row[3])
+                            self.marks3_var.set(str(row[4]))
+                            self.grades3.config(text=row[7])
 
-                    # Calculate GPA based on marks
-                    marks = [int(rows[i][4]) for i in range(len(rows))]
-                    gpa = self.calculate_gpa(marks)
-                    self.gpa.config(text=str(gpa))
+                    marks = [row[4] for row in rows]
+                    try:
+                        marks = [int(mark) for mark in marks]
+                        gpa = self.calculate_gpa(marks)
+                        self.gpa.config(text=gpa)
+                    except ValueError as ve:
+                        messagebox.showerror("Error", f"Invalid mark found: {ve}", parent=self.root)
                 else:
                     messagebox.showerror("Error", "No record found", parent=self.root)
         except Exception as ex:

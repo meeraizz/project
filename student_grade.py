@@ -3,7 +3,6 @@ from tkinter import ttk, messagebox
 import sqlite3
 import customtkinter
 
-
 class gradeclass:
     def __init__(self, root):
         self.root = root
@@ -108,7 +107,6 @@ class gradeclass:
                         self.var_course.get(),
                         self.var_marks.get(),
                         self.var_grades.get(),
-                        str(gpa),
                     ))
                     conn.commit()
                     messagebox.showinfo("Success", "Result Added Successfully", parent=self.root)
