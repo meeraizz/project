@@ -36,9 +36,9 @@ def create_db():
         id TEXT,
         name TEXT,
         course TEXT,
-        marks_obt TEXT,
-        full_marks TEXT,
-        per TEXT
+        marks TEXT,
+        grades TEXT,
+        gpa TEXT
     )
     """)
 
@@ -48,13 +48,10 @@ def create_db():
         name TEXT,
         email TEXT,
         contact TEXT,
-        profile_picture TEXT
+        course TEXT,
+        profile_picture BLOB
     )
-    """)
-
-
-
-    
+    """)    
 
     con.commit()
     con.close()

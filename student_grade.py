@@ -25,21 +25,21 @@ class gradeclass:
         self.fetch_id()
 
         # ===widgets===
-        lbl_select = Label(self.root, text="Select Student", font=("times new roman", 25, "bold"), bg="#fff0f3").place(x=600, y=150)
-        lbl_name = Label(self.root, text="Name", font=("times new roman", 25, "bold"), bg="#fff0f3").place(x=600, y=230)
-        lbl_course = Label(self.root, text="Course", font=("times new roman", 25, "bold"), bg="#fff0f3").place(x=600, y=310)
-        lbl_marks_obtained = Label(self.root, text="Marks Obtained", font=("times new roman", 25, "bold"), bg="#fff0f3").place(x=600, y=390)
-        lbl_full_marks = Label(self.root, text="Full Marks", font=("times new roman", 25, "bold"), bg="#fff0f3").place(x=600, y=470)
+        lbl_select = Label(self.root, text="Select Student", font=("king", 25, "bold"), bg="#fff0f3").place(x=600, y=150)
+        lbl_name = Label(self.root, text="Name", font=("king", 25, "bold"), bg="#fff0f3").place(x=600, y=230)
+        lbl_course = Label(self.root, text="Course", font=("king", 25, "bold"), bg="#fff0f3").place(x=600, y=310)
+        lbl_marks_obtained = Label(self.root, text="Marks Obtained", font=("king", 25, "bold"), bg="#fff0f3").place(x=600, y=390)
+        lbl_full_marks = Label(self.root, text="Full Marks", font=("king", 25, "bold"), bg="#fff0f3").place(x=600, y=470)
 
-        self.txt_student = ttk.Combobox(self.root, textvariable=self.var_id, values=self.id_list, font=("times new roman", 20, "bold"), state='readonly', justify=CENTER)
+        self.txt_student = ttk.Combobox(self.root, textvariable=self.var_id, values=self.id_list, font=("king", 20, "bold"), state='readonly', justify=CENTER)
         self.txt_student.place(x=880,y=150, width=200, height=45)
         self.txt_student.set("Select")
         btn_search = Button(self.root, text='Search', font=("King", 20), bg="#e0d2ef", fg="black", cursor="hand2", command=self.search).place(x=1100, y=150, width=150, height=45)
 
-        txt_name = Entry(self.root, textvariable=self.var_name, font=("times new roman", 20, "bold"), bg="lightyellow", state='readonly').place(x=880, y=230, width=370, height=45)
-        txt_course = Entry(self.root, textvariable=self.var_course, font=("times new roman", 20, "bold"), bg="lightyellow", state='readonly').place(x=880, y=310, width=370, height=45)
-        txt_marks = Entry(self.root, textvariable=self.var_marks, font=("times new roman", 20, "bold"), bg="lightyellow").place(x=880, y=390, width=370, height=45)
-        txt_full_marks = Entry(self.root, textvariable=self.var_full_marks, font=("times new roman", 20, "bold"), bg="lightyellow").place(x=880, y=470, width=370, height=45)
+        txt_name = Entry(self.root, textvariable=self.var_name, font=("king", 20, "bold"), bg="lightyellow", state='readonly').place(x=880, y=230, width=370, height=45)
+        txt_course = Entry(self.root, textvariable=self.var_course, font=("king", 20, "bold"), bg="lightyellow", state='readonly').place(x=880, y=310, width=370, height=45)
+        txt_marks = Entry(self.root, textvariable=self.var_marks, font=("king", 20, "bold"), bg="lightyellow").place(x=880, y=390, width=370, height=45)
+        txt_full_marks = Entry(self.root, textvariable=self.var_full_marks, font=("king", 20, "bold"), bg="lightyellow").place(x=880, y=470, width=370, height=45)
 
         # =====button======
         btn_add = Button(self.root, text="Submit", font=("King", 20), bg="#e0d2ef", activebackground="lightgreen", cursor="hand2", command=self.add).place(x=880, y=540, width=150, height=45)

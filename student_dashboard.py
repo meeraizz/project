@@ -26,25 +26,22 @@ class GradeMaster:
 
         # ===Menu===
         M_Frame = LabelFrame(self.root, text="Menu", font=("King", 15), bg="#fff0f3")
-        M_Frame.place(x=10, y=70, width=1860, height=100)
+        M_Frame.place(x=90, y=70, width=1680, height=100)
 
         btn_course = Button(M_Frame, text="Course", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_course)
-        btn_course.place(x=40, y=10, width=270, height=60)
+        btn_course.place(x=200, y=10, width=270, height=60)
 
         btn_student = Button(M_Frame, text="Student", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_student)
-        btn_student.place(x=340, y=10, width=270, height=60)
+        btn_student.place(x=500, y=10, width=270, height=60)
 
         btn_teacher = Button(M_Frame, text="Teacher", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_teacher)
-        btn_teacher.place(x=640, y=10, width=270, height=60)
-
-        btn_grade = Button(M_Frame, text="Grade", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_grade)
-        btn_grade.place(x=940, y=10, width=270, height=60)
+        btn_teacher.place(x=800, y=10, width=270, height=60)
 
         btn_result = Button(M_Frame, text="Result", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_result)
-        btn_result.place(x=1240, y=10, width=270, height=60)
+        btn_result.place(x=1100, y=10, width=270, height=60)
 
         btn_logout = Button(M_Frame, text="Logout", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2")
-        btn_logout.place(x=1540, y=10, width=270, height=60)
+        btn_logout.place(x=1400, y=10, width=270, height=60)
 
         # ===content_windows===
         self.bg_img = Image.open("images/bg.jpg")
@@ -56,11 +53,11 @@ class GradeMaster:
 
         #======update details=====
         self.lbl_course = Label(self.root, text="Total Course\n[ 0 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=50, y=300, width=350, height=150)
-        self.lbl_teacher = Label(self.root, text="Total Teacher\n[ 0 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=430, y=300, width=350, height=150)
-        self.lbl_student = Label(self.root, text="Total Student\n[ 0 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=230, y=500, width=350, height=150)
+        self.lbl_teacher = Label(self.root, text="Total Teacher\n[ 2 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=430, y=300, width=350, height=150)
+        self.lbl_student = Label(self.root, text="Total Student\n[ 3 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=230, y=500, width=350, height=150)
 
         # ====footer=====
-        footer = Label(self.root, text="Grade Master\n Contact Us:06-33xxx56", font=("times new roman", 15, "bold"), bg="#262626", fg="white")
+        footer = Label(self.root, text="Grade Master\n Contact Us:06-33xxx56", font=("king", 15, "bold"), bg="#262626", fg="white")
         footer.pack(side=BOTTOM, fill=X)
 
     def add_course(self):
@@ -70,11 +67,6 @@ class GradeMaster:
     def add_student(self):
         self.new_win = Toplevel(self.root)
         self.new_obj = DetailsClass(self.new_win)
-
-    def add_grade(self):
-        self.new_win = Toplevel(self.root)
-        self.new_win.geometry("1200x480+80+170")
-        self.new_obj = gradeclass(self.new_win)
     
     def add_teacher(self):
         self.new_win = Toplevel(self.root)
