@@ -44,11 +44,11 @@ class teacherprofiletcview:
         lbl_courses = Label(self.root, text="Courses", font=("times new roman", 25, "bold"), bg="#fff0f3")
         lbl_courses.place(x=600, y=480)
 
-        self.txt_name = Entry(self.root, textvariable=self.var_teacher_name, font=("times new roman", 25, "bold"), bg="lightyellow", state= "readonly")
+        self.txt_name = Entry(self.root, textvariable=self.var_teacher_name, font=("times new roman", 25, "bold"), bg="lightyellow")
         self.txt_name.place(x=880, y=230, width=370, height=45)
-        self.txt_email = Entry(self.root, textvariable=self.var_teacher_email, font=("times new roman", 25, "bold"), bg="lightyellow", state= "readonly")
+        self.txt_email = Entry(self.root, textvariable=self.var_teacher_email, font=("times new roman", 25, "bold"), bg="lightyellow")
         self.txt_email.place(x=880, y=310, width=370, height=45)
-        self.txt_contact = Entry(self.root, textvariable=self.var_teacher_contact, font=("times new roman", 25, "bold"), bg="lightyellow", state= "readonly")
+        self.txt_contact = Entry(self.root, textvariable=self.var_teacher_contact, font=("times new roman", 25, "bold"), bg="lightyellow")
         self.txt_contact.place(x=880, y=390, width=370, height=45)
         
         self.profile_frame = Frame(self.root, bg="white", bd=2, relief=RIDGE)
@@ -92,12 +92,7 @@ class teacherprofiletcview:
     def submit_data(self):
         con = sqlite3.connect('GradeMaster.db')
         cur = con.cursor()
-        cur.execute("""CREATE TABLE IF NOT EXISTS teacher (
-                        tid INTEGER PRIMARY KEY AUTOINCREMENT,
-                        name TEXT,
-                        email TEXT,
-                        contact TEXT,
-                        profile_picture TEXT)""")
+
         cur.execute("INSERT INTO teacher (name, email, contact, profile_picture) VALUES (?, ?, ?, ?)",
                     (self.var_teacher_name.get(), self.var_teacher_email.get(), self.var_teacher_contact.get(), self.var_profile_picture.get()))
         con.commit()

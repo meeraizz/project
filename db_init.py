@@ -48,6 +48,7 @@ def create_db():
         name TEXT,
         email TEXT,
         contact TEXT,
+        course TEXT
         profile_picture TEXT
     )
     """)
