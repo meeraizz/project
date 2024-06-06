@@ -3,38 +3,6 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 import customtkinter
 
-def create_db():
-    conn = sqlite3.connect('GradeMaster.db')
-    cursor = conn.cursor()
-    
-    # Create tables
-    cursor.execute('''CREATE TABLE IF NOT EXISTS Courses (
-                      id INTEGER PRIMARY KEY AUTOINCREMENT,
-                      course_name TEXT NOT NULL)''')
-    
-    cursor.execute('''CREATE TABLE IF NOT EXISTS Classes (
-                      id INTEGER PRIMARY KEY AUTOINCREMENT,
-                      class_name TEXT NOT NULL,
-                      course_id INTEGER,
-                      teacher_name TEXT NOT NULL,
-                      FOREIGN KEY (course_id) REFERENCES Courses (id))''')
-    
-    cursor.execute('''CREATE TABLE IF NOT EXISTS Students (
-                      id INTEGER PRIMARY KEY AUTOINCREMENT,
-                      student_id TEXT NOT NULL,
-                      student_name TEXT NOT NULL)''')
-    
-    cursor.execute('''CREATE TABLE IF NOT EXISTS Enrollments (
-                      id INTEGER PRIMARY KEY AUTOINCREMENT,
-                      student_id INTEGER,
-                      class_id INTEGER,
-                      FOREIGN KEY (student_id) REFERENCES Students (id),
-                      FOREIGN KEY (class_id) REFERENCES Classes (id))''')
-    
-    conn.commit()
-    conn.close()
-
-create_db()
 
 class StudentView:
     def __init__(self, root):

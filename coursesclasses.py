@@ -2,22 +2,7 @@ import sqlite3
 import tkinter as tk
 from tkinter import messagebox, ttk
 import customtkinter
-
 import sqlite3
-
-def create_db():
-    conn = sqlite3.connect('example.db')
-    cursor = conn.cursor()
-    
-    # Create table
-    cursor.execute('''CREATE TABLE IF NOT EXISTS students
-                      (id INTEGER PRIMARY KEY, name TEXT, grade TEXT)''')
-
-    conn.commit()
-    conn.close()
-
-create_db()
-
 
 class EnrollClass:
     def __init__(self, root):
@@ -63,7 +48,7 @@ class EnrollClass:
     def fetch_students(self):
         conn = sqlite3.connect('GradeMaster.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT student_id, student_name FROM Students")
+        cursor.execute("SELECT student_id, student_name FROM student")
         rows = cursor.fetchall()
         for row in rows:
             self.student_list.append(f"{row[0]}: {row[1]}")
@@ -72,7 +57,7 @@ class EnrollClass:
     def fetch_courses(self):
         conn = sqlite3.connect('GradeMaster.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT id, course_name FROM Courses")
+        cursor.execute("SELECT id, course_name FROM course")
         rows = cursor.fetchall()
         for row in rows:
             self.course_list.append(f"{row[0]}: {row[1]}")
@@ -102,9 +87,9 @@ class EnrollClass:
         conn = sqlite3.connect('GradeMaster.db')
         cursor = conn.cursor()
         cursor.execute('''
-            SELECT Students.student_id, Students.student_name, Courses.id, Courses.course_name
+            SELECT Students.id, Students.name, Courses.id, Courses.course
             FROM Enrollments
-            JOIN Students ON Enrollments.student_id = Students.id
+            JOIN Students ON Enrollments.id = Students.id
             JOIN Courses ON Enrollments.class_id = Courses.id
         ''')
         rows = cursor.fetchall()

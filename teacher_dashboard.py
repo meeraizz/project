@@ -8,7 +8,7 @@ from teacher_profile_tcview import teacherprofiletcview
 from details_tcview import DetailsClass_tc
 from report import ReportClass
 
-class GradeMaster:
+class GradeMastertc:
     def __init__(self, root):
         self.root = root
         self.root.title("Grade Master")
@@ -86,5 +86,5 @@ class GradeMaster:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    obj = GradeMaster(root)
+    obj = GradeMastertc(root)
     root.mainloop()
