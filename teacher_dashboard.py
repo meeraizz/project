@@ -4,7 +4,6 @@ from tkinter import ttk, messagebox
 import sqlite3
 import customtkinter
 from student_grade import gradeclass
-from teacher_profile_tcview import TeacherProfileTCView
 from details_tcview import DetailsClass_tc
 from report import ReportClass
 

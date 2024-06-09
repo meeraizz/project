@@ -54,7 +54,7 @@ class TeacherProfileTCView:
         self.txt_course.place(x=880, y=480, width=370, height=100)
 
         # Image
-        self.image_frame = Frame(root, bd=3, bg="#ff80b4", width=200, height=200, relief=RIDGE)
+        self.image_frame = Frame(root, bd=3, bg="black", width=200, height=200, relief=GROOVE)
         self.image_frame.place(x=1300, y=150, width=200, height=220)
         self.default_image_path = "images/pfp.png"
         self.img_label = Label(self.image_frame, bg="white")
@@ -75,7 +75,7 @@ class TeacherProfileTCView:
     def display_image(self, file_path):
         if os.path.exists(file_path):
             img = Image.open(file_path)
-            img = img.resize((200, 220),Image.LANCZOS )
+            img = img.resize((200, 220), Image.LANCZOS)
             self.img = ImageTk.PhotoImage(img)
             self.img_label.config(image=self.img)
             self.img_label.image = self.img

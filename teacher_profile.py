@@ -1,7 +1,9 @@
 import sqlite3
 from tkinter import *
 from tkinter import ttk, messagebox
+from PIL import Image, ImageTk
 import customtkinter
+import os
 
 class teacherprofile:
     def __init__(self, root):
@@ -45,12 +47,16 @@ class teacherprofile:
         self.txt_email.place(x=880, y=310, width=370, height=45)
         self.txt_contact = Entry(self.root, textvariable=self.var_teacher_contact, font=("king", 25, "bold"), bg="lightyellow", state='readonly')
         self.txt_contact.place(x=880, y=390, width=370, height=45)
-        self.profile_frame = Frame(self.root, bg="white", bd=2, relief=RIDGE)
-        self.profile_frame.place(x=1300, y=150, width=160, height=160)
-        self.profile_picture = Label(self.profile_frame, bg="white")
-        self.profile_picture.pack(fill=BOTH, expand=True)
         self.txt_course = Entry(self.root, textvariable=self.var_teacher_course, font=("king", 25, "bold"), bg="lightyellow", state='readonly')
         self.txt_course.place(x=880, y=470, width=370, height=135)
+
+        #=====Image=========
+        self.image_frame = Frame(root, bd=3, bg="white", width=200, height=200, relief=RIDGE)
+        self.image_frame.place(x=1300, y=150, width=200, height=220)
+        self.default_image_path = "images/pfp.png"
+        self.img_label = Label(self.image_frame, bg="white")
+        self.img_label.place(x=0, y=0)
+        self.display_image(self.default_image_path)
 
         #=====Buttons========
         btn_search = Button(self.root, text='Search', font=("King", 20), bg="#e0d2ef", fg="black", cursor="hand2", command=self.search)
@@ -59,6 +65,17 @@ class teacherprofile:
         # Fetch teacher data from database and populate combo box
         self.fetch_teachers()
         self.txt_teacher.bind("<<ComboboxSelected>>", self.update_teacher_tid)
+
+    def display_image(self, file_path):
+        if os.path.exists(file_path):
+            img = Image.open(file_path)
+            img = img.resize((200, 220), Image.LANCZOS)
+            self.img = ImageTk.PhotoImage(img)
+            self.img_label.config(image=self.img)
+            self.img_label.image = self.img
+        else:
+            self.img_label.config(image="")
+            print(f"Image file {file_path} not found")
 
     def fetch_teachers(self):
         conn = sqlite3.connect(database="GradeMaster.db")
@@ -90,10 +107,12 @@ class teacherprofile:
                     self.var_teacher_email.set(teacher_data[1])
                     self.var_teacher_contact.set(teacher_data[2])
                     self.var_teacher_course.set(teacher_data[3])
-                    # Update profile picture if available
-                    if teacher_data[3]:
-                        # Update profile picture using the fetched path or data
-                        pass  # Update profile picture here
+                    
+                    profile_picture_path = teacher_data[4]
+                    if profile_picture_path and os.path.exists(profile_picture_path):
+                        self.display_image(profile_picture_path)
+                    else:
+                        self.display_image(self.default_image_path)
                 else:
                     messagebox.showerror("Error", "No record found", parent=self.root)
             except Exception as ex:
