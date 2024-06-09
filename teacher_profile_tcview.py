@@ -2,12 +2,10 @@ import sqlite3
 from tkinter import *
 from tkinter import ttk, messagebox, filedialog
 from PIL import Image, ImageTk
-from io import BytesIO
 import customtkinter
 import os
 
-
-class teacherprofiletcview:
+class TeacherProfileTCView:
     def __init__(self, root):
         self.root = root
         self.root.title("Grade Master")
@@ -15,11 +13,11 @@ class teacherprofiletcview:
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
         
-        #========== Title===========
+        # Title
         title = Label(self.root, text="Teacher Profile", font=("King", 30, "bold"), bg="#ff80b4", fg="#262626")
         title.place(x=0, y=10, width=1960, height=70)
 
-        #========Variables============
+        # Variables
         self.var_teacher_tid = StringVar()
         self.var_teacher_name = StringVar()
         self.var_teacher_email = StringVar()
@@ -28,13 +26,12 @@ class teacherprofiletcview:
         self.var_profile_picture = StringVar()
         self.tid_list = []
 
-        #============Widgets==========
+        # Widgets
         lbl_tid = Label(self.root, text="Teacher ID", font=("times new roman", 25, "bold"), bg="#fff0f3")
         lbl_tid.place(x=600, y=150)
         self.cmb_tid = ttk.Combobox(self.root, textvariable=self.var_teacher_tid, font=("times new roman", 25, "bold"), state='readonly')
         self.cmb_tid.place(x=880, y=150, width=240, height=45)
         
-        #==========Search button========
         btn_search = Button(self.root, text="Search", font=("times new roman", 20, "bold"), bg="#ff80b4", fg="#262626", command=self.fetch_teacher_details)
         btn_search.place(x=1130, y=150, width=120, height=45)
 
@@ -53,38 +50,44 @@ class teacherprofiletcview:
         self.txt_email.place(x=880, y=310, width=370, height=45)
         self.txt_contact = Entry(self.root, textvariable=self.var_teacher_contact, font=("times new roman", 25, "bold"), bg="lightyellow")
         self.txt_contact.place(x=880, y=390, width=370, height=45)
-        
         self.txt_course = Entry(self.root, textvariable=self.var_teacher_course, font=("times new roman", 25, "bold"), bg="lightyellow")
         self.txt_course.place(x=880, y=480, width=370, height=100)
 
-        self.profile_frame = Frame(self.root, bg="white", bd=2, relief=RIDGE)
-        self.profile_frame.place(x=1300, y=150, width=200, height=220)
-        self.profile_picture = Label(self.profile_frame, bg="white")
-        self.profile_picture.pack(fill=BOTH, expand=True)
-        
+        # Image
+        self.image_frame = Frame(root, bd=3, bg="#ff80b4", width=200, height=200, relief=RIDGE)
+        self.image_frame.place(x=1300, y=150, width=200, height=220)
+        self.default_image_path = "images/pfp.png"
+        self.img_label = Label(self.image_frame, bg="white")
+        self.img_label.place(x=0, y=0)
+        self.display_image(self.default_image_path)
 
-        #=====Buttons========
+        # Buttons
         btn_upload = Button(self.root, text="Upload Image", font=("times new roman", 15, "bold"), bg="#ff80b4", fg="#262626", command=self.upload_image)
         btn_upload.place(x=1320, y=400, width=170, height=35)
-        
         btn_clear = Button(self.root, text="Clear", font=("times new roman", 20, "bold"), bg="#ff80b4", fg="#262626", command=self.clear_data)
         btn_clear.place(x=880, y=600, width=150, height=40)
-        
         btn_submit = Button(self.root, text="Submit", font=("times new roman", 20, "bold"), bg="#ff80b4", fg="#262626", command=self.submit_data)
         btn_submit.place(x=1100, y=600, width=150, height=40)
 
-        #===== Load existing data if any =====
+        # Load existing data if any
         self.load_tid_list()
 
+    def display_image(self, file_path):
+        if os.path.exists(file_path):
+            img = Image.open(file_path)
+            img = img.resize((200, 220),Image.LANCZOS )
+            self.img = ImageTk.PhotoImage(img)
+            self.img_label.config(image=self.img)
+            self.img_label.image = self.img
+        else:
+            self.img_label.config(image="")
+
     def upload_image(self):
-        file_path = filedialog.askopenfilename(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg")])
+        file_path = filedialog.askopenfilename(initialdir=os.getcwd(), title="Select image file",
+                                               filetype=(("JPG File", "*.jpg"), ("PNG File", "*.png"), ("All Files", "*.*")))
         if file_path:
             self.var_profile_picture.set(file_path)
-            img = Image.open(file_path)
-            img = img.resize((200, 220), Image.ANTIALIAS)
-            self.img = ImageTk.PhotoImage(img)
-            self.profile_picture.config(image=self.img)
-            self.profile_picture.image = self.img
+            self.display_image(file_path)
 
     def clear_data(self):
         self.var_teacher_tid.set("")
@@ -92,8 +95,8 @@ class teacherprofiletcview:
         self.var_teacher_email.set("")
         self.var_teacher_contact.set("")
         self.var_teacher_course.set("")
-        self.var_profile_picture.set("")
-        self.profile_picture.config(image="")
+        self.var_profile_picture.set(self.default_image_path)
+        self.display_image(self.default_image_path)
 
     def submit_data(self):
         con = sqlite3.connect('GradeMaster.db')
@@ -140,14 +143,7 @@ class teacherprofiletcview:
                 self.var_teacher_contact.set(row[2])
                 self.var_teacher_course.set(row[3])
                 self.var_profile_picture.set(row[4])
-                if row[4] and os.path.exists(row[4]):
-                    img = Image.open(row[4])
-                    img = img.resize((200, 220), Image.ANTIALIAS)
-                    self.img = ImageTk.PhotoImage(img)
-                    self.profile_picture.config(image=self.img)
-                    self.profile_picture.image = self.img
-                else:
-                    self.profile_picture.config(image="")
+                self.display_image(row[4])
             else:
                 messagebox.showerror("Error", "No teacher found with the selected ID")
         else:
@@ -155,5 +151,5 @@ class teacherprofiletcview:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    obj = teacherprofiletcview(root)
+    obj = TeacherProfileTCView(root)
     root.mainloop()
