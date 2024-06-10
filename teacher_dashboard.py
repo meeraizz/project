@@ -5,6 +5,7 @@ import sqlite3
 import customtkinter
 from student_grade import gradeclass
 from details_tcview import DetailsClass_tc
+from teachercard import teachercard
 from report import ReportClass
 
 class GradeMastertc:
@@ -33,8 +34,8 @@ class GradeMastertc:
         btn_student = Button(M_Frame, text="Student", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_student)
         btn_student.place(x=500, y=10, width=270, height=60)
 
-        btn_teacher = Button(M_Frame, text="Teacher", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_teacher)
-        btn_teacher.place(x=800, y=10, width=270, height=60)
+        btn_profile = Button(M_Frame, text="Profile", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_profile)
+        btn_profile.place(x=800, y=10, width=270, height=60)
 
         btn_grade = Button(M_Frame, text="Grade", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_grade)
         btn_grade.place(x=1100, y=10, width=270, height=60)
@@ -73,10 +74,10 @@ class GradeMastertc:
         self.new_win.geometry("1200x480+80+170")
         self.new_obj = gradeclass(self.new_win)
     
-    def add_teacher(self):
+    def add_profile(self):
         self.new_win = Toplevel(self.root)
         self.new_win.geometry("1200x480+80+170")
-        self.new_obj = TeacherProfileTCView(self.new_win)
+        self.new_obj = teachercard(self.new_win)
 
     def add_result(self):
         self.new_win = Toplevel(self.root)

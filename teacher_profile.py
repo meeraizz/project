@@ -1,9 +1,9 @@
 import sqlite3
 from tkinter import *
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox,filedialog
 from PIL import Image, ImageTk
-import customtkinter
 import os
+import customtkinter
 
 class teacherprofile:
     def __init__(self, root):
@@ -50,7 +50,7 @@ class teacherprofile:
         self.txt_course = Entry(self.root, textvariable=self.var_teacher_course, font=("king", 25, "bold"), bg="lightyellow", state='readonly')
         self.txt_course.place(x=880, y=470, width=370, height=135)
 
-        #=====Image=========
+        #==========Image==============
         self.image_frame = Frame(root, bd=3, bg="white", width=200, height=200, relief=RIDGE)
         self.image_frame.place(x=1300, y=150, width=200, height=220)
         self.default_image_path = "images/pfp.png"
@@ -69,13 +69,12 @@ class teacherprofile:
     def display_image(self, file_path):
         if os.path.exists(file_path):
             img = Image.open(file_path)
-            img = img.resize((200, 220), Image.LANCZOS)
+            img = img.resize((200, 220),Image.LANCZOS )
             self.img = ImageTk.PhotoImage(img)
             self.img_label.config(image=self.img)
             self.img_label.image = self.img
         else:
             self.img_label.config(image="")
-            print(f"Image file {file_path} not found")
 
     def fetch_teachers(self):
         conn = sqlite3.connect(database="GradeMaster.db")
@@ -107,12 +106,10 @@ class teacherprofile:
                     self.var_teacher_email.set(teacher_data[1])
                     self.var_teacher_contact.set(teacher_data[2])
                     self.var_teacher_course.set(teacher_data[3])
-                    
-                    profile_picture_path = teacher_data[4]
-                    if profile_picture_path and os.path.exists(profile_picture_path):
-                        self.display_image(profile_picture_path)
-                    else:
-                        self.display_image(self.default_image_path)
+                    # Update profile picture if available
+                    if teacher_data[3]:
+                        # Update profile picture using the fetched path or data
+                        pass  # Update profile picture here
                 else:
                     messagebox.showerror("Error", "No record found", parent=self.root)
             except Exception as ex:
