@@ -7,6 +7,7 @@ from student_grade import gradeclass
 from teacher_profile import teacherprofile
 from details import DetailsClass
 from report import ReportClass
+from coursesclasses_student import StudentView
 
 class GradeMaster:
     def __init__(self, root):
@@ -17,7 +18,7 @@ class GradeMaster:
 
         # ====icons=====
         self.logo_image = Image.open("images/Grade-Master_Logo.png")
-        self.logo_image = self.logo_image.resize((70, 70), Image.LANCZOS)  # Use LANCZOS for high-quality downsampling
+        self.logo_image = self.logo_image.resize((70, 70), Image.LANCZOS) 
         self.logo_dash = ImageTk.PhotoImage(self.logo_image)
 
         # ======title==========
@@ -62,7 +63,7 @@ class GradeMaster:
 
     def add_course(self):
         self.new_win = Toplevel(self.root)
-        self.new_obj = CourseClass(self.new_win)
+        self.new_obj = StudentView(self.new_win)
 
     def add_student(self):
         self.new_win = Toplevel(self.root)

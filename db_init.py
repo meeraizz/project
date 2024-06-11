@@ -7,6 +7,14 @@ def create_db():
     cur.execute("""
     CREATE TABLE IF NOT EXISTS users (
         id TEXT PRIMARY KEY,
+        name TEXT,
+        email TEXT,
+        dob TEXT,
+        contact TEXT,
+        state TEXT,
+        city TEXT,
+        pin TEXT,
+        address TEXT
         password TEXT,
         role TEXT 
     )
@@ -41,7 +49,7 @@ def create_db():
     
     cur.execute("""
     CREATE TABLE IF NOT EXISTS grade (
-        cid INTEGER PRIMARY KEY AUTOINCREMENT,
+        cid INTEGER,
         id TEXT,
         name TEXT,
         course1 TEXT,
@@ -53,7 +61,6 @@ def create_db():
         grade1 TEXT,
         grade2 TEXT,
         grade3 TEXT,
-        gpa TEXT
     )
     """)
 
@@ -67,6 +74,17 @@ def create_db():
         profile_picture BLOB
     )
     """)    
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS gpa (
+        cid INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER,
+        credit_hours INTEGER,
+        grade TEXT,
+        grade_points REAL,
+        gpa BOOLEAN
+    )
+    """)
 
     con.commit()
     con.close()

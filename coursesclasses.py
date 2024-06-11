@@ -4,7 +4,7 @@ from tkinter import messagebox, ttk
 import customtkinter
 import sqlite3
 
-class EnrollClass:
+class CourseClass:
     def __init__(self, root):
         self.root = root
         self.root.title("Course Enrollment")
@@ -43,12 +43,10 @@ class EnrollClass:
         self.tree.heading("Course Name", text="Course Name")
         self.tree.place(x=50, y=380, width=700, height=200)
 
-        self.load_enrollments()
-
     def fetch_students(self):
         conn = sqlite3.connect('GradeMaster.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT student_id, student_name FROM student")
+        cursor.execute("SELECT id, name FROM student")
         rows = cursor.fetchall()
         for row in rows:
             self.student_list.append(f"{row[0]}: {row[1]}")
@@ -57,7 +55,7 @@ class EnrollClass:
     def fetch_courses(self):
         conn = sqlite3.connect('GradeMaster.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT id, course_name FROM course")
+        cursor.execute("SELECT cid, name FROM course")
         rows = cursor.fetchall()
         for row in rows:
             self.course_list.append(f"{row[0]}: {row[1]}")
@@ -81,24 +79,8 @@ class EnrollClass:
         messagebox.showinfo("Success", "Student enrolled successfully!")
         self.load_enrollments()
 
-    def load_enrollments(self):
-        for row in self.tree.get_children():
-            self.tree.delete(row)
-        conn = sqlite3.connect('GradeMaster.db')
-        cursor = conn.cursor()
-        cursor.execute('''
-            SELECT Students.id, Students.name, Courses.id, Courses.course
-            FROM Enrollments
-            JOIN Students ON Enrollments.id = Students.id
-            JOIN Courses ON Enrollments.class_id = Courses.id
-        ''')
-        rows = cursor.fetchall()
-        for row in rows:
-            self.tree.insert('', 'end', values=row)
-        conn.close()
-
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    obj = EnrollClass(root)
+    obj = CourseClass(root)
     root.mainloop()
 

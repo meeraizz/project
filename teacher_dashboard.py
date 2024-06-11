@@ -7,6 +7,7 @@ from student_grade import gradeclass
 from teacher_profile_tcview import teacherprofiletcview
 from details_tcview import DetailsClass_tc
 from report import ReportClass
+from coursesclasses import CourseClass
 
 class GradeMastertc:
     def __init__(self, root):
