@@ -2,21 +2,20 @@ import sqlite3
 from tkinter import *
 from tkinter import ttk, messagebox, filedialog
 from PIL import Image, ImageTk
+from editprofile import editprofile
 import customtkinter
 import os
-from editprofile import editprofile
-
 
 class teachercard:
     def __init__(self, root):
         self.root = root
         self.root.title("Grade Master")
-        self.root.geometry("1850x800+50+200")
+        self.root.geometry("1200x750+50+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
         #=============Title==================
-        title = Label(self.root, text="Profile", font=("King", 30, "bold"), bg="#ff80b4", fg="#262626")
+        title = Label(self.root, text="Teacher Profile", font=("King", 30, "bold"), bg="#ff80b4", fg="#262626")
         title.place(x=0, y=10, width=1960, height=70)
 
         # ============ Widgets ================
@@ -34,13 +33,13 @@ class teachercard:
 
 
         lbl_name = Label(self.root, text="Name", font=("King", 25, "bold"), bg="white")
-        lbl_name.place(x=800, y=310)
+        lbl_name.place(x=800, y=230)
         lbl_email = Label(self.root, text="Email", font=("King", 25, "bold"), bg="white")
-        lbl_email.place(x=800, y=390)
+        lbl_email.place(x=800, y=310)
         lbl_contact = Label(self.root, text="Contact", font=("King", 25, "bold"), bg="white")
-        lbl_contact.place(x=800, y=480)
+        lbl_contact.place(x=800, y=390)
         lbl_courses = Label(self.root, text="Courses", font=("King", 25, "bold"), bg="white")
-        lbl_courses.place(x=800, y=560)
+        lbl_courses.place(x=800, y=480)
 
         #============Profile picture==========
         self.image_frame = Frame(root, bd=3, bg="white", width=200, height=200, relief=RIDGE)
@@ -50,30 +49,28 @@ class teachercard:
         self.img_label.place(x=0, y=0)
         self.display_image(self.default_image_path)
 
-        #===============Button==============
+        #===============BUtton==============
         btn_edit = Button(self.root, text="Edit", font=("King", 15, "bold"), bg="#ff80b4", fg="#262626",command=self.edit)
         btn_edit.place(x=1320, y=700, width=150, height=35)
 
-
-        self.lbl_name = Label(self.root, textvariable=self.var_teacher_name, font=("times new roman", 25, "bold"), bg="white", anchor="w")
-        self.lbl_name.place(x=980, y=310, width=370, height=45)
-
-        self.lbl_email = Label(self.root, textvariable=self.var_teacher_email, font=("times new roman", 25, "bold"), bg="white", anchor="w")
-        self.lbl_email.place(x=980, y=390, width=370, height=45)
-
-        self.lbl_contact = Label(self.root, textvariable=self.var_teacher_contact, font=("times new roman", 25, "bold"), bg="white", anchor="w")
-        self.lbl_contact.place(x=980, y=480, width=370, height=45)
-
-        self.lbl_course = Label(self.root, textvariable=self.var_teacher_course, font=("times new roman", 25, "bold"), bg="white", anchor="nw", justify=LEFT, wraplength=360)
-        self.lbl_course.place(x=980, y=560, width=370, height=100)
+        self.txt_name = Entry(self.root, textvariable=self.var_teacher_name, font=("times new roman", 25, "bold"), bg="white")
+        self.txt_name.place(x=1000, y=230, width=370, height=45)
+        self.txt_email = Entry(self.root, textvariable=self.var_teacher_email, font=("times new roman", 25, "bold"), bg="white")
+        self.txt_email.place(x=1000, y=310, width=370, height=45)
+        self.txt_contact = Entry(self.root, textvariable=self.var_teacher_contact, font=("times new roman", 25, "bold"), bg="white")
+        self.txt_contact.place(x=1000, y=390, width=370, height=45)
+        self.txt_course = Entry(self.root, textvariable=self.var_teacher_course, font=("times new roman", 25, "bold"), bg="white")
+        self.txt_course.place(x=1000, y=480, width=370, height=100)
 
 
     def edit(self):
-        self.root.destroy()
-        self.new_win = customtkinter.CTk()
-        self.new_obj = editprofile(self.new_win)
-        self.new_win.mainloop()
+        new_top = customtkinter.CTkToplevel(self.root)
+        new_window = editprofile(new_top)
+        new_top.transient(self.root)  
+        new_top.grab_set()  
+        new_top.focus_force() 
 
+        
 
     def display_image(self, file_path):
         if os.path.exists(file_path):

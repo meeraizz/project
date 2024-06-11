@@ -14,6 +14,7 @@ class GradeMastertc:
         self.root.title("Grade Master")
         self.root.geometry("1350x700+0+0")
         self.root.config(bg='#fff0f3')
+        self.root.focus_force()
 
         # ====icons=====
         self.logo_image = Image.open("images/Grade-Master_Logo.png")
@@ -62,27 +63,37 @@ class GradeMastertc:
         footer.pack(side=BOTTOM, fill=X)
 
     def add_course(self):
+        new_root = customtkinter.CTk()
         self.new_win = Toplevel(self.root)
         self.new_obj = CourseClass(self.new_win)
 
     def add_student(self):
-        self.new_win = Toplevel(self.root)
-        self.new_obj = DetailsClass_tc(self.new_win)
+        new_top = customtkinter.CTkToplevel(self.root)
+        new_window = DetailsClass_tc(new_top)
+        new_top.transient(self.root)  
+        new_top.grab_set()  
+        new_top.focus_force() 
 
     def add_grade(self):
-        self.new_win = Toplevel(self.root)
-        self.new_win.geometry("1200x480+80+170")
-        self.new_obj = gradeclass(self.new_win)
+        new_top = customtkinter.CTkToplevel(self.root)
+        new_window = gradeclass(new_top)
+        new_top.transient(self.root)  
+        new_top.grab_set()  
+        new_top.focus_force() 
     
     def add_profile(self):
-        self.new_win = Toplevel(self.root)
-        self.new_win.geometry("1200x480+80+170")
-        self.new_obj = teachercard(self.new_win)
+        new_top = customtkinter.CTkToplevel(self.root)
+        new_window = teachercard(new_top)
+        new_top.transient(self.root)  
+        new_top.grab_set()  
+        new_top.focus_force() 
 
     def add_result(self):
-        self.new_win = Toplevel(self.root)
-        self.new_win.geometry("1200x480+80+170")
-        self.new_obj = ReportClass(self.new_win)
+        new_top = customtkinter.CTkToplevel(self.root)
+        new_window = ReportClass(new_top)
+        new_top.transient(self.root)  
+        new_top.grab_set()  
+        new_top.focus_force() 
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
