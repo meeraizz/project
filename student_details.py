@@ -13,7 +13,7 @@ class DetailsClass:
         self.root.focus_force()
 
         self.main_frame = Frame(self.root, bg="#fff0f3")
-        self.main_frame.pack(fill=BOTH, expand=True)  
+        self.main_frame.pack(fill=BOTH, expand=True)
 
         self.create_widgets()
 
@@ -292,24 +292,6 @@ class DetailsClass:
         except Exception as ex:
             messagebox.showerror("Error", f"Error fetching user IDs: {str(ex)}")
 
-def show(self):
-    con = sqlite3.connect(database="GradeMaster.db")
-    cur = con.cursor()
-    try:
-        cur.execute("SELECT * FROM student")
-        rows = cur.fetchall()
-        if rows:
-            self.student_table.delete(*self.student_table.get_children())
-            for row in rows:
-                self.student_table.insert('', END, values=row)
-        else:
-            self.student_table.delete(*self.student_table.get_children())
-
-    except Exception as ex:
-        messagebox.showerror("Error", f"Error due to {str(ex)}")
-
-    finally:
-        con.close()
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
