@@ -5,8 +5,10 @@ import sqlite3
 import customtkinter
 from student_grade import gradeclass
 from teacher_profile import teacherprofile
-from details import DetailsClass
+from student_details import DetailsClass
 from report import ReportClass
+from coursesclasses_student import StudentView
+from student_card import StudentCard
 
 class GradeMaster:
     def __init__(self, root):
@@ -17,7 +19,7 @@ class GradeMaster:
 
         # ====icons=====
         self.logo_image = Image.open("images/Grade-Master_Logo.png")
-        self.logo_image = self.logo_image.resize((70, 70), Image.LANCZOS)  # Use LANCZOS for high-quality downsampling
+        self.logo_image = self.logo_image.resize((70, 70), Image.LANCZOS) 
         self.logo_dash = ImageTk.PhotoImage(self.logo_image)
 
         # ======title==========
@@ -31,7 +33,7 @@ class GradeMaster:
         btn_course = Button(M_Frame, text="Course", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_course)
         btn_course.place(x=200, y=10, width=270, height=60)
 
-        btn_student = Button(M_Frame, text="Student", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_student)
+        btn_student = Button(M_Frame, text="Profile", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_student)
         btn_student.place(x=500, y=10, width=270, height=60)
 
         btn_teacher = Button(M_Frame, text="Teacher", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_teacher)
@@ -62,14 +64,11 @@ class GradeMaster:
 
     def add_course(self):
         self.new_win = Toplevel(self.root)
-        self.new_obj = CourseClass(self.new_win)
+        self.new_obj = StudentView(self.new_win)
 
     def add_student(self):
-        new_top = customtkinter.CTkToplevel(self.root)
-        new_window = DetailsClass(new_top)
-        new_top.transient(self.root)  
-        new_top.grab_set()  
-        new_top.focus_force() 
+        self.new_win = Toplevel(self.root)
+        self.new_obj = StudentCard(self.new_win)
     
     def add_teacher(self):
         new_top = customtkinter.CTkToplevel(self.root)

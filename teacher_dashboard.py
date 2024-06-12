@@ -7,6 +7,7 @@ from student_grade import gradeclass
 from teachercard import teachercard
 from details_tcview import detailsclasstc
 from report import ReportClass
+from coursesclasses import CourseClass
 
 class GradeMastertc:
     def __init__(self, root, teacher_id):
