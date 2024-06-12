@@ -62,7 +62,7 @@ class GradeMastertc:
 
     def add_course(self):
         new_top = customtkinter.CTkToplevel(self.root)
-        new_window = courseclass(new_top)
+        new_window = CourseClass(new_top)
         new_top.transient(self.root)  
         new_top.grab_set()  
         new_top.focus_force() 
@@ -107,5 +107,5 @@ class GradeMastertc:
 
 if __name__=="__main__":
     root=customtkinter.CTk()
-    obj=GradeMastertc(root)
+    obj=GradeMastertc(root, teacher_id=any)
     root.mainloop()        

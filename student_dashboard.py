@@ -11,11 +11,12 @@ from coursesclasses_student import StudentView
 from student_card import StudentCard
 
 class GradeMaster:
-    def __init__(self, root):
+    def __init__(self, root, student_id):
         self.root = root
         self.root.title("Grade Master")
         self.root.geometry("1350x700+0+0")
         self.root.config(bg='#fff0f3')
+        self.student_id = student_id
 
         # ====icons=====
         self.logo_image = Image.open("images/Grade-Master_Logo.png")
@@ -42,7 +43,7 @@ class GradeMaster:
         btn_result = Button(M_Frame, text="Result", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_result)
         btn_result.place(x=1100, y=10, width=270, height=60)
 
-        btn_logout = Button(M_Frame, text="Logout", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2")
+        btn_logout = Button(M_Frame, text="Logout", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.logout)
         btn_logout.place(x=1400, y=10, width=270, height=60)
 
         # ===content_windows===
@@ -67,8 +68,11 @@ class GradeMaster:
         self.new_obj = StudentView(self.new_win)
 
     def add_student(self):
-        self.new_win = Toplevel(self.root)
-        self.new_obj = StudentCard(self.new_win, student_id=1)  # Example student_id
+        new_top = customtkinter.CTkToplevel(self.root)
+        new_window = StudentCard(new_top)
+        new_top.transient(self.root)  
+        new_top.grab_set()  
+        new_top.focus_force() 
     
     def add_teacher(self):
         new_top = customtkinter.CTkToplevel(self.root)
@@ -84,8 +88,19 @@ class GradeMaster:
         new_top.grab_set()  
         new_top.focus_force() 
 
+    def logout(self):
+        messagebox.showinfo("Logout", "You have successfully logged out.")
+
+        dummy_window = Toplevel(self.root)
+        dummy_window.withdraw()  
+        for window in self.root.winfo_children():
+            if window != dummy_window:
+                window.destroy()
+        dummy_window.destroy()
+        self.root.destroy()
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    obj = GradeMaster(root)
+    student_id = "12345"
+    obj = GradeMaster(root, student_id)
     root.mainloop()

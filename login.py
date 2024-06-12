@@ -54,7 +54,7 @@ class LoginClass:
             self.root.destroy()  # Close the login window
             if role == "Student":
                 root = customtkinter.CTk()
-                app = StudentDashboard(root)
+                app = StudentDashboard(root, student_id=user_id)
                 root.mainloop()
             elif role == "Teacher":
                 root = customtkinter.CTk()

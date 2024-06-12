@@ -1,6 +1,6 @@
 import sqlite3
 from tkinter import *
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, filedialog
 from PIL import Image, ImageTk
 from student_details import DetailsClass
 import customtkinter
@@ -22,7 +22,6 @@ class StudentCard:
         self.main_frame.pack(fill=BOTH, expand=True)
 
         self.create_widgets()
-        self.load_student_data()
 
     def create_widgets(self):
         # =====title======
@@ -41,6 +40,7 @@ class StudentCard:
         self.var_state = StringVar()
         self.var_city = StringVar()
         self.var_pin = StringVar()
+        self.var_address = StringVar()
 
         # =====widgets======
         # =======column 1=========
@@ -111,15 +111,39 @@ class StudentCard:
         self.txt_address.place(x=600, y=260,  width=600, height=100)
 
         # ============= Button ================
-        btn_edit = Button(self.root, text="Edit", font=("King", 15, "bold"), bg="#ff80b4", fg="#262626")
+        btn_edit = Button(self.root, text="Edit", font=("King", 15, "bold"), bg="#ff80b4", fg="#262626", command=self.edit)
         btn_edit.place(x=1000, y=500, width=150, height=35)
 
+        self.load_student_data()
+
+    def edit(self):
+        student_data = {
+            'id': self._id,
+            'name': self.var_name.get(),
+            'email': self.var_email.get(),
+            'contact': self.var_contact.get(),
+            'course': self.var_course.get(),
+            'gender': self.var_gender.get(),
+            'dob': self.var_dob.get(),
+            'admission':self.var_a_date.get(),
+            'state': self.var_state.get(),
+            'city':self.var_city.get(),
+            'pin':self.var_pin.get(),
+            'address': self.var_address.get()
+        }
+        new_top = customtkinter.CTkToplevel(self.root)
+        new_window = DetailsClass(new_top, student_data=student_data)
+        new_top.transient(self.root)
+        new_top.grab_set()
+        new_top.focus_force()
+        self.root.wait_window(new_top)  # Wait for the edit window to close
+        self.load_student_data()  # Reload data
+
     def load_student_data(self):
-        selected_id = self.student_id
         con = sqlite3.connect(database="GradeMaster.db")
         cur = con.cursor()
         try:
-            cur.execute("SELECT * FROM users WHERE id=?", (selected_id,))
+            cur.execute("SELECT * FROM student WHERE id=?", (self.student_id,))
             row = cur.fetchone()
             if row:
                 self.var_id.set(row[0])
@@ -131,18 +155,17 @@ class StudentCard:
                 self.var_state.set(row[6])
                 self.var_city.set(row[7])
                 self.var_pin.set(row[8])
-                self.txt_address.delete("1.0", END)
-                self.txt_address.insert(END, row[9])
+                self.var_address.set(row[9])
+            else:
+                messagebox.showerror("Error", "Student data not found.")
         except Exception as ex:
             messagebox.showerror("Error", f"Error loading student data: {str(ex)}")
         finally:
             con.close()
 
-        self.new_win = Toplevel(self.root)
-        self.new_obj = DetailsClass(self.new_win, student_id=self.student_id)
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    # For testing, replace with an actual student_id
-    obj = StudentCard(root, student_id=1)
+    student_id = "1221109567"  # Replace with the actual student ID
+    obj = StudentCard(root, student_id=student_id)
     root.mainloop()
