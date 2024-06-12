@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 import sqlite3
 import customtkinter
 from student_dashboard import GradeMaster as StudentDashboard
-from teacher_dashboard import GradeMastertc as TeacherDashboard
+from teacher_dashboard import GradeMastertc as TeacherDashboard 
 
 class LoginClass:
     def __init__(self, root):
@@ -44,7 +44,8 @@ class LoginClass:
         password = self.password_entry.get()
         role = self.role.get()
         cur.execute('SELECT * FROM users WHERE id = ? AND password = ? AND role = ?', (user_id, password, role))
-        if cur.fetchone():
+        user_data = cur.fetchone()
+        if user_data:
             messagebox.showinfo(title="Login Success", message="You successfully logged in.")
             self.root.destroy()  # Close the login window
             if role == "Student":
@@ -53,7 +54,7 @@ class LoginClass:
                 root.mainloop()
             elif role == "Teacher":
                 root = customtkinter.CTk()
-                app = TeacherDashboard(root)
+                app = TeacherDashboard(root, teacher_id=user_id)  # Pass the teacher_id to the dashboard
                 root.mainloop()
         else:
             messagebox.showerror(title="Error", message="Invalid login")
@@ -63,8 +64,6 @@ class LoginClass:
     def logout(self):
         self.id_entry.delete(0, END)
         self.password_entry.delete(0, END)
-        self.role_combobox.set("")
-        messagebox.showinfo(title="Logout", message="You have been logged out.")
 
 if __name__ == "__main__":
     root = customtkinter.CTk()

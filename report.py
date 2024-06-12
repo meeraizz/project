@@ -7,7 +7,7 @@ class ReportClass:
     def __init__(self, root):
         self.root = root
         self.root.title("Grade Master")
-        self.root.geometry("1100x500+60+150")
+        self.root.geometry("1200x750+50+200")
         self.root.config(bg="#fff0f3")
         self.root.focus_force()
 
