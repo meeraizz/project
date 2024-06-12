@@ -7,7 +7,7 @@ import customtkinter
 import os
 
 class teachercard:
-    def init(self, root, teacher_id):
+    def __init__(self, root, teacher_id):
         self.root = root
         self.teacher_id = teacher_id
         self.root.title("Grade Master")
@@ -80,6 +80,20 @@ class teachercard:
         self.load_teacher_data()  # Reload data
 
 
+    def display_image(self, file_path):
+        if os.path.exists(file_path):
+            try:
+                img = Image.open(file_path)
+                img = img.resize((200, 220), Image.LANCZOS)
+                self.img = ImageTk.PhotoImage(img)
+                self.img_label.config(image=self.img)
+                self.img_label.image = self.img
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to load image: {str(e)}")
+                self.img_label.config(image="")
+        else:
+            self.img_label.config(image="")
+
     def load_teacher_data(self):
         conn = sqlite3.connect("GradeMaster.db")
         cur = conn.cursor()
@@ -91,6 +105,7 @@ class teachercard:
                 self.var_teacher_email.set(row[1])
                 self.var_teacher_contact.set(row[2])
                 self.var_teacher_course.set(row[3])
+                self.display_image(row[4])
             else:
                 messagebox.showerror("Error", "Teacher data not found.")
         except Exception as ex:
@@ -101,5 +116,6 @@ class teachercard:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    obj = teachercard(root, teacher_id=121)
+    # For testing, replace `any` with an actual teacher_id
+    obj = teachercard(root, teacher_id=any)
     root.mainloop()
