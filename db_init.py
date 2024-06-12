@@ -14,7 +14,7 @@ def create_db():
         state TEXT,
         city TEXT,
         pin TEXT,
-        address TEXT
+        address TEXT,
         password TEXT,
         role TEXT 
     )
@@ -60,13 +60,13 @@ def create_db():
         marks3 INTEGER ,
         grade1 TEXT,
         grade2 TEXT,
-        grade3 TEXT,
+        grade3 TEXT
     )
     """)
 
     cur.execute("""
     CREATE TABLE IF NOT EXISTS teacher (
-        tid INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER,
         name TEXT,
         email TEXT,
         contact TEXT,

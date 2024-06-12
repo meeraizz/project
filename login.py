@@ -48,7 +48,8 @@ class LoginClass:
         password = self.password_entry.get()
         role = self.role.get()
         cur.execute('SELECT * FROM users WHERE id = ? AND password = ? AND role = ?', (user_id, password, role))
-        if cur.fetchone():
+        user_data = cur.fetchone()
+        if user_data:
             messagebox.showinfo(title="Login Success", message="You successfully logged in.")
             self.root.destroy()  # Close the login window
             if role == "Student":
@@ -57,7 +58,7 @@ class LoginClass:
                 root.mainloop()
             elif role == "Teacher":
                 root = customtkinter.CTk()
-                app = TeacherDashboard(root)
+                app = TeacherDashboard(root, teacher_id=user_id)  # Pass the teacher_id to the dashboard
                 root.mainloop()
         else:
             messagebox.showerror(title="Error", message="Invalid login")

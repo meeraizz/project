@@ -1,14 +1,14 @@
 from tkinter import *
-from PIL import Image, ImageTk    #pip install pillow
+from PIL import Image, ImageTk   
 from tkinter import ttk,messagebox
 import sqlite3
 import customtkinter
 
-class DetailsClass_tc:
+class detailsclasstc:
     def __init__(self,root):
         self.root=root
         self.root.title("Grade Master")
-        self.root.geometry("1850x750+50+200")
+        self.root.geometry("1200x750+50+200")
         self.root.config(bg="#fff0f3")
         self.root.focus_force()
 
@@ -136,5 +136,5 @@ class DetailsClass_tc:
 
 if __name__=="__main__":
     root=customtkinter.CTk()
-    obj=DetailsClass_tc(root)
+    obj=detailsclasstc(root)
     root.mainloop()        
