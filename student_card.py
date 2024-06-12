@@ -47,7 +47,7 @@ class StudentCard:
         lbl_id = Label(self.root, text="ID No.", font=("king", 15, "bold"), bg="#fff0f3")
         lbl_id.place(x=450, y=60)
 
-        txt_id = Entry(self.root, textvariable=self.var_id, font=("king", 15, "bold"), bg="lightyellow", state='disabled')
+        txt_id = Entry(self.root, textvariable=self.var_id, font=("king", 15, "bold"), bg="lightyellow", state='readonly')
         txt_id.place(x=600, y=60, width=170)
 
         lbl_name = Label(self.root, text="Name", font=("king", 15, "bold"), bg="#fff0f3")
@@ -59,28 +59,28 @@ class StudentCard:
 
         lbl_state = Label(self.root, text="State", font=("king", 15, "bold"), bg="#fff0f3")
         lbl_state.place(x=450, y=220)
-        txt_state = Entry(self.root, textvariable=self.var_state, font=("king", 15, "bold"), bg="lightyellow", state='disabled')
+        txt_state = Entry(self.root, textvariable=self.var_state, font=("king", 15, "bold"), bg="lightyellow", state='readonly')
         txt_state.place(x=600, y=220, width=150)
 
         lbl_city = Label(self.root, text="City", font=("king", 15, "bold"), bg="#fff0f3")
         lbl_city.place(x=760, y=220)
-        txt_city = Entry(self.root, textvariable=self.var_city, font=("king", 15, "bold"), bg="lightyellow", state='disabled')
+        txt_city = Entry(self.root, textvariable=self.var_city, font=("king", 15, "bold"), bg="lightyellow", state='readonly')
         txt_city.place(x=840, y=220, width=150)
 
         lbl_pin = Label(self.root, text="Pin", font=("king", 15, "bold"), bg="#fff0f3")
         lbl_pin.place(x=1000, y=220)
-        txt_pin = Entry(self.root, textvariable=self.var_pin, font=("king", 15, "bold"), bg="lightyellow", state='disabled')
+        txt_pin = Entry(self.root, textvariable=self.var_pin, font=("king", 15, "bold"), bg="lightyellow", state='readonly')
         txt_pin.place(x=1100, y=220, width=100)
 
         lbl_address = Label(self.root, text="Address", font=("king", 15, "bold"), bg="#fff0f3")
         lbl_address.place(x=450, y=260)
 
         # ====entry fields====
-        txt_name = Entry(self.root, textvariable=self.var_name, font=("king", 15, "bold"), bg="lightyellow", state='disabled')
+        txt_name = Entry(self.root, textvariable=self.var_name, font=("king", 15, "bold"), bg="lightyellow", state='readonly')
         txt_name.place(x=600, y=100, width=200)
-        txt_email = Entry(self.root, textvariable=self.var_email, font=("king", 15, "bold"), bg="lightyellow", state='disabled')
+        txt_email = Entry(self.root, textvariable=self.var_email, font=("king", 15, "bold"), bg="lightyellow", state='readonly')
         txt_email.place(x=600, y=140, width=200)
-        self.txt_gender = ttk.Combobox(self.root, textvariable=self.var_gender, values=("Select", "Male", "Female"), font=("king", 15, "bold"), state='disabled', justify=CENTER)
+        self.txt_gender = ttk.Combobox(self.root, textvariable=self.var_gender, values=("Select", "Male", "Female"), font=("king", 15, "bold"), state='readonly', justify=CENTER)
         self.txt_gender.place(x=600, y=180, width=200)
         self.txt_gender.current(0)
         # =======column 2=========
@@ -96,18 +96,18 @@ class StudentCard:
         # ====entry fields 2====
         self.course_list = []
 
-        txt_dob = Entry(self.root, textvariable=self.var_dob, font=("king", 15, "bold"), bg="lightyellow", state='disabled')
+        txt_dob = Entry(self.root, textvariable=self.var_dob, font=("king", 15, "bold"), bg="lightyellow", state='readonly')
         txt_dob.place(x=1000, y=60, width=200)
-        txt_contact = Entry(self.root, textvariable=self.var_contact, font=("king", 15, "bold"), bg="lightyellow", state='disabled')
+        txt_contact = Entry(self.root, textvariable=self.var_contact, font=("king", 15, "bold"), bg="lightyellow", state='readonly')
         txt_contact.place(x=1000, y=100, width=200)
-        txt_admission = Entry(self.root, textvariable=self.var_a_date, font=("king", 15, "bold"), bg="lightyellow", state='disabled')
+        txt_admission = Entry(self.root, textvariable=self.var_a_date, font=("king", 15, "bold"), bg="lightyellow", state='readonly')
         txt_admission.place(x=1000, y=140, width=200)
-        self.txt_course = ttk.Combobox(self.root, textvariable=self.var_course, values=(" "), font=("king", 15, "bold"), state='disabled', justify=CENTER)
+        self.txt_course = ttk.Combobox(self.root, textvariable=self.var_course, values=(" "), font=("king", 15, "bold"), state='readonly', justify=CENTER)
         self.txt_course.place(x=1000, y=180, width=200)
         self.txt_course.set("Select")
 
         # ====text address=====
-        self.txt_address = Text(self.root, font=("king", 15, "bold"), bg="lightyellow", state='disabled')
+        self.txt_address = Text(self.root, font=("king", 15, "bold"), bg="lightyellow", state='normal')
         self.txt_address.place(x=600, y=260,  width=600, height=100)
 
         # ============= Button ================
@@ -118,32 +118,32 @@ class StudentCard:
 
     def edit(self):
         student_data = {
-            'id': self._id,
+            'id': self.var_id.get(),
             'name': self.var_name.get(),
             'email': self.var_email.get(),
             'contact': self.var_contact.get(),
             'course': self.var_course.get(),
             'gender': self.var_gender.get(),
             'dob': self.var_dob.get(),
-            'admission':self.var_a_date.get(),
+            'admission': self.var_a_date.get(),
             'state': self.var_state.get(),
-            'city':self.var_city.get(),
-            'pin':self.var_pin.get(),
-            'address': self.var_address.get()
+            'city': self.var_city.get(),
+            'pin': self.var_pin.get(),
+            'address': self.txt_address.get("1.0", END)
         }
         new_top = customtkinter.CTkToplevel(self.root)
         new_window = DetailsClass(new_top, student_data=student_data)
         new_top.transient(self.root)
         new_top.grab_set()
         new_top.focus_force()
-        self.root.wait_window(new_top)  # Wait for the edit window to close
+        new_top.wait_window()  # Wait for the edit window to close
         self.load_student_data()  # Reload data
 
     def load_student_data(self):
         con = sqlite3.connect(database="GradeMaster.db")
         cur = con.cursor()
         try:
-            cur.execute("SELECT * FROM student WHERE id=?", (self.student_id,))
+            cur.execute("SELECT * FROM users WHERE id=?", (self.student_id,))
             row = cur.fetchone()
             if row:
                 self.var_id.set(row[0])
@@ -163,9 +163,8 @@ class StudentCard:
         finally:
             con.close()
 
-
 if __name__ == "__main__":
     root = customtkinter.CTk()
     student_id = "1221109567"  # Replace with the actual student ID
-    obj = StudentCard(root, student_id=student_id)
+    obj = StudentCard(root, student_id=any)
     root.mainloop()

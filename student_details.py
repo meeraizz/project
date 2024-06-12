@@ -6,12 +6,13 @@ import sqlite3
 import customtkinter
 
 class DetailsClass:
-    def __init__(self, root):
+    def __init__(self, root, user_id):
         self.root = root
         self.root.title("Grade Master")
         self.root.geometry("1550x500+60+150")
         self.root.config(bg="#fff0f3")
         self.root.focus_force()
+        self.user_id = user_id
 
         self.main_frame = Frame(self.root, bg="#fff0f3")
         self.main_frame.pack(fill=BOTH, expand=True)  
@@ -43,6 +44,7 @@ class DetailsClass:
 
         txt_id = Entry(self.root, textvariable=self.var_id, font=("king",15,"bold"), bg="lightyellow")
         txt_id.place(x=600, y=60, width=170)
+        self.var_id.set(self.user_id)
 
         lbl_name = Label(self.root, text="Name", font=("king",15,"bold"), bg="#fff0f3")
         lbl_name.place(x=450, y=100)                     
@@ -295,5 +297,6 @@ class DetailsClass:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
+    user_id = any
     obj = DetailsClass(root)
     root.mainloop()
