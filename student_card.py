@@ -111,7 +111,7 @@ class StudentCard:
         self.txt_address.place(x=600, y=260,  width=600, height=100)
 
         # ============= Button ================
-        btn_edit = Button(self.root, text="Edit", font=("King", 15, "bold"), bg="#ff80b4", fg="#262626", command=self.edit)
+        btn_edit = Button(self.root, text="Edit", font=("King", 15, "bold"), bg="#ff80b4", fg="#262626")
         btn_edit.place(x=1000, y=500, width=150, height=35)
 
     def load_student_data(self):
@@ -138,7 +138,6 @@ class StudentCard:
         finally:
             con.close()
 
-    def edit(self):
         self.new_win = Toplevel(self.root)
         self.new_obj = DetailsClass(self.new_win, student_id=self.student_id)
 
