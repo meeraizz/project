@@ -24,6 +24,7 @@ class StudentCard:
 
         self.create_widgets()
 
+
         # Load student data
         self.load_student_data()
 
