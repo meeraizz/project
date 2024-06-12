@@ -5,7 +5,7 @@ import sqlite3
 import customtkinter
 from student_grade import gradeclass
 from teacher_profile import teacherprofile
-from details import DetailsClass
+from std_details import DetailsClass
 from report import ReportClass
 from coursesclasses_student import StudentView
 
