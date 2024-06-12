@@ -18,13 +18,13 @@ class teacherprofile:
         title.place(x=0, y=10, width=1960, height=70)
 
         #========Variables============
-        self.var_teacher_tid = StringVar()
+        self.var_teacher_id = StringVar()
         self.var_teacher_name = StringVar()
         self.var_teacher_email = StringVar()
         self.var_teacher_contact = StringVar()
         self.var_teacher_course = StringVar()
         self.var_profile_picture = StringVar()
-        self.tid_list = []  # Initialize tid_list
+        self.id_list = []  # Initialize id_list
 
         #============Widgets==========
         lbl_select = Label(self.root, text="Select Teacher", font=("king", 20, "bold"), bg="#fff0f3")
@@ -68,7 +68,7 @@ class teacherprofile:
         btn_search.place(x=1000, y=150, width=150, height=45)
 
         self.fetch_teachers()
-        self.txt_teacher.bind("<<ComboboxSelected>>", self.update_teacher_tid)
+        self.txt_teacher.bind("<<ComboboxSelected>>", self.update_teacher_id)
 
     def display_image(self, file_path):
         if os.path.exists(file_path):
@@ -84,10 +84,10 @@ class teacherprofile:
         conn = sqlite3.connect(database="GradeMaster.db")
         cur = conn.cursor()
         try:
-            cur.execute("SELECT tid, name FROM teacher")
+            cur.execute("SELECT id, name FROM teacher")
             rows = cur.fetchall()
             if rows:
-                self.tid_list = [row[0] for row in rows]
+                self.id_list = [row[0] for row in rows]
                 self.txt_teacher['values'] = [row[1] for row in rows]
             else:
                 print("No records found in the teacher table.")
@@ -98,12 +98,12 @@ class teacherprofile:
             conn.close()
 
     def search(self):
-        selected_tid = self.var_teacher_tid.get()
-        if selected_tid:
+        selected_id = self.var_teacher_id.get()
+        if selected_id:
             conn = sqlite3.connect(database="GradeMaster.db")
             cur = conn.cursor()
             try:
-                cur.execute("SELECT name, email, contact, course, profile_picture FROM teacher WHERE tid=?", (selected_tid,))
+                cur.execute("SELECT name, email, contact, course, profile_picture FROM teacher WHERE id=?", (selected_id,))
                 teacher_data = cur.fetchone()
                 if teacher_data:
                     self.var_teacher_name.set(teacher_data[0])
@@ -123,11 +123,11 @@ class teacherprofile:
         else:
             messagebox.showerror("Error", "Please select a teacher", parent=self.root)
             
-    def update_teacher_tid(self, event):
+    def update_teacher_id(self, event):
         selected_teacher_name = self.txt_teacher.get()
         if selected_teacher_name:
             index = self.txt_teacher.current()
-            self.var_teacher_tid.set(self.tid_list[index])
+            self.var_teacher_id.set(self.id_list[index])
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
