@@ -48,7 +48,7 @@ class EnrollClass:
     def fetch_students(self):
         conn = sqlite3.connect('GradeMaster.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT student_id, student_name FROM student")
+          
         rows = cursor.fetchall()
         for row in rows:
             self.student_list.append(f"{row[0]}: {row[1]}")
