@@ -1,6 +1,6 @@
 import sqlite3
 from tkinter import *
-from tkinter import ttk, messagebox,filedialog
+from tkinter import ttk, messagebox, filedialog
 from PIL import Image, ImageTk
 import os
 import customtkinter
@@ -56,7 +56,7 @@ class teacherprofile:
         self.txt_course.place(x=880, y=470, width=370, height=135)
 
         #==========Image==============
-        self.image_frame = Frame(root, bd=3, bg="white", width=200, height=200, relief=RIDGE)
+        self.image_frame = Frame(self.root, bd=3, bg="white", width=200, height=200, relief=RIDGE)
         self.image_frame.place(x=1300, y=150, width=200, height=220)
         self.default_image_path = "images/pfp.png"
         self.img_label = Label(self.image_frame, bg="white")
@@ -71,14 +71,20 @@ class teacherprofile:
         self.txt_teacher.bind("<<ComboboxSelected>>", self.update_teacher_id)
 
     def display_image(self, file_path):
+        # Clear existing image
+        self.img_label.config(image="")
         if os.path.exists(file_path):
-            img = Image.open(file_path)
-            img = img.resize((200, 220),Image.LANCZOS )
-            self.img = ImageTk.PhotoImage(img)
-            self.img_label.config(image=self.img)
-            self.img_label.image = self.img
+            try:
+                img = Image.open(file_path)
+                img = img.resize((200, 220), Image.LANCZOS)
+                self.img = ImageTk.PhotoImage(img)
+                self.img_label.config(image=self.img)
+                self.img_label.image = self.img
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to load image: {str(e)}")
         else:
             self.img_label.config(image="")
+            messagebox.showerror("Error", f"Image file not found: {file_path}")
 
     def fetch_teachers(self):
         conn = sqlite3.connect(database="GradeMaster.db")
@@ -99,7 +105,7 @@ class teacherprofile:
 
     def search(self):
         selected_id = self.var_teacher_id.get()
-        if selected_id:
+        if selected_id and selected_id != "Select":
             conn = sqlite3.connect(database="GradeMaster.db")
             cur = conn.cursor()
             try:
@@ -111,9 +117,10 @@ class teacherprofile:
                     self.var_teacher_contact.set(teacher_data[2])
                     self.var_teacher_course.set(teacher_data[3])
                     # Update profile picture if available
-                    if teacher_data[3]:
-                        # Update profile picture using the fetched path or data
-                        pass  # Update profile picture here
+                    if teacher_data[4]:
+                        self.display_image(teacher_data[4])
+                    else:
+                        self.display_image(self.default_image_path)  # Show default image if no profile picture is available
                 else:
                     messagebox.showerror("Error", "No record found", parent=self.root)
             except Exception as ex:
