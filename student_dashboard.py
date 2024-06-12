@@ -65,18 +65,26 @@ class GradeMaster:
         self.new_obj = CourseClass(self.new_win)
 
     def add_student(self):
-        self.new_win = Toplevel(self.root)
-        self.new_obj = DetailsClass(self.new_win)
+        new_top = customtkinter.CTkToplevel(self.root)
+        new_window = DetailsClass(new_top)
+        new_top.transient(self.root)  
+        new_top.grab_set()  
+        new_top.focus_force() 
     
     def add_teacher(self):
-        self.new_win = Toplevel(self.root)
-        self.new_win.geometry("1200x480+80+170")
-        self.new_obj = teacherprofile(self.new_win)
+        new_top = customtkinter.CTkToplevel(self.root)
+        new_window = teacherprofile(new_top)
+        new_top.transient(self.root)  
+        new_top.grab_set()  
+        new_top.focus_force() 
 
     def add_result(self):
-        self.new_win = Toplevel(self.root)
-        self.new_win.geometry("1200x480+80+170")
-        self.new_obj = ReportClass(self.new_win)
+        new_top = customtkinter.CTkToplevel(self.root)
+        new_window = ReportClass(new_top)
+        new_top.transient(self.root)  
+        new_top.grab_set()  
+        new_top.focus_force() 
+
 
 if __name__ == "__main__":
     root = customtkinter.CTk()

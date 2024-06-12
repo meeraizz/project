@@ -4,7 +4,7 @@ from tkinter import ttk,messagebox
 import sqlite3
 import customtkinter
 
-class DetailsClass_tc:
+class detailsclasstc:
     def __init__(self,root):
         self.root=root
         self.root.title("Grade Master")
@@ -136,5 +136,5 @@ class DetailsClass_tc:
 
 if __name__=="__main__":
     root=customtkinter.CTk()
-    obj=DetailsClass_tc(root)
+    obj=detailsclasstc(root)
     root.mainloop()        

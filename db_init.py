@@ -59,7 +59,7 @@ def create_db():
 
     cur.execute("""
     CREATE TABLE IF NOT EXISTS teacher (
-        tid INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER,
         name TEXT,
         email TEXT,
         contact TEXT,
