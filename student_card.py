@@ -4,7 +4,6 @@ from tkinter import ttk, messagebox, filedialog
 from PIL import Image, ImageTk
 from student_details import DetailsClass
 import customtkinter
-import os
 
 class StudentCard:
     def __init__(self, root, student_id):
@@ -193,7 +192,7 @@ class StudentCard:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    # For testing, replace any with an actual student_id
-    obj = StudentCard(root, student_id=1221109567)
+
+    obj = StudentCard(root)
     root.mainloop()
 
