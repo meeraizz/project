@@ -8,6 +8,7 @@ from teacher_profile_tcview import teacherprofiletcview
 from details_tcview import DetailsClass_tc
 from report import ReportClass
 from coursesclasses import CourseClass
+from teachercard import teachercard
 
 class GradeMastertc:
     def __init__(self, root):
@@ -78,7 +79,7 @@ class GradeMastertc:
     def add_teacher(self):
         self.new_win = Toplevel(self.root)
         self.new_win.geometry("1200x480+80+170")
-        self.new_obj = teacherprofiletcview(self.new_win)
+        self.new_obj = teachercard(self.new_win)
 
     def add_result(self):
         self.new_win = Toplevel(self.root)

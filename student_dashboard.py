@@ -1,7 +1,7 @@
+import sqlite3
 from tkinter import *
 from PIL import Image, ImageTk
 from tkinter import ttk, messagebox
-import sqlite3
 import customtkinter
 from student_grade import gradeclass
 from teacher_profile import teacherprofile
@@ -68,7 +68,7 @@ class GradeMaster:
 
     def add_student(self):
         self.new_win = Toplevel(self.root)
-        self.new_obj = StudentCard(self.new_win)
+        self.new_obj = StudentCard(self.new_win, student_id=1)  # Example student_id
     
     def add_teacher(self):
         self.new_win = Toplevel(self.root)
