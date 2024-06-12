@@ -16,6 +16,9 @@ def create_db():
                       class_name TEXT NOT NULL,
                       course_id INTEGER,
                       teacher_name TEXT NOT NULL,
+                      credit_hours INTEGER,
+                      charges REAL,
+                      description TEXT,
                       FOREIGN KEY (course_id) REFERENCES Courses (id))''')
     
     cursor.execute('''CREATE TABLE IF NOT EXISTS Students (
@@ -39,7 +42,7 @@ class StudentView:
     def __init__(self, root):
         self.root = root
         self.root.title("Student Classes and Teachers")
-        self.root.geometry("1200x480+80+170")
+        self.root.geometry("1200x600+80+50")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
@@ -61,10 +64,13 @@ class StudentView:
         btn_show_classes.place(x=390, y=60, width=120, height=28)
 
         # Initialize Treeview to display classes and teachers
-        self.tree = ttk.Treeview(self.root, columns=("Class Name", "Teacher Name"), show='headings')
+        self.tree = ttk.Treeview(self.root, columns=("Class Name", "Teacher Name", "Credit Hours", "Charges", "Description"), show='headings')
         self.tree.heading("Class Name", text="Class Name")
         self.tree.heading("Teacher Name", text="Teacher Name")
-        self.tree.place(x=10, y=100, width=1180, height=340)
+        self.tree.heading("Credit Hours", text="Credit Hours")
+        self.tree.heading("Charges", text="Charges")
+        self.tree.heading("Description", text="Description")
+        self.tree.place(x=10, y=100, width=1180, height=480)
 
     def show_classes(self):
         student_id = self.var_student_id.get()
@@ -78,7 +84,7 @@ class StudentView:
         conn = sqlite3.connect('Grademaster.db')
         cursor = conn.cursor()
         cursor.execute('''
-            SELECT Classes.class_name, Classes.teacher_name
+            SELECT Classes.class_name, Classes.teacher_name, Classes.credit_hours, Classes.charges, Classes.description
             FROM Enrollments
             JOIN Classes ON Enrollments.class_id = Classes.id
             WHERE Enrollments.student_id = (
