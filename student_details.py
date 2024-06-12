@@ -16,6 +16,10 @@ class DetailsClass:
         self.main_frame.pack(fill=BOTH, expand=True)
 
         self.create_widgets()
+        self.update_callback = None
+        
+    def close_window(self):
+        self.root.destroy()
 
     def create_widgets(self):
         #=====title======
@@ -238,8 +242,15 @@ class DetailsClass:
                         con.commit()
                         messagebox.showinfo("Success","Student Update Successfully",parent=self.root)
 
+                    self.close_window()
+                    self.update_data()
+
             except Exception as ex:
                 messagebox.showerror("Error",f"Error due to {str(ex)}")
+
+    def update_data(self):
+        if self.update_callback:
+            self.update_callback(self.get_data())
 
     def search(self):
         selected_id = self.var_id.get()
@@ -292,6 +303,20 @@ class DetailsClass:
         except Exception as ex:
             messagebox.showerror("Error", f"Error fetching user IDs: {str(ex)}")
 
+    def get_data(self):
+        data = {
+            "id": self.var_id.get(),
+            "name": self.var_name.get(),
+            "email": self.var_email.get(),
+            "gender": self.var_gender.get(),
+            "dob": self.var_dob.get(),
+            "contact": self.var_contact.get(),
+            "state": self.var_state.get(),
+            "city": self.var_city.get(),
+            "pin": self.var_pin.get(),
+            "address": self.txt_address.get("1.0", END)
+        }
+        return data
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
