@@ -1,33 +1,40 @@
-import sqlite3
 import tkinter as tk
 from tkinter import messagebox, ttk
-import customtkinter
+import sqlite3
 
 class StudentView:
     def __init__(self, root):
         self.root = root
-        self.root.title("Student Classes and Teachers")
-        self.root.geometry("800x600+200+100")
+        self.root.title("Student Classes")
+        self.root.geometry("1200x600+80+50")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
         # Title
-        title = tk.Label(self.root, text="Student Classes and Teachers", font=("King", 30, "bold"), bg="#ff80b4", fg="#262626").place(x=0, y=10, width=800, height=70)
+        title = tk.Label(self.root, text="Student Classes ", font=("Arial", 20, "bold"), bg="#ff80b4", fg="#262626")
+        title.place(x=10, y=15, width=1180, height=35)
 
         # Variables
         self.var_student_id = tk.StringVar()
 
         # Widgets
-        lbl_student = tk.Label(self.root, text="Enter Student ID", font=("king", 20, "bold"), bg="#fff0f3").place(x=50, y=150)
-        self.entry_student_id = tk.Entry(self.root, textvariable=self.var_student_id, font=("king", 20, "bold"), justify=tk.CENTER, bg="lightyellow")
-        self.entry_student_id.place(x=360, y=150, width=280, height=45)
-        btn_show_classes = tk.Button(self.root, text="Show Classes", font=("King", 20), bg="#e0d2ef", activebackground="lightgreen", cursor="hand2", command=self.show_classes).place(x=300, y=220, width=200, height=45)
+        lbl_student = tk.Label(self.root, text="Enter Student ID", font=("Arial", 15), bg="#fff0f3")
+        lbl_student.place(x=10, y=60)
+
+        self.entry_student_id = tk.Entry(self.root, textvariable=self.var_student_id, font=("Arial", 15), bg="#ffffff")
+        self.entry_student_id.place(x=170, y=60, width=200)
+
+        btn_show_classes = tk.Button(self.root, text="Show Classes", font=("Arial", 12), bg="#ff80b4", fg="#ffffff", command=self.show_classes)
+        btn_show_classes.place(x=390, y=60, width=120, height=28)
 
         # Initialize Treeview to display classes and teachers
-        self.tree = ttk.Treeview(self.root, columns=("Class Name", "Teacher Name"), show='headings')
+        self.tree = ttk.Treeview(self.root, columns=("Class Name", "Credit Hours", "Charges", "Description"), show='headings')
         self.tree.heading("Class Name", text="Class Name")
-        self.tree.heading("Teacher Name", text="Teacher Name")
-        self.tree.place(x=50, y=300, width=700, height=250)
+
+        self.tree.heading("Credit Hours", text="Credit Hours")
+        self.tree.heading("Charges", text="Charges")
+        self.tree.heading("Description", text="Description")
+        self.tree.place(x=10, y=100, width=1180, height=480)
 
     def show_classes(self):
         student_id = self.var_student_id.get()
@@ -38,10 +45,10 @@ class StudentView:
         for row in self.tree.get_children():
             self.tree.delete(row)
 
-        conn = sqlite3.connect('GradeMaster.db')
+        conn = sqlite3.connect('Grademaster.db')
         cursor = conn.cursor()
         cursor.execute('''
-            SELECT Classes.class_name, Classes.teacher_name
+            SELECT Classes.class_name, Classes.credit_hours, Classes.charges, Classes.description
             FROM Enrollments
             JOIN Classes ON Enrollments.class_id = Classes.id
             WHERE Enrollments.student_id = (
@@ -57,6 +64,6 @@ class StudentView:
         conn.close()
 
 if __name__ == "__main__":
-    root = customtkinter.CTk()
+    root = tk.Tk()
     StudentView(root)
     root.mainloop()

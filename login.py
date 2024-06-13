@@ -4,7 +4,7 @@ import sqlite3
 import customtkinter
 from student_dashboard import GradeMaster as StudentDashboard
 from teacher_dashboard import GradeMastertc as TeacherDashboard
-from register import UserClass  
+from register import RegisterClass
 
 class LoginClass:
     def __init__(self, root):
@@ -69,7 +69,7 @@ class LoginClass:
         register_window = Toplevel(self.root)
         register_window.title("Register")
         register_window.geometry("800x600")
-        UserClass(register_window)
+        RegisterClass(register_window)
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
