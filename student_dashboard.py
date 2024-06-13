@@ -9,14 +9,16 @@ from student_details import DetailsClass
 from report import ReportClass
 from coursesclasses_student import StudentView
 from student_card import StudentCard
+import os
 
 class GradeMaster:
     def __init__(self, root, student_id):
         self.root = root
+        self.student_id = student_id
         self.root.title("Grade Master")
         self.root.geometry("1350x700+0+0")
         self.root.config(bg='#fff0f3')
-        self.student_id = student_id
+        self.root.focus_force()
 
         # ====icons=====
         self.logo_image = Image.open("images/Grade-Master_Logo.png")
@@ -27,9 +29,8 @@ class GradeMaster:
         title = Label(self.root, text="Grade Master", padx=10, compound=LEFT, image=self.logo_dash, font=("King", 40, "bold"), bg="#ffb3d2", fg="black")
         title.place(x=0, y=0, relwidth=1, height=70)
 
-        # ===Menu===
         M_Frame = LabelFrame(self.root, text="Menu", font=("King", 15), bg="#fff0f3")
-        M_Frame.place(x=40, y=70, width=1860, height=100)
+        M_Frame.place(x=10, y=70, width=1860, height=100)
 
         btn_course = Button(M_Frame, text="Course", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_course)
         btn_course.place(x=200, y=10, width=270, height=60)
@@ -37,70 +38,71 @@ class GradeMaster:
         btn_student = Button(M_Frame, text="Profile", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_student)
         btn_student.place(x=500, y=10, width=270, height=60)
 
-        btn_teacher = Button(M_Frame, text="Teacher", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_teacher)
-        btn_teacher.place(x=800, y=10, width=270, height=60)
+        btn_profile = Button(M_Frame, text="Teacher", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_teacher)
+        btn_profile.place(x=800, y=10, width=270, height=60)
 
-        btn_result = Button(M_Frame, text="Result", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_result)
-        btn_result.place(x=1100, y=10, width=270, height=60)
+        btn_grade = Button(M_Frame, text="Result", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_result)
+        btn_grade.place(x=1100, y=10, width=270, height=60)
 
-        btn_logout = Button(M_Frame, text="Logout", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.logout)
+        btn_logout = Button(M_Frame, text="Logout", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2")
         btn_logout.place(x=1400, y=10, width=270, height=60)
 
-        # ===content_windows===
         self.bg_img = Image.open("images/bg.jpg")
         self.bg_img = self.bg_img.resize((1000, 600), Image.LANCZOS) 
         self.bg_img = ImageTk.PhotoImage(self.bg_img)
-
         self.lbl_bg = Label(self.root, image=self.bg_img)
         self.lbl_bg.place(x=820, y=230, width=1000, height=600)
 
-        #======update details=====
         self.lbl_course = Label(self.root, text="Total Course\n[ 0 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=50, y=300, width=350, height=150)
         self.lbl_teacher = Label(self.root, text="Total Teacher\n[ 2 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=430, y=300, width=350, height=150)
-        self.lbl_student = Label(self.root, text="Total Student\n[ 3 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=230, y=500, width=350, height=150)
-
-        # ====footer=====
-        footer = Label(self.root, text="Grade Master\n Contact Us:06-33xxx56", font=("king", 15, "bold"), bg="#262626", fg="white")
-        footer.pack(side=BOTTOM, fill=X)
-
-    def add_course(self):
-        self.new_win = Toplevel(self.root)
-        self.new_obj = StudentView(self.new_win)
+        self.lbl_student = Label(self.root, text="Total Student\n[ 2 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=230, y=500, width=350, height=150)
 
     def add_student(self):
-        new_top = customtkinter.CTkToplevel(self.root)
-        new_window = StudentCard(new_top)
-        new_top.transient(self.root)  
-        new_top.grab_set()  
-        new_top.focus_force() 
-    
+        print("Profile button clicked")  # Debugging statement
+        new_window = Toplevel(self.root)
+        new_window.title("Student Profile")
+        new_window.geometry("800x600")
+        new_window.config(bg='#fff0f3')
+        StudentCard(new_window, self.student_id)
+        new_window.transient(self.root)  # Set to be on top of the main window
+        new_window.grab_set()  # Ensure all events are sent to this window until it is closed
+        self.root.wait_window(new_window)  # Wait for this window to be closed
+
+    def add_course(self):
+        print("Course button clicked")  # Debugging statement
+        new_window = Toplevel(self.root)
+        new_window.title("Course Details")
+        new_window.geometry("800x600")
+        new_window.config(bg='#fff0f3')
+        StudentView(new_window)  # Assuming StudentView handles course details
+        new_window.transient(self.root)
+        new_window.grab_set()
+        self.root.wait_window(new_window)
+
     def add_teacher(self):
-        new_top = customtkinter.CTkToplevel(self.root)
-        new_window = teacherprofile(new_top)
-        new_top.transient(self.root)  
-        new_top.grab_set()  
-        new_top.focus_force() 
+        print("Teacher button clicked")  # Debugging statement
+        new_window = Toplevel(self.root)
+        new_window.title("Teacher Profile")
+        new_window.geometry("800x600")
+        new_window.config(bg='#fff0f3')
+        teacherprofile(new_window)  # Assuming teacherprofile handles teacher details
+        new_window.transient(self.root)
+        new_window.grab_set()
+        self.root.wait_window(new_window)
 
     def add_result(self):
-        new_top = customtkinter.CTkToplevel(self.root)
-        new_window = ReportClass(new_top)
-        new_top.transient(self.root)  
-        new_top.grab_set()  
-        new_top.focus_force() 
-
-    def logout(self):
-        messagebox.showinfo("Logout", "You have successfully logged out.")
-
-        dummy_window = Toplevel(self.root)
-        dummy_window.withdraw()  
-        for window in self.root.winfo_children():
-            if window != dummy_window:
-                window.destroy()
-        dummy_window.destroy()
-        self.root.destroy()
+        print("Result button clicked")  # Debugging statement
+        new_window = Toplevel(self.root)
+        new_window.title("Result Details")
+        new_window.geometry("800x600")
+        new_window.config(bg='#fff0f3')
+        ReportClass(new_window)  # Assuming gradeclass handles result details
+        new_window.transient(self.root)
+        new_window.grab_set()
+        self.root.wait_window(new_window)
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    student_id = "12345"
+    student_id = "1221109567"  # Replace with the actual student ID
     obj = GradeMaster(root, student_id)
     root.mainloop()
