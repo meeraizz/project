@@ -2,6 +2,42 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 import sqlite3
 
+def create_db():
+    conn = sqlite3.connect('Grademaster.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('''CREATE TABLE IF NOT EXISTS Courses (
+                      id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      course_name TEXT NOT NULL)''')
+
+    
+    cursor.execute('''CREATE TABLE IF NOT EXISTS Classes (
+                      id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      class_name TEXT NOT NULL,
+                      course_id INTEGER,
+                      teacher_name TEXT NOT NULL,
+                      credit_hours INTEGER,
+                      charges REAL,
+                      description TEXT,
+                      FOREIGN KEY (course_id) REFERENCES Courses (id))''')
+    
+    cursor.execute('''CREATE TABLE IF NOT EXISTS Students (
+                      id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      student_id TEXT NOT NULL,
+                      student_name TEXT NOT NULL)''')
+    
+    cursor.execute('''CREATE TABLE IF NOT EXISTS Enrollments (
+                      id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      student_id INTEGER,
+                      class_id INTEGER,
+                      FOREIGN KEY (student_id) REFERENCES Students (id),
+                      FOREIGN KEY (class_id) REFERENCES Classes (id))''')
+    
+    conn.commit()
+    conn.close()
+
+create_db()
+
 class StudentView:
     def __init__(self, root):
         self.root = root
@@ -11,7 +47,7 @@ class StudentView:
         self.root.focus_force()
 
         # Title
-        title = tk.Label(self.root, text="Student Classes ", font=("Arial", 20, "bold"), bg="#ff80b4", fg="#262626")
+        title = tk.Label(self.root, text="Student Classes", font=("Arial", 20, "bold"), bg="#ff80b4", fg="#262626")
         title.place(x=10, y=15, width=1180, height=35)
 
         # Variables
@@ -28,7 +64,7 @@ class StudentView:
         btn_show_classes.place(x=390, y=60, width=120, height=28)
 
         # Initialize Treeview to display classes and teachers
-        self.tree = ttk.Treeview(self.root, columns=("Class Name", "Credit Hours", "Charges", "Description"), show='headings')
+        self.tree = ttk.Treeview(self.root, columns=("Class Name",  "Credit Hours", "Charges", "Description"), show='headings')
         self.tree.heading("Class Name", text="Class Name")
 
         self.tree.heading("Credit Hours", text="Credit Hours")

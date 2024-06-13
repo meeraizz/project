@@ -26,7 +26,7 @@ class RegisterClass:
         self.var_dob = StringVar()
         self.var_address = StringVar()
         self.var_state = StringVar()
-        self.var_postcode = StringVar()
+        self.var_pin = StringVar()
         self.var_password = StringVar()
         self.var_user_type = StringVar()
 
@@ -65,9 +65,9 @@ class RegisterClass:
         self.entry_state = Entry(self.root, textvariable=self.var_state, font=("king", 15))
         self.entry_state.place(x=650, y=140, width=200)
         
-        lbl_postcode = Label(self.root, text="Postcode", font=("king", 15, "bold"), bg="#fff0f3").place(x=500, y=180)
-        self.entry_postcode = Entry(self.root, textvariable=self.var_postcode, font=("king", 15))
-        self.entry_postcode.place(x=650, y=180, width=200)
+        lbl_pin = Label(self.root, text="Postcode", font=("king", 15, "bold"), bg="#fff0f3").place(x=500, y=180)
+        self.entry_pin = Entry(self.root, textvariable=self.var_pin, font=("king", 15))
+        self.entry_pin.place(x=650, y=180, width=200)
         
         lbl_user_type = Label(self.root, text="User Type", font=("king", 15, "bold"), bg="#fff0f3").place(x=500, y=220)
         self.cmb_user_type = ttk.Combobox(self.root, textvariable=self.var_user_type, values=["Student", "Teacher"], font=("king", 15), state='readonly')
@@ -82,6 +82,7 @@ class RegisterClass:
         btn_register.place(x=375, y=350, width=150, height=45)
 
     def register_user(self):
+        print("Register button clicked")  # Debugging statement
         if self.var_user_type.get() == "Select":
             messagebox.showerror("Error", "Please select user type (Student/Teacher)")
             return
@@ -94,30 +95,37 @@ class RegisterClass:
             messagebox.showerror("Error", "Invalid user type")
             return
 
-        conn = sqlite3.connect('Grademaster.db')
-        cursor = conn.cursor()
-        
-        cursor.execute(f'''INSERT INTO users
-                           (name, contact_number, email, gender, dob, address, state, postcode, password)
-                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                       (self.var_name.get(),
-                        self.var_contact.get(),
-                        self.var_email.get(),
-                        self.var_gender.get(),
-                        self.var_dob.get(),
-                        self.var_address.get(),
-                        self.var_state.get(),
-                        self.var_postcode.get(),
-                        self.var_password.get()))
-        
-        conn.commit()
-        conn.close()
+        try:
+            conn = sqlite3.connect('Grademaster.db')
+            cursor = conn.cursor()
+            print("Database connection successful")  # Debugging statement
+            
+            cursor.execute(f'''INSERT INTO users
+                            (name, contact, email, gender, dob, address, state, pin, password)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                        (self.var_name.get(),
+                            self.var_contact.get(),
+                            self.var_email.get(),
+                            self.var_gender.get(),
+                            self.var_dob.get(),
+                            self.var_address.get(),
+                            self.var_state.get(),
+                            self.var_pin.get(),
+                            self.var_password.get()))
+            
+            conn.commit()
+            conn.close()
+            print("User registered successfully")  # Debugging statement
 
-        messagebox.showinfo("Success", f"{self.var_user_type.get()} registered successfully!")
-        self.clear_fields()
+            messagebox.showinfo("Success", f"{self.var_user_type.get()} registered successfully!")
+            self.clear_fields()
 
-        # Destroy current window
-        self.root.destroy()
+            print("Destroying window")  # Debugging statement
+            # Destroy current window
+            self.root.destroy()
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {str(e)}")
+            print(f"Error: {str(e)}")  # Debugging statement
 
     def clear_fields(self):
         self.var_id.set("")
@@ -128,7 +136,7 @@ class RegisterClass:
         self.var_dob.set("")
         self.var_address.set("")
         self.var_state.set("")
-        self.var_postcode.set("")
+        self.var_pin.set("")
         self.var_password.set("")
         self.var_user_type.set("Select")
 

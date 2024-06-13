@@ -85,6 +85,7 @@ def create_db():
         gpa BOOLEAN
     )
     """)
+    
 
     con.commit()
     con.close()

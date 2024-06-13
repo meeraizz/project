@@ -107,8 +107,8 @@ class StudentCard:
         self.txt_course.set("Select")
 
         # ====text address=====
-        self.txt_address = Text(self.root, font=("king", 15, "bold"), bg="lightyellow", state='normal')
-        self.txt_address.place(x=600, y=260,  width=600, height=100)
+        txt_address = Entry(self.root, font=("king", 15, "bold"), bg="lightyellow", state='readonly')
+        txt_address.place(x=600, y=260,  width=600, height=100)
 
         # ============= Button ================
         btn_edit = Button(self.root, text="Edit", font=("King", 15, "bold"), bg="#ff80b4", fg="#262626", command=self.edit)
@@ -117,27 +117,14 @@ class StudentCard:
         self.load_student_data()
 
     def edit(self):
-        student_data = {
-            'id': self.var_id.get(),
-            'name': self.var_name.get(),
-            'email': self.var_email.get(),
-            'contact': self.var_contact.get(),
-            'course': self.var_course.get(),
-            'gender': self.var_gender.get(),
-            'dob': self.var_dob.get(),
-            'admission': self.var_a_date.get(),
-            'state': self.var_state.get(),
-            'city': self.var_city.get(),
-            'pin': self.var_pin.get(),
-            'address': self.txt_address.get("1.0", END)
-        }
+
         new_top = customtkinter.CTkToplevel(self.root)
-        new_window = DetailsClass(new_top, student_data=student_data)
+        new_window = DetailsClass(new_top)
         new_top.transient(self.root)
         new_top.grab_set()
         new_top.focus_force()
-        new_top.wait_window()  # Wait for the edit window to close
-        self.load_student_data()  # Reload data
+        new_top.wait_window()  
+        self.load_student_data()  
 
     def load_student_data(self):
         con = sqlite3.connect(database="GradeMaster.db")
@@ -165,6 +152,6 @@ class StudentCard:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    student_id = "1221109567"  # Replace with the actual student ID
+    
     obj = StudentCard(root, student_id=any)
     root.mainloop()

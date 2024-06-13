@@ -298,5 +298,5 @@ class DetailsClass:
 if __name__ == "__main__":
     root = customtkinter.CTk()
     user_id = any
-    obj = DetailsClass(root)
+    obj = DetailsClass(root, user_id=any)
     root.mainloop()
