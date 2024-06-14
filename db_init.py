@@ -5,34 +5,19 @@ def create_db():
     cur = con.cursor()
 
     cur.execute("""
-    CREATE TABLE IF NOT EXISTS users (
-        id TEXT PRIMARY KEY,
-        name TEXT,
-        email TEXT,
-        dob TEXT,
-        contact TEXT,
-        state TEXT,
-        city TEXT,
-        pin TEXT,
-        address TEXT,
-        password TEXT,
-        role TEXT 
-    )
-    """)
-
-    cur.execute("""
     CREATE TABLE IF NOT EXISTS student (
-        id TEXT PRIMARY KEY,
+        id INTEGER PRIMARY KEY,
         name TEXT,
         email TEXT,
         gender TEXT,
         dob TEXT,
-        contact TEXT,
+        contact INTEGER,
         course TEXT,
         state TEXT,
         city TEXT,
-        pin TEXT,
-        address TEXT
+        pin INTEGER,
+        address TEXT,
+        password TEXT
     )
     """)
 
@@ -49,7 +34,7 @@ def create_db():
     cur.execute("""
     CREATE TABLE IF NOT EXISTS grade (
         cid INTEGER,
-        id TEXT,
+        id INTEGER,
         name TEXT,
         course1 TEXT,
         course2 TEXT,
@@ -70,7 +55,8 @@ def create_db():
         email TEXT,
         contact TEXT,
         course TEXT,
-        profile_picture BLOB
+        profile_picture BLOB,
+        password TEXT
     )
     """)    
 

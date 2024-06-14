@@ -8,7 +8,7 @@ class DetailsClass:
     def __init__(self, root, student_data=None):
         self.root = root
         self.root.title("Grade Master")
-        self.root.geometry("1500x500+50+100")
+        self.root.geometry("1350x500+50+200")
         self.root.config(bg="#fff0f3")
         self.root.focus_force()
 
@@ -17,7 +17,6 @@ class DetailsClass:
 
         self.create_widgets()
         if student_data:
-            print("DetailsClass received student data:", student_data)
             self.populate_data(student_data)
 
     def create_widgets(self):
@@ -121,16 +120,16 @@ class DetailsClass:
             con = sqlite3.connect('GradeMaster.db')
             cur = con.cursor()
             cur.execute("""CREATE TABLE IF NOT EXISTS student (
-                            id TEXT PRIMARY KEY,
+                            id INTEGER PRIMARY KEY,
                             name TEXT,
                             email TEXT,
                             gender TEXT,
                             dob TEXT,
-                            contact TEXT,                            
+                            contact INTEGER,
                             course TEXT,
                             state TEXT,
                             city TEXT,
-                            pin TEXT,
+                            pin INTEGER,
                             address TEXT)""")
 
             if self.var_id.get():

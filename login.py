@@ -4,7 +4,7 @@ import sqlite3
 import customtkinter
 from student_dashboard import GradeMaster as StudentDashboard
 from teacher_dashboard import GradeMastertc as TeacherDashboard
-from register import RegisterClass
+from register2 import RegisterClass
 
 class LoginClass:
     def __init__(self, root):
@@ -40,29 +40,41 @@ class LoginClass:
         login_button.grid(row=4, column=1, pady=30)
         register_button.grid(row=4, column=2, pady=30)
 
-    # Function to verify login credentials
     def login(self):
-        conn = sqlite3.connect("GradeMaster.db")
-        cur = conn.cursor()
-        user_id = self.id_entry.get()
-        password = self.password_entry.get()
-        role = self.role.get()
-        cur.execute('SELECT * FROM users WHERE id = ? AND password = ? AND role = ?', (user_id, password, role))
-        user_data = cur.fetchone()
-        if user_data:
-            messagebox.showinfo(title="Login Success", message="You successfully logged in.")
-            self.root.destroy()  # Close the login window
-            if role == "Student":
-                root = customtkinter.CTk()
-                app = StudentDashboard(root, student_id=user_id)
-                root.mainloop()
-            elif role == "Teacher":
-                root = customtkinter.CTk()
-                app = TeacherDashboard(root, teacher_id=user_id)  # Pass the teacher_id to the dashboard
-                root.mainloop()
-        else:
-            messagebox.showerror(title="Error", message="Invalid login")
-        conn.close()
+            conn = sqlite3.connect("GradeMaster.db")
+            cur = conn.cursor()
+            
+            user_id = self.id_entry.get()
+            password = self.password_entry.get()
+            role = self.role.get()
+            
+            # Adjust the query to select from both student and teacher tables
+            cur.execute('''
+                        SELECT id, password, 'Student' AS role FROM student 
+                        WHERE id = ? AND password = ?
+                        UNION ALL
+                        SELECT id, password, 'Teacher' AS role FROM teacher
+                        WHERE id = ? AND password = ?
+                        ''', (user_id, password, user_id, password))
+            
+            user_data = cur.fetchone()
+            
+            if user_data:
+                messagebox.showinfo(title="Login Success", message="You successfully logged in.")
+                self.root.destroy()  # Close the login window
+                
+                if user_data[2] == "Student":
+                    root = customtkinter.CTk()
+                    app = StudentDashboard(root, student_id=user_id)
+                    root.mainloop()
+                elif user_data[2] == "Teacher":
+                    root = customtkinter.CTk()
+                    app = TeacherDashboard(root, teacher_id=user_id)
+                    root.mainloop()
+            else:
+                messagebox.showerror(title="Error", message="Invalid login")
+            
+            conn.close()
 
     # Function to open the registration window
     def open_register_window(self):
