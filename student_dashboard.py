@@ -58,51 +58,51 @@ class GradeMaster:
         self.lbl_student = Label(self.root, text="Total Student\n[ 2 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=230, y=500, width=350, height=150)
 
     def add_student(self):
-        print("Profile button clicked")  # Debugging statement
+        print("Profile button clicked")  
         new_window = Toplevel(self.root)
         new_window.title("Student Profile")
         new_window.geometry("800x600")
         new_window.config(bg='#fff0f3')
         StudentCard(new_window, self.student_id)
-        new_window.transient(self.root)  # Set to be on top of the main window
-        new_window.grab_set()  # Ensure all events are sent to this window until it is closed
-        self.root.wait_window(new_window)  # Wait for this window to be closed
+        new_window.transient(self.root)  
+        new_window.grab_set()  
+        self.root.wait_window(new_window)  
 
     def add_course(self):
-        print("Course button clicked")  # Debugging statement
+        print("Course button clicked")  
         new_window = Toplevel(self.root)
         new_window.title("Course Details")
         new_window.geometry("800x600")
         new_window.config(bg='#fff0f3')
-        StudentView(new_window)  # Assuming StudentView handles course details
+        StudentView(new_window) 
         new_window.transient(self.root)
         new_window.grab_set()
         self.root.wait_window(new_window)
 
     def add_teacher(self):
-        print("Teacher button clicked")  # Debugging statement
+        print("Teacher button clicked")  
         new_window = Toplevel(self.root)
         new_window.title("Teacher Profile")
         new_window.geometry("800x600")
         new_window.config(bg='#fff0f3')
-        teacherprofile(new_window)  # Assuming teacherprofile handles teacher details
+        teacherprofile(new_window)  
         new_window.transient(self.root)
         new_window.grab_set()
         self.root.wait_window(new_window)
 
     def add_result(self):
-        print("Result button clicked")  # Debugging statement
+        print("Result button clicked")  
         new_window = Toplevel(self.root)
         new_window.title("Result Details")
         new_window.geometry("800x600")
         new_window.config(bg='#fff0f3')
-        ReportClass(new_window)  # Assuming gradeclass handles result details
+        ReportClass(new_window)  
         new_window.transient(self.root)
         new_window.grab_set()
         self.root.wait_window(new_window)
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    student_id = "1221109567"  # Replace with the actual student ID
-    obj = GradeMaster(root, student_id)
+
+    obj = GradeMaster(root, student_id=any)
     root.mainloop()

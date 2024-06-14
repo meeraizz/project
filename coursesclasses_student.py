@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
 import sqlite3
+import customtkinter
 
 def create_db():
     conn = sqlite3.connect('Grademaster.db')
@@ -100,6 +101,6 @@ class StudentView:
         conn.close()
 
 if __name__ == "__main__":
-    root = tk.Tk()
+    root = customtkinter.CTk()
     StudentView(root)
     root.mainloop()

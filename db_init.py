@@ -28,7 +28,6 @@ def create_db():
         gender TEXT,
         dob TEXT,
         contact TEXT,
-        admission TEXT,
         course TEXT,
         state TEXT,
         city TEXT,

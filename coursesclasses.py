@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
 import sqlite3
+import customtkinter
 
 class ManageCourse:
     def __init__(self, root):
@@ -167,7 +168,7 @@ class ManageCourse:
             self.course_tree.delete(row)
         conn = sqlite3.connect('Grademaster.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM course")
+        cursor.execute("SELECT * FROM Courses")
         rows = cursor.fetchall()
         for row in rows:
             self.course_tree.insert('', 'end', values=row)
@@ -184,6 +185,6 @@ class ManageCourse:
         self.var_description.set(course_data[4])
 
 if __name__ == "__main__":
-    root = tk.Tk()
+    root = customtkinter.CTk()
     obj = ManageCourse(root)
     root.mainloop()

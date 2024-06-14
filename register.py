@@ -25,6 +25,7 @@ class RegisterClass:
         self.var_gender = StringVar()
         self.var_dob = StringVar()
         self.var_address = StringVar()
+        self.var_city = StringVar()
         self.var_state = StringVar()
         self.var_pin = StringVar()
         self.var_password = StringVar()
@@ -65,18 +66,22 @@ class RegisterClass:
         self.entry_state = Entry(self.root, textvariable=self.var_state, font=("king", 15))
         self.entry_state.place(x=650, y=140, width=200)
         
-        lbl_pin = Label(self.root, text="Postcode", font=("king", 15, "bold"), bg="#fff0f3").place(x=500, y=180)
+        lbl_city = Label(self.root, text="City", font=("king", 15, "bold"), bg="#fff0f3").place(x=500, y=180)
+        self.entry_city = Entry(self.root, textvariable=self.var_city, font=("king", 15))
+        self.entry_city.place(x=650, y=180, width=200)
+
+        lbl_pin = Label(self.root, text="Postcode", font=("king", 15, "bold"), bg="#fff0f3").place(x=500, y=220)
         self.entry_pin = Entry(self.root, textvariable=self.var_pin, font=("king", 15))
-        self.entry_pin.place(x=650, y=180, width=200)
+        self.entry_pin.place(x=650, y=220, width=200)
         
-        lbl_user_type = Label(self.root, text="User Type", font=("king", 15, "bold"), bg="#fff0f3").place(x=500, y=220)
+        lbl_user_type = Label(self.root, text="User Type", font=("king", 15, "bold"), bg="#fff0f3").place(x=500, y=260)
         self.cmb_user_type = ttk.Combobox(self.root, textvariable=self.var_user_type, values=["Student", "Teacher"], font=("king", 15), state='readonly')
-        self.cmb_user_type.place(x=650, y=220, width=200)
+        self.cmb_user_type.place(x=650, y=260, width=200)
         self.cmb_user_type.set("Select")
         
-        lbl_password = Label(self.root, text="Password", font=("king", 15, "bold"), bg="#fff0f3").place(x=500, y=260)
+        lbl_password = Label(self.root, text="Password", font=("king", 15, "bold"), bg="#fff0f3").place(x=500, y=300)
         self.entry_password = Entry(self.root, textvariable=self.var_password, font=("king", 15), show='*')
-        self.entry_password.place(x=650, y=260, width=200)
+        self.entry_password.place(x=650, y=300, width=200)
 
         btn_register = Button(self.root, text="Register", font=("King", 20), bg="#e0d2ef", activebackground="lightgreen", cursor="hand2", command=self.register_user)
         btn_register.place(x=375, y=350, width=150, height=45)
@@ -101,17 +106,20 @@ class RegisterClass:
             print("Database connection successful")  # Debugging statement
             
             cursor.execute(f'''INSERT INTO users
-                            (name, contact, email, gender, dob, address, state, pin, password)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                        (self.var_name.get(),
+                            (id, name, contact, email, gender, dob, address, state, city, pin, password, role)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                        (self.var_id.get(),
+                         self.var_name.get(),
                             self.var_contact.get(),
                             self.var_email.get(),
                             self.var_gender.get(),
                             self.var_dob.get(),
                             self.var_address.get(),
                             self.var_state.get(),
+                            self.var_city.get(),
                             self.var_pin.get(),
-                            self.var_password.get()))
+                            self.var_password.get(),
+                            self.var_user_type.get()))
             
             conn.commit()
             conn.close()
@@ -135,11 +143,11 @@ class RegisterClass:
         self.var_gender.set("Select")
         self.var_dob.set("")
         self.var_address.set("")
+        self.var_city.set("")
         self.var_state.set("")
         self.var_pin.set("")
         self.var_password.set("")
         self.var_user_type.set("Select")
-
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
