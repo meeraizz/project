@@ -4,7 +4,7 @@ import sqlite3
 import customtkinter
 from student_dashboard import GradeMaster as StudentDashboard
 from teacher_dashboard import GradeMastertc as TeacherDashboard
-from register2 import RegisterClass
+from register import RegisterClass
 
 class LoginClass:
     def __init__(self, root):
