@@ -65,7 +65,7 @@ class StudentCard:
 
         lbl_address = Label(self.main_frame, text="Address", font=("King", 15, "bold"), bg="white")
         lbl_address.place(x=30, y=260)
-        self.txt_address = Label(self.main_frame, textvariable=self.var_address, font=("King", 15, "bold"), bg="#fff0f3", anchor='w')
+        self.txt_address = Text(self.main_frame, font=("King", 15, "bold"), bg="#fff0f3", wrap=WORD)
         self.txt_address.place(x=200, y=260, width=250, height=100)
 
         # =======column 2=========
@@ -112,7 +112,7 @@ class StudentCard:
             'state': self.var_state.get(),
             'city': self.var_city.get(),
             'pin': self.var_pin.get(),
-            'address': self.var_address.get()
+            'address': self.txt_address.get("1.0", END).strip()
         }
         new_top = customtkinter.CTkToplevel(self.root)
         new_window = DetailsClass(new_top, student_data=student_data)
@@ -139,7 +139,8 @@ class StudentCard:
                 self.var_state.set(row[7])
                 self.var_city.set(row[8])
                 self.var_pin.set(row[9])
-                self.var_address.set(row[10])
+                self.txt_address.delete("1.0", END)
+                self.txt_address.insert("1.0", row[10])
 
             else:
                 messagebox.showerror("Error", "Student data not found.")
