@@ -16,7 +16,13 @@ class GradeMaster:
         self.root = root
         self.student_id = student_id
         self.root.title("Grade Master")
-        self.root.geometry("1350x700+0+0")
+        
+        # Get the screen width and height
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+
+        # Set the window to full screen size
+        self.root.geometry(f"{screen_width}x{screen_height}+0+0")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
@@ -103,6 +109,12 @@ class GradeMaster:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
+    # Get the screen width and height
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+
+    # Set the window to full screen size
+    root.geometry(f"{screen_width}x{screen_height}+0+0")
 
     obj = GradeMaster(root, student_id=any)
     root.mainloop()
