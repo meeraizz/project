@@ -10,13 +10,13 @@ class StudentCard:
         self.root = root
         self.student_id = student_id
         self.root.title("Grade Master")
-        self.root.geometry("1350x750+50+200")
+        self.root.geometry("1400x750+50+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
         # =============Title==================
         title = Label(self.root, text="Student Profile", font=("King", 30, "bold"), bg="#ff80b4", fg="#262626")
-        title.place(x=0, y=10, width=1350, height=70)
+        title.place(x=0, y=10, width=1450, height=70)
 
         self.main_frame = Frame(self.root, bd=2, relief=RIDGE, bg="white")
         self.main_frame.place(x=175, y=100, width=1000, height=500)

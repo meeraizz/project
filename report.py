@@ -1,13 +1,14 @@
 from tkinter import *
 from tkinter import ttk, messagebox, filedialog
 import sqlite3
-import customtkinter
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+import customtkinter
 
 class ReportClass:
-    def __init__(self, root):
+    def __init__(self, root, student_id):
         self.root = root
+        self.student_id = student_id
         self.root.title("Grade Master")
         self.root.geometry("1200x750+50+200")
         self.root.config(bg="#fff0f3")
@@ -17,115 +18,107 @@ class ReportClass:
         self.main_frame.pack(fill=BOTH, expand=True)
 
         self.create_widgets()
+        self.fetch_student_record()   # Fetch and display all records when the window opens
 
     def create_widgets(self):
         # =====title======
         title = Label(self.main_frame, text="View Student Results", font=("king", 23, "bold"), bg="#FFB3D2", fg="black")
-        title.pack(fill=X)  
+        title.pack(fill=X)
 
         # =====search======
-        self.var_search = StringVar()
+
         self.var_id = ""
         self.var_student_id = StringVar()
-
-        lbl_search = Label(self.root, text="Search by ID No.", font=("king", 20, "bold"), bg="#fff0f3").place(x=250, y=100)
-        txt_search = Entry(self.root, textvariable=self.var_search, font=("king", 20), bg="lightyellow").place(x=530, y=100, width=170)
-        btn_search = Button(self.root, text="Search", font=("king", 15, "bold"), bg="#03a9f4", fg="#fff0f3", cursor="hand2", command=self.search).place(x=720, y=100, width=100, height=35)
-        btn_clear = Button(self.root, text="Clear", font=("king", 15, "bold"), bg="#F19CBB", fg="#fff0f3", cursor="hand2", command=self.clear).place(x=840, y=100, width=100, height=35)
-        btn_print = Button(self.root, text="Print", font=("king", 15, "bold"), bg="#DE3163", fg="#fff0f3", cursor="hand2", command=self.print_as_pdf).place(x=950, y=100, width=100, height=35)
+        
+        btn_print = Button(self.main_frame, text="Print", font=("king", 15, "bold"), bg="#DE3163", fg="#fff0f3", cursor="hand2", command=self.print_as_pdf)
+        btn_print.place(x=950, y=500, width=100, height=35)
 
         # =====result_labels======
-        lbl_id = Label(self.root, text="ID No.", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=300, y=180, width=150, height=50)
-        lbl_name = Label(self.root, text="Name", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=300, y=230, width=150, height=50)
-        lbl_course = Label(self.root, text="Course", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=300, y=280, width=150, height=50)
-        lbl_marks = Label(self.root, text="Marks", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=450, y=280, width=150, height=50)
-        lbl_grades = Label(self.root, text="Grades", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=600, y=280, width=150, height=50)
-        lbl_gpa = Label(self.root, text="GPA", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE).place(x=750, y=280, width=150, height=50)
+        lbl_id = Label(self.main_frame, text="ID No.", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE)
+        lbl_id.place(x=300, y=180, width=150, height=50)
+        
+        lbl_name = Label(self.main_frame, text="Name", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE)
+        lbl_name.place(x=300, y=230, width=150, height=50)
+        
+        lbl_course = Label(self.main_frame, text="Course", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE)
+        lbl_course.place(x=300, y=280, width=150, height=50)
+        
+        lbl_marks = Label(self.main_frame, text="Marks", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE)
+        lbl_marks.place(x=450, y=280, width=150, height=50)
+        
+        lbl_grades = Label(self.main_frame, text="Grades", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE)
+        lbl_grades.place(x=600, y=280, width=150, height=50)
+        
+        lbl_gpa = Label(self.main_frame, text="GPA", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE)
+        lbl_gpa.place(x=750, y=280, width=150, height=50)
 
-        self.id = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        self.id = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.id.place(x=450, y=180, width=450, height=50)
-        self.name = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        
+        self.name = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.name.place(x=450, y=230, width=450, height=50)
 
-        self.course1 = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        self.course1 = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.course1.place(x=300, y=330, width=150, height=50)
-        self.course2 = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        
+        self.course2 = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.course2.place(x=300, y=380, width=150, height=50)
-        self.course3 = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        
+        self.course3 = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.course3.place(x=300, y=430, width=150, height=50)
 
         self.marks1_var = StringVar()
         self.marks2_var = StringVar()
         self.marks3_var = StringVar()
-        self.marks1 = Label(self.root, textvariable=self.marks1_var, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        
+        self.marks1 = Label(self.main_frame, textvariable=self.marks1_var, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.marks1.place(x=450, y=330, width=150, height=50)
-        self.marks2 = Label(self.root, textvariable=self.marks2_var, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        
+        self.marks2 = Label(self.main_frame, textvariable=self.marks2_var, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.marks2.place(x=450, y=380, width=150, height=50)
-        self.marks3 = Label(self.root, textvariable=self.marks3_var, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        
+        self.marks3 = Label(self.main_frame, textvariable=self.marks3_var, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.marks3.place(x=450, y=430, width=150, height=50)
 
-        self.grades1 = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        self.grades1 = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.grades1.place(x=600, y=330, width=150, height=50)
-        self.grades2 = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        
+        self.grades2 = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.grades2.place(x=600, y=380, width=150, height=50)
-        self.grades3 = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        
+        self.grades3 = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.grades3.place(x=600, y=430, width=150, height=50)
 
-        self.gpa = Label(self.root, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        self.gpa = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.gpa.place(x=750, y=330, width=150, height=50)
 
-    # =========================================================
-    def search(self):
+    def fetch_student_record(self):
         con = sqlite3.connect(database="GradeMaster.db")
         cur = con.cursor()
         try:
-            if self.var_search.get() == "":
-                messagebox.showerror("Error", "ID No. should be required", parent=self.root)
+            cur.execute("SELECT * FROM grade WHERE id=?", (self.student_id,))
+            row = cur.fetchone()
+            print(row)  # Debugging statement
+            if row:
+                # Display fetched data
+                self.var_id = row[0]
+                self.id.config(text=row[1])
+                self.name.config(text=row[2])
+                self.course1.config(text=row[3])
+                self.marks1_var.set(str(row[6]))
+                self.grades1.config(text=row[9])
+                self.course2.config(text=row[4])
+                self.marks2_var.set(str(row[7]))
+                self.grades2.config(text=row[10])
+                self.course3.config(text=row[5])
+                self.marks3_var.set(str(row[8]))
+                self.grades3.config(text=row[11])
+                
+                self.calculate_gpa([row])  # Pass a list with the single row for GPA calculation
             else:
-                cur.execute("SELECT * FROM grade WHERE id=?", (self.var_search.get(),))
-                rows = cur.fetchall()
-                if len(rows) > 0:
-                    self.clear()
-
-                    self.var_id = rows[0][0]
-                    self.id.config(text=rows[0][1])
-                    self.name.config(text=rows[0][2])
-                    
-                    for i, row in enumerate(rows):
-                        if i == 0:
-                            self.course1.config(text=row[3])
-                            self.marks1_var.set(str(row[6]))
-                            self.grades1.config(text=row[9])                       
-                            self.course2.config(text=row[4])
-                            self.marks2_var.set(str(row[7]))
-                            self.grades2.config(text=row[10])                       
-                            self.course3.config(text=row[5])
-                            self.marks3_var.set(str(row[8]))
-                            self.grades3.config(text=row[11])
-
-                    self.calculate_gpa(rows)
-                else:
-                    messagebox.showerror("Error", "No record found", parent=self.root)
+                messagebox.showinfo("Info", "No record found for this student ID", parent=self.root)
         except Exception as ex:
-            messagebox.showerror("Error", f"Error due to {str(ex)}")
-        finally:
-            con.close()
-
-    def fetch_student_courses(self):
-        id = self.var_student_id.get()
-        if not id:
-            messagebox.showerror("Error", "Please enter student ID.")
-            return []
-
-        con = sqlite3.connect(database="GradeMaster.db")
-        cur = con.cursor()
-        try:
-            cur.execute("SELECT course_name, credit_hours, grade FROM course WHERE student_id=?", (id,))
-            rows = cur.fetchall()
-            return rows
-        except Exception as ex:
-            messagebox.showerror("Error", f"Error fetching student courses: {str(ex)}")
-            return []
+            messagebox.showerror("Error", f"Error fetching student record: {str(ex)}", parent=self.root)
         finally:
             con.close()
 
@@ -154,22 +147,6 @@ class ReportClass:
         except Exception as ex:
             messagebox.showerror("Error", f"Error calculating GPA: {str(ex)}")
 
-    def clear(self):
-        self.var_id = ""
-        self.id.config(text="")
-        self.name.config(text="")
-        self.course1.config(text="")
-        self.course2.config(text="")
-        self.course3.config(text="")
-        self.marks1.config(text="")
-        self.marks2.config(text="")
-        self.marks3.config(text="")
-        self.grades1.config(text="")
-        self.grades2.config(text="")
-        self.grades3.config(text="")
-        self.gpa.config(text="")
-        self.var_search.set("")
-
     def print_as_pdf(self):
         if not self.var_id:
             messagebox.showerror("Error", "No data to print.", parent=self.root)
@@ -195,5 +172,5 @@ class ReportClass:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    obj = ReportClass(root)
+    obj = ReportClass(root, student_id=any)  # Replace with actual student ID
     root.mainloop()

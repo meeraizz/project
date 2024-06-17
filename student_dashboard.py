@@ -17,11 +17,9 @@ class GradeMaster:
         self.student_id = student_id
         self.root.title("Grade Master")
         
-        # Get the screen width and height
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
 
-        # Set the window to full screen size
         self.root.geometry(f"{screen_width}x{screen_height}+0+0")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
@@ -50,7 +48,7 @@ class GradeMaster:
         btn_grade = Button(M_Frame, text="Result", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_result)
         btn_grade.place(x=1100, y=10, width=270, height=60)
 
-        btn_logout = Button(M_Frame, text="Logout", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2")
+        btn_logout = Button(M_Frame, text="Logout", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.logout)
         btn_logout.place(x=1400, y=10, width=270, height=60)
 
         self.bg_img = Image.open("images/bg.jpg")
@@ -102,18 +100,18 @@ class GradeMaster:
         new_window.title("Result Details")
         new_window.geometry("800x600")
         new_window.config(bg='#fff0f3')
-        ReportClass(new_window)  
+        ReportClass(new_window, self.student_id)  
         new_window.transient(self.root)
         new_window.grab_set()
         self.root.wait_window(new_window)
 
+    def logout(self):
+        self.root.destroy()
+
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    # Get the screen width and height
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
-
-    # Set the window to full screen size
     root.geometry(f"{screen_width}x{screen_height}+0+0")
 
     obj = GradeMaster(root, student_id=any)

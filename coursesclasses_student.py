@@ -48,20 +48,20 @@ class StudentView:
         self.root.focus_force()
 
         # Title
-        title = tk.Label(self.root, text="Student Classes", font=("Arial", 20, "bold"), bg="#ff80b4", fg="#262626")
+        title = tk.Label(self.root, text="Student Classes", font=("King", 20, "bold"), bg="#ff80b4", fg="#262626")
         title.place(x=10, y=15, width=1180, height=35)
 
         # Variables
         self.var_student_id = tk.StringVar()
 
         # Widgets
-        lbl_student = tk.Label(self.root, text="Enter Student ID", font=("Arial", 15), bg="#fff0f3")
+        lbl_student = tk.Label(self.root, text="Enter Student ID", font=("King", 15), bg="#fff0f3")
         lbl_student.place(x=10, y=60)
 
-        self.entry_student_id = tk.Entry(self.root, textvariable=self.var_student_id, font=("Arial", 15), bg="#ffffff")
+        self.entry_student_id = tk.Entry(self.root, textvariable=self.var_student_id, font=("King", 15), bg="#ffffff")
         self.entry_student_id.place(x=170, y=60, width=200)
 
-        btn_show_classes = tk.Button(self.root, text="Show Classes", font=("Arial", 12), bg="#ff80b4", fg="#ffffff", command=self.show_classes)
+        btn_show_classes = tk.Button(self.root, text="Show Classes", font=("King", 12), bg="#ff80b4", fg="#ffffff", command=self.show_classes)
         btn_show_classes.place(x=390, y=60, width=120, height=28)
 
         # Initialize Treeview to display classes and teachers
