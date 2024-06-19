@@ -7,6 +7,7 @@ from student_grade import gradeclass
 from teachercard import teachercard
 from details_tcview import detailsclasstc
 from report import ReportClass
+from coursesclasses import ManageCourse
 
 class GradeMastertc:
     def __init__(self, root, teacher_id):
@@ -60,7 +61,7 @@ class GradeMastertc:
 
     def add_course(self):
         new_top = customtkinter.CTkToplevel(self.root)
-        new_window = courseclass(new_top)
+        new_window = ManageCourse(new_top)
         new_top.transient(self.root)  
         new_top.grab_set()  
         new_top.focus_force() 
