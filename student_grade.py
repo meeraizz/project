@@ -67,7 +67,7 @@ class gradeclass:
         conn = sqlite3.connect(database="GradeMaster.db")
         cur = conn.cursor()
         try:
-            cur.execute("SELECT name FROM course")
+            cur.execute("SELECT name FROM Courses")
             rows = cur.fetchall()
             if len(rows) > 0:
                 for row in rows:
@@ -101,7 +101,7 @@ class gradeclass:
                 if row is not None:
                     messagebox.showerror("Error", "Result already present", parent=self.root)
                 else:
-                    cur.execute("INSERT INTO grade (id, name, course1, course2, course3, marks1, marks2, marks3, grade1, grade2, grade3, gpa) VALUES (?, ?, ?, ?, ?, ?)", (
+                    cur.execute("INSERT INTO grade (id, name, course1, course2, course3, marks1, marks2, marks3, grade1, grade2, grade3) VALUES (?, ?, ?, ?, ?)", (
                         self.var_id.get(),
                         self.var_name.get(),
                         self.var_course.get(),

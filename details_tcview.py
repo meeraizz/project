@@ -32,7 +32,7 @@ class detailsclasstc:
 
         scrolly=Scrollbar(self.C_Frame,orient=VERTICAL)
         scrollx=Scrollbar(self.C_Frame,orient=HORIZONTAL)
-        self.CourseTable=ttk.Treeview(self.C_Frame,columns=("id","name","email","gender","dob","contact","admission","course","state","city","pin","address"),xscrollcommand=scrollx.set,yscrollcommand=scrolly.set)
+        self.CourseTable=ttk.Treeview(self.C_Frame,columns=("id","name","email","gender","dob","contact","course","state","city","pin","address"),xscrollcommand=scrollx.set,yscrollcommand=scrolly.set)
 
         scrollx.pack(side=BOTTOM,fill=X)
         scrolly.pack(side=RIGHT,fill=Y)
@@ -45,7 +45,6 @@ class detailsclasstc:
         self.CourseTable.heading("gender",text="Gender")
         self.CourseTable.heading("dob",text="D.O.B")
         self.CourseTable.heading("contact",text="Contact")
-        self.CourseTable.heading("admission",text="Admission")
         self.CourseTable.heading("course",text="Course")
         self.CourseTable.heading("state",text="State")
         self.CourseTable.heading("city",text="City")
@@ -58,7 +57,6 @@ class detailsclasstc:
         self.CourseTable.column("gender",width=100)
         self.CourseTable.column("dob",width=100)
         self.CourseTable.column("contact",width=100)
-        self.CourseTable.column("admission",width=100)
         self.CourseTable.column("course",width=100)
         self.CourseTable.column("state",width=100)
         self.CourseTable.column("city",width=100)
@@ -100,13 +98,12 @@ class detailsclasstc:
         self.var_gender.set(row[3])
         self.var_dob.set(row[4])
         self.var_contact.set(row[5])
-        self.var_a_date.set(row[6])
-        self.var_course.set(row[7])
-        self.var_state.set(row[8])
-        self.var_city.set(row[9])
-        self.var_pin.set(row[10])                   
+        self.var_course.set(row[6])
+        self.var_state.set(row[7])
+        self.var_city.set(row[8])
+        self.var_pin.set(row[9])                   
         self.txt_address.delete("1.0",END)
-        self.txt_address.insert(END,row[11])
+        self.txt_address.insert(END,row[10])
 
 
 
@@ -126,7 +123,7 @@ class detailsclasstc:
         con=sqlite3.connect(database="Grademaster.db")
         cur=con.cursor()
         try:
-            cur.execute("select name from course")
+            cur.execute("select name from Courses")
             rows=cur.fetchall()
             if len(rows)>0:
                 self.course_list = [row[0] for row in rows]

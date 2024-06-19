@@ -22,16 +22,6 @@ def create_db():
     """)
 
     cur.execute("""
-    CREATE TABLE IF NOT EXISTS course (
-        cid INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT, 
-        duration TEXT, 
-        charges TEXT, 
-        description TEXT
-    )
-    """)
-    
-    cur.execute("""
     CREATE TABLE IF NOT EXISTS grade (
         cid INTEGER,
         id INTEGER,
@@ -70,7 +60,43 @@ def create_db():
         gpa BOOLEAN
     )
     """)
+
+    cur.execute('''CREATE TABLE IF NOT EXISTS Courses (
+                      id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      course_name TEXT NOT NULL)''')
+
     
+    cur.execute('''CREATE TABLE IF NOT EXISTS Classes (
+                      id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      class_name TEXT NOT NULL,
+                      course_id INTEGER,
+                      teacher_name TEXT NOT NULL,
+                      credit_hours INTEGER,
+                      charges REAL,
+                      description TEXT,
+                      FOREIGN KEY (course_id) REFERENCES Courses (id))''')
+    
+    cur.execute('''CREATE TABLE IF NOT EXISTS Students (
+                        id INTEGER PRIMARY KEY,
+                        name TEXT,
+                        email TEXT,
+                        gender TEXT,
+                        dob TEXT,
+                        contact INTEGER,
+                        course TEXT,
+                        state TEXT,
+                        city TEXT,
+                        pin INTEGER,
+                        address TEXT,
+                        password TEXT)''')
+    
+    cur.execute('''CREATE TABLE IF NOT EXISTS Enrollments (
+                      id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      student_id INTEGER,
+                      class_id INTEGER,
+                      FOREIGN KEY (student_id) REFERENCES Students (id),
+                      FOREIGN KEY (class_id) REFERENCES Classes (id))''')
+
 
     con.commit()
     con.close()
