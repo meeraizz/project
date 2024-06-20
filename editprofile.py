@@ -65,7 +65,7 @@ class editprofile:
         btn_submit = Button(self.root, text="Submit", font=("times new roman", 20, "bold"), bg="#ff80b4", fg="#262626", command=self.submit_data)
         btn_submit.place(x=1100, y=600, width=150, height=40)
 
-        # Load existing data if any
+       
         if teacher_data:
             self.populate_data(teacher_data)
 
@@ -133,7 +133,7 @@ class editprofile:
             messagebox.showerror("Database Error", f"Error interacting with database: {e}")
         finally:
             con.close()
-            self.root.destroy()  # Close window after submission
+            self.root.destroy()  
 
 if __name__ == "__main__":
     root = customtkinter.CTk()

@@ -68,9 +68,9 @@ class GradeMaster:
         self.lbl_student = Label(self.root, text="Total Student\n[ 0 ]", font=("King", 20), bd=10, relief="ridge", bg="#ffb3d2", fg="black")
         self.lbl_student.place(x=230, y=500, width=350, height=150)
 
-        # Call the update_counts method to set initial counts
+        
         self.update_counts()
-        # Schedule the update_counts method to be called every 5 seconds
+        
         self.root.after(5000, self.update_counts)
 
     def fetch_total_courses(self):
@@ -121,7 +121,7 @@ class GradeMaster:
         self.lbl_teacher.config(text=f"Total Teacher\n[ {total_teachers} ]")
         self.lbl_student.config(text=f"Total Student\n[ {total_students} ]")
 
-        # Schedule the next update
+        
         self.root.after(5000, self.update_counts)
     def add_student(self):
         print("Profile button clicked")  

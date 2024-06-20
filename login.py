@@ -85,11 +85,11 @@ class LoginClass:
             
             if user_data:
                 messagebox.showinfo(title="Login Success", message="You successfully logged in.")
-                self.root.destroy()  # Close the login window
+                self.root.destroy()  
                 
                 if user_data[2] == "Student":
                     root = customtkinter.CTk()
-                    app = StudentDashboard(root, student_id=user_id)  # Pass student_id to GradeMaster
+                    app = StudentDashboard(root, student_id=user_id)  
                     root.mainloop()
                 elif user_data[2] == "Teacher":
                     root = customtkinter.CTk()
@@ -104,21 +104,21 @@ class LoginClass:
             conn.close()
 
 
-    # Function to open the registration window
+    
     def open_register_window(self):
         register_window = Toplevel(self.root)
         register_window.title("Register")
         register_window.geometry("800x600")
         RegisterClass(register_window)
 
-    # Function to open the forgot password window
+    
     def open_forgot_password_window(self):
         forgot_window = Toplevel(self.root)
         forgot_window.title("Forgot Password")
         forgot_window.geometry("900x700+200+100")
         forgot_window.config(bg='#fff0f3')
 
-        # Variables for the forgot password window
+        
         var_forgot_id = StringVar()
         var_new_password = StringVar()
 
@@ -130,7 +130,7 @@ class LoginClass:
 
         Button(forgot_window, text="Submit", bg="#FF69B4", fg="black", font=("Arial", 14), command=lambda: self.reset_password(var_forgot_id.get(), var_new_password.get(), forgot_window)).place(x=400, y=250, width=100, height=30)
 
-    # Function to reset password
+    
     def reset_password(self, user_id, new_password, window):
         if user_id == "" or new_password == "":
             messagebox.showerror("Error", "All fields are required", parent=window)
@@ -140,19 +140,19 @@ class LoginClass:
         cur = conn.cursor()
         
         try:
-            # Check if the user exists
+            
             cur.execute("SELECT id FROM student WHERE id = ? UNION ALL SELECT id FROM teacher WHERE id = ?", (user_id, user_id))
             user = cur.fetchone()
 
             if user:
-                # Update the password for the student
+                
                 cur.execute("UPDATE student SET password = ? WHERE id = ?", (new_password, user_id))
-                # Update the password for the teacher
+                
                 cur.execute("UPDATE teacher SET password = ? WHERE id = ?", (new_password, user_id))
                 conn.commit()
 
                 messagebox.showinfo("Success", "Password has been reset successfully", parent=window)
-                window.destroy()  # Close the forgot password window
+                window.destroy()  
             else:
                 messagebox.showerror("Error", "User ID does not exist", parent=window)
         

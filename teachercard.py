@@ -50,7 +50,7 @@ class teachercard:
         btn_edit = Button(self.root, text="Edit", font=("King", 15, "bold"), bg="#ff80b4", fg="#262626", command=self.edit)
         btn_edit.place(x=1320, y=700, width=150, height=35)
 
-        # Text fields to display the fetched data
+        #==============Entry=================
         self.txt_name = Label(self.root, textvariable=self.var_teacher_name, font=("times new roman", 25, "bold"), bg="white", anchor='w', justify=LEFT)
         self.txt_name.place(x=1000, y=230, width=370, height=45)
         self.txt_email = Label(self.root, textvariable=self.var_teacher_email, font=("times new roman", 25, "bold"), bg="white", anchor='w', justify=LEFT)
@@ -69,15 +69,14 @@ class teachercard:
             'email': self.var_teacher_email.get(),
             'contact': self.var_teacher_contact.get(),
             'course': self.var_teacher_course.get(),
-            'profile_picture': self.default_image_path  # Update this to fetch the actual path from the database if necessary
+            'profile_picture': self.default_image_path  
         }
         new_top = customtkinter.CTkToplevel(self.root)
         new_window = editprofile(new_top, teacher_data=teacher_data)
         new_top.transient(self.root)
         new_top.grab_set()
         new_top.focus_force()
-        self.root.wait_window(new_top)  # Wait for the edit window to close
-        self.load_teacher_data()  # Reload data
+        self.root.wait_window(new_top)  
 
     def display_image(self, file_path):
         if os.path.exists(file_path):

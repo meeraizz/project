@@ -46,7 +46,7 @@ class AttendanceManager:
         self.btn_mark_absent = Button(self.root, text="Mark Absent", font=("King", 15), bg="#e0d2ef", fg="#262626", command=self.mark_absent)
         self.btn_mark_absent.place(x=960, y=750, width=190, height=35)
 
-        # Initialize student combobox
+       
         self.fetch_students()
 
     def fetch_students(self):
@@ -82,7 +82,7 @@ class AttendanceManager:
     def load_calendar(self, event=None):
         selected_course = self.cmb_course.get().split(" - ")[0]
         self.course_id = int(selected_course)
-        # Implement loading of attendance data for the selected student and course into the calendar
+        
 
     def mark_attendance(self):
         self.mark_status("Present")

@@ -12,14 +12,14 @@ class detailsclasstc:
         self.root.config(bg="#fff0f3")
         self.root.focus_force()
 
-        # Create a main frame to contain all widgets
+        #=======main frame=============
         self.main_frame = Frame(self.root, bg="#fff0f3")
         self.main_frame.pack(fill=BOTH, expand=True)  
 
         title=Label(self.main_frame, text="Manage Student Details", font=("king",23,"bold"), bg="#ff80b4", fg="black")
         title.place(x=0, y=10, width=1960, height=70)
 
-        # Variables
+        #=======Variables=======
         self.var_id = StringVar()
         self.var_name = StringVar()
         self.var_email = StringVar()

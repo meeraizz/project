@@ -55,7 +55,7 @@ class AttendanceReport:
         self.canvas = FigureCanvasTkAgg(self.figure, self.canvas_frame)
         self.canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=True)
 
-        # Fetch course options and initialize
+        
         self.fetch_courses()
 
     def fetch_courses(self):
@@ -88,10 +88,10 @@ class AttendanceReport:
             """, (self.student_id, selected_course))
             rows = cur.fetchall()
             if rows:
-                # Clear the existing data in the treeview
+                
                 for item in self.attendance_tree.get_children():
                     self.attendance_tree.delete(item)
-                # Insert new data
+                
                 for row in rows:
                     self.attendance_tree.insert("", "end", values=row)
         except Exception as e:
@@ -117,7 +117,7 @@ class AttendanceReport:
                 return
 
             dates = [datetime.strptime(row[0], '%Y-%m-%d') for row in data]
-            status = [1 if row[1] == 'Present' else 0 for row in data]  # Assuming 'Present' is one status and anything else is considered 'Absent'
+            status = [1 if row[1] == 'Present' else 0 for row in data]  
 
             # Clear the previous plot
             self.ax.clear()
@@ -131,7 +131,7 @@ class AttendanceReport:
             self.ax.grid(True)
             self.ax.legend()
 
-            # Update canvas with new plot
+            
             self.canvas.draw()
         except Exception as e:
             messagebox.showerror("Error", f"Error plotting attendance trend: {str(e)}")
@@ -140,6 +140,5 @@ class AttendanceReport:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    # Replace 1221109567 with a valid student_id from your database
-    app = AttendanceReport(root, student_id=1221109567)
+    app = AttendanceReport(root, student_id=any)
     root.mainloop()

@@ -62,7 +62,7 @@ class teacherprofile:
         btn_search = Button(self.root, text='Search', font=("King", 20), bg="#e0d2ef", fg="black", cursor="hand2", command=self.search)
         btn_search.place(x=1100, y=150, width=150, height=45)
 
-        # Fetch teacher data from database and populate combo box
+        #==============Fetch data=============
         self.fetch_teachers()
         self.txt_teacher.bind("<<ComboboxSelected>>", self.update_teacher_id)
 
@@ -116,7 +116,7 @@ class teacherprofile:
                     if teacher_data[4]:
                         self.display_image(teacher_data[4])
                     else:
-                        self.display_image(self.default_image_path)  # Show default image if no profile picture is available
+                        self.display_image(self.default_image_path)
                 else:
                     messagebox.showerror("Error", "No record found", parent=self.root)
             except Exception as ex:

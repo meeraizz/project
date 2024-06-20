@@ -20,11 +20,11 @@ class DetailsClass:
             self.populate_data(student_data)
 
     def create_widgets(self):
-        # Title
+        #===============Title==============
         title = Label(self.main_frame, text="Manage Student Details", font=("king", 23, "bold"), bg="#FFB3D2", fg="black")
         title.pack(fill=X, padx=20, pady=10)
 
-        # Variables
+        #============Variables=============
         self.var_id = StringVar()
         self.var_name = StringVar()
         self.var_email = StringVar()
@@ -36,7 +36,7 @@ class DetailsClass:
         self.var_city = StringVar()
         self.var_pin = StringVar()
 
-        # Entry fields and labels
+        #========== Entry and labels==============
         lbl_id = Label(self.main_frame, text="ID No.", font=("king", 15, "bold"), bg="#fff0f3")
         lbl_id.place(x=450, y=60)
         txt_id = Entry(self.main_frame, textvariable=self.var_id, font=("king", 15, "bold"), bg="lightyellow")
@@ -99,7 +99,7 @@ class DetailsClass:
         btn_save = Button(self.main_frame, text="Save", font=("king", 15, "bold"), bg="#FF0090", fg="#fff0f3", cursor="hand2", command=self.save)
         btn_save.place(x=1090, y=400, width=110, height=40)
 
-        # Fetch courses from database
+        
         self.fetch_courses()
 
     def populate_data(self, data):
@@ -133,7 +133,7 @@ class DetailsClass:
                             address TEXT)""")
 
             if self.var_id.get():
-                # Update existing student record
+                
                 cur.execute("""UPDATE student SET name=?, email=?, gender=?, dob=?, contact=?, 
                             course=?, state=?, city=?, pin=?, address=? WHERE id=?""",
                             (self.var_name.get(), self.var_email.get(), self.var_gender.get(),
@@ -142,7 +142,7 @@ class DetailsClass:
                             self.var_pin.get(), self.txt_address.get("1.0", END), self.var_id.get()))
                 messagebox.showinfo("Success", "Student profile updated successfully")
             else:
-                # Insert new student record
+                
                 cur.execute("""INSERT INTO student (name, email, gender, dob, contact, course, 
                             state, city, pin, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                             (self.var_name.get(), self.var_email.get(), self.var_gender.get(),
