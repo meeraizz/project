@@ -63,6 +63,7 @@ class LoginClass:
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load logo image: {e}")
 
+    # In LoginClass login method
     def login(self):
         conn = sqlite3.connect("GradeMaster.db")
         cur = conn.cursor()
@@ -88,7 +89,7 @@ class LoginClass:
                 
                 if user_data[2] == "Student":
                     root = customtkinter.CTk()
-                    app = StudentDashboard(root, student_id=user_id)
+                    app = StudentDashboard(root, student_id=user_id)  # Pass student_id to GradeMaster
                     root.mainloop()
                 elif user_data[2] == "Teacher":
                     root = customtkinter.CTk()
@@ -101,6 +102,7 @@ class LoginClass:
             messagebox.showerror("Error", f"An error occurred: {e}")
         finally:
             conn.close()
+
 
     # Function to open the registration window
     def open_register_window(self):
