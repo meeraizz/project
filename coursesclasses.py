@@ -13,7 +13,7 @@ class ManageCourse:
 
         # Title
         title = tk.Label(self.root, text="Manage Course Details", font=("King", 30, "bold"), bg="#ff80b4", fg="#262626")
-        title.place(x=10, y=15, width=1960, height=35)
+        title.place(x=10, y=15, width=1960, height=70)
 
         # Course ID (Hidden)
         self.var_id = tk.IntVar()
@@ -60,13 +60,13 @@ class ManageCourse:
         btn_clear.place(x=760, y=500, width=110, height=40)
 
         # Search
-        lbl_search = tk.Label(self.root, text="Search by Course Name", font=("King", 15), bg="#fff0f3")
+        lbl_search = tk.Label(self.root, text="Search by Course Name", font=("King", 20), bg="#fff0f3")
         lbl_search.place(x=950, y=150)
         self.var_search = tk.StringVar()
         self.txt_search = tk.Entry(self.root, textvariable=self.var_search, font=("King", 15), bg="#ffffff")
         self.txt_search.place(x=1300, y=150, width=200)
 
-        btn_search = tk.Button(self.root, text="Search", font=("King", 12), bg="#ff80b4", fg="black", command=self.search_course)
+        btn_search = tk.Button(self.root, text="Search", font=("King", 15), bg="#ff80b4", fg="black", command=self.search_course)
         btn_search.place(x=1550, y=150, width=80, height=28)
 
 
