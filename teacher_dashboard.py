@@ -16,6 +16,10 @@ class GradeMastertc:
         self.root.title("Grade Master")
         self.root.geometry("1350x700+0+0")
         self.root.config(bg='#fff0f3')
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+
+        self.root.geometry(f"{screen_width}x{screen_height}+0+0")
         self.root.focus_force()
 
         # ====icons=====
@@ -103,9 +107,11 @@ class GradeMastertc:
 
     def logout(self):
         self.root.destroy()
-
-
+    
 if __name__=="__main__":
     root=customtkinter.CTk()
-    obj=GradeMastertc(root)
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    root.geometry(f"{screen_width}x{screen_height}+0+0")
+    obj=GradeMastertc(root, teacher_id=any)
     root.mainloop()        
