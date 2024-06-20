@@ -53,9 +53,6 @@ def create_db():
                       charges TEXT,
                       description TEXT)''')
 
-    
-
-    
 
     
     cur.execute('''CREATE TABLE IF NOT EXISTS Enrollments (

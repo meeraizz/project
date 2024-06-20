@@ -25,7 +25,7 @@ class teacherprofile:
         self.var_teacher_course = StringVar()
         self.var_profile_picture = StringVar()
         self.id_list = []  # Initialize id_list
-
+        
         #============Widgets==========
         lbl_select = Label(self.root, text="Select Teacher", font=("king", 20, "bold"), bg="#fff0f3")
         lbl_select.place(x=600, y=150)
@@ -42,7 +42,7 @@ class teacherprofile:
         self.txt_teacher.place(x=880, y=150, width=200, height=45)
         self.txt_teacher.set("Select")
         self.txt_name = Entry(self.root, textvariable=self.var_teacher_name, font=("king", 25, "bold"), bg="lightyellow", state='readonly')
-        self.txt_name.place(x=880, y=230, width=370, height=45)
+        self.txt_name.placec
         self.txt_email = Entry(self.root, textvariable=self.var_teacher_email, font=("king", 25, "bold"), bg="lightyellow", state='readonly')
         self.txt_email.place(x=880, y=310, width=370, height=45)
         self.txt_contact = Entry(self.root, textvariable=self.var_teacher_contact, font=("king", 25, "bold"), bg="lightyellow", state='readonly')
