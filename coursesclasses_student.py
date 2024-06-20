@@ -8,7 +8,7 @@ class StudentView:
         self.root = root
         self.student_id = student_id
         self.root.title("Student Courses")
-        self.root.geometry("1200x750+50+200")
+        self.root.geometry("1200x750+0+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 

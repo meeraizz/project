@@ -10,7 +10,7 @@ class StudentCard:
         self.root = root
         self.student_id = student_id
         self.root.title("Grade Master")
-        self.root.geometry("1400x750+50+200")
+        self.root.geometry("1400x750+0+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 

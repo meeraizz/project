@@ -59,7 +59,7 @@ def create_db():
     cur.execute('''CREATE TABLE IF NOT EXISTS Courses (
                       cid INTEGER PRIMARY KEY AUTOINCREMENT,
                       course_name TEXT,
-                      credit_hour INTEGER,
+                      credit_hour INTEGER NOT NULL CHECK(credit_hour > 0),
                       charges TEXT,
                       description TEXT)''')
 

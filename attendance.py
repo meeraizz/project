@@ -9,7 +9,7 @@ class AttendanceManager:
     def __init__(self, root):
         self.root = root
         self.root.title("Attendance Management")
-        self.root.geometry("1200x750+50+200")
+        self.root.geometry("1200x750+0+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
@@ -40,8 +40,11 @@ class AttendanceManager:
         self.calendar = Calendar(self.root, selectmode="day", date_pattern='yyyy-mm-dd', font=("King", 15))
         self.calendar.place(x=750, y=450)
 
-        self.btn_mark_attendance = Button(self.root, text="Mark Attendance", font=("King", 15),bg="#ff80b4", fg="#262626", command=self.mark_attendance,)
-        self.btn_mark_attendance.place(x=850, y=750, width=200, height=35)
+        self.btn_mark_attendance = Button(self.root, text="Mark Present", font=("King", 15), bg="#ff80b4", fg="#262626", command=self.mark_attendance)
+        self.btn_mark_attendance.place(x=750, y=750, width=190, height=35)
+
+        self.btn_mark_absent = Button(self.root, text="Mark Absent", font=("King", 15), bg="#e0d2ef", fg="#262626", command=self.mark_absent)
+        self.btn_mark_absent.place(x=960, y=750, width=190, height=35)
 
         # Initialize student combobox
         self.fetch_students()
@@ -82,16 +85,32 @@ class AttendanceManager:
         # Implement loading of attendance data for the selected student and course into the calendar
 
     def mark_attendance(self):
+        self.mark_status("Present")
+
+    def mark_absent(self):
+        self.mark_status("Absent")
+
+    def mark_status(self, status):
+        if self.student_id is None or self.course_id is None:
+            messagebox.showwarning("Warning", "Please select both a student and a course.")
+            return
+
         selected_date = self.calendar.get_date()
         formatted_date = datetime.strptime(selected_date, "%Y-%m-%d").date()
-        attendance_status = "Present"  # Example, you can implement logic for marking absent or late
         try:
             conn = sqlite3.connect(database="GradeMaster.db")
             cur = conn.cursor()
+            cur.execute("SELECT * FROM Attendance WHERE student_id=? AND course_id=? AND date=?", 
+                        (self.student_id, self.course_id, formatted_date))
+            existing_entry = cur.fetchone()
+            if existing_entry:
+                messagebox.showinfo("Info", "Attendance for this date has already been marked.")
+                return
+
             cur.execute("INSERT INTO Attendance (student_id, course_id, date, status) VALUES (?, ?, ?, ?)",
-                        (self.student_id, self.course_id, formatted_date, attendance_status))
+                        (self.student_id, self.course_id, formatted_date, status))
             conn.commit()
-            messagebox.showinfo("Success", "Attendance marked successfully")
+            messagebox.showinfo("Success", f"Attendance marked as {status} successfully")
         except Exception as e:
             messagebox.showerror("Error", f"Error marking attendance: {str(e)}")
         finally:
