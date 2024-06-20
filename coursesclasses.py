@@ -8,13 +8,13 @@ class ManageCourse:
     def __init__(self, root):
         self.root = root
         self.root.title("Course Enrollment")
-        self.root.geometry("1200x480+80+170")
+        self.root.geometry("1200x750+50+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
         # Title
-        title = tk.Label(self.root, text="Manage Course Details", font=("King", 20, "bold"), bg="#ff80b4", fg="#262626")
-        title.place(x=10, y=15, width=1180, height=35)
+        title = tk.Label(self.root, text="Manage Course Details", font=("King", 30, "bold"), bg="#ff80b4", fg="#262626")
+        title.place(x=0, y=10, width=1960, height=70)
 
         # Course ID (Hidden)
         self.var_id = tk.IntVar()
@@ -62,10 +62,10 @@ class ManageCourse:
 
         # Search
         lbl_search = tk.Label(self.root, text="Search by Course Name", font=("King", 15), bg="#fff0f3")
-        lbl_search.place(x=720, y=60)
+        lbl_search.place(x=720, y=90)
         self.var_search = tk.StringVar()
         self.txt_search = tk.Entry(self.root, textvariable=self.var_search, font=("King", 15), bg="#ffffff")
-        self.txt_search.place(x=950, y=60, width=200)
+        self.txt_search.place(x=1050, y=90, width=200)
 
         btn_search = tk.Button(self.root, text="Search", font=("King", 12), bg="#ff80b4", fg="#ffffff", command=self.search_course)
         btn_search.place(x=1150, y=60, width=80, height=28)
@@ -82,7 +82,7 @@ class ManageCourse:
         self.course_tree.column("credit_hour", width=100)
         self.course_tree.column("charges", width=100)
         self.course_tree.column("description", width=300)
-        self.course_tree.place(x=720, y=100, width=510, height=340)
+        self.course_tree.place(x=720, y=150, width=510, height=340)
         self.course_tree.bind("<ButtonRelease-1>", self.get_selected_course)
 
         self.load_course()
