@@ -78,7 +78,7 @@ class GradeMaster:
         new_window.title("Course Details")
         new_window.geometry("800x600")
         new_window.config(bg='#fff0f3')
-        StudentView(new_window) 
+        StudentView(new_window, self.student_id)
         new_window.transient(self.root)
         new_window.grab_set()
         self.root.wait_window(new_window)

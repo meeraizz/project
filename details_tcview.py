@@ -19,6 +19,17 @@ class detailsclasstc:
         title=Label(self.main_frame, text="Manage Student Details", font=("king",23,"bold"), bg="#FFB3D2", fg="black")
         title.place(x=0, y=10, width=1960, height=70)
 
+        # Variables
+        self.var_id = StringVar()
+        self.var_name = StringVar()
+        self.var_email = StringVar()
+        self.var_gender = StringVar()
+        self.var_dob = StringVar()
+        self.var_contact = StringVar()
+        self.var_course = StringVar()
+        self.var_state = StringVar()
+        self.var_city = StringVar()
+        self.var_pin = StringVar()
 
         #=======search panel=====
         self.var_search=StringVar()
