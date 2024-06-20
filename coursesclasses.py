@@ -5,7 +5,6 @@ import sqlite3
 import customtkinter
 
 class ManageCourse:
-class ManageCourse:
     def __init__(self, root):
         self.root = root
         self.root.title("Course Enrollment")

@@ -134,7 +134,7 @@ class detailsclasstc:
         con=sqlite3.connect(database="Grademaster.db")
         cur=con.cursor()
         try:
-            cur.execute("select name from Courses")
+            cur.execute("select course_name from Courses")
             rows=cur.fetchall()
             if len(rows)>0:
                 self.course_list = [row[0] for row in rows]
