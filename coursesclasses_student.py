@@ -70,7 +70,7 @@ class StudentView:
             SELECT student.id, Courses.course_name
             FROM Enrollments
             JOIN student ON Enrollments.student_id = student.id
-            JOIN Courses ON Enrollments.course_id = Courses.course_id
+            JOIN Courses ON Enrollments.cid = Courses.cid
             WHERE student.id = ?
         ''', (student_id,))
         rows = cursor.fetchall()
@@ -105,7 +105,7 @@ class StudentView:
             student_id = student[0]
 
             # Get the course ID from the course name
-            cursor.execute("SELECT course_id FROM Courses WHERE course_name = ?", (course_name,))
+            cursor.execute("SELECT cid FROM Courses WHERE course_name = ?", (course_name,))
             course = cursor.fetchone()
             if not course:
                 messagebox.showerror("Error", "Invalid Course")
@@ -113,13 +113,13 @@ class StudentView:
             course_id = course[0]
 
             # Check if the student is already enrolled in the course
-            cursor.execute("SELECT * FROM Enrollments WHERE student_id = ? AND course_id = ?", (student_id, course_id))
+            cursor.execute("SELECT * FROM Enrollments WHERE student_id = ? AND cid = ?", (student_id, course_id))
             enrollment = cursor.fetchone()
             if enrollment:
                 messagebox.showinfo("Info", "Student already enrolled in this course")
             else:
                 # Enroll the student in the course
-                cursor.execute("INSERT INTO Enrollments (student_id, course_id) VALUES (?, ?)", (student_id, course_id))
+                cursor.execute("INSERT INTO Enrollments (student_id, cid) VALUES (?, ?)", (student_id, course_id))
                 conn.commit()
                 messagebox.showinfo("Success", "Enrollment successful")
 
@@ -134,5 +134,5 @@ class StudentView:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    StudentView(root, student_id="1221109567")
+    StudentView(root, student_id=any)
     root.mainloop()
