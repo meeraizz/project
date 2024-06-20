@@ -7,6 +7,7 @@ class StudentView:
     def __init__(self, root, student_id):
         self.root = root
         self.student_id = student_id
+
         self.root.title("Student Courses")
         self.root.geometry("800x600+200+100")
         self.root.config(bg='#fff0f3')
