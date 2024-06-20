@@ -36,7 +36,7 @@ def create_db():
         id INTEGER,
         name TEXT,
         email TEXT,
-        contact TEXT,
+        contact INTEGER,
         course TEXT,
         profile_picture BLOB,
         password TEXT

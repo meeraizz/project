@@ -13,7 +13,10 @@ class LoginClass:
         self.root.geometry("1350x700+0+0")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
 
+        self.root.geometry(f"{screen_width}x{screen_height}+0+0")
         #=========Title=========
         title = Label(self.root, text="Login", font=("King", 30, "bold"), bg="#ff80b4", fg="black")
         title.place(x=0, y=10, width=1960, height=70)
@@ -107,5 +110,8 @@ class LoginClass:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    root.geometry(f"{screen_width}x{screen_height}+0+0")
     obj = LoginClass(root)
     root.mainloop()
