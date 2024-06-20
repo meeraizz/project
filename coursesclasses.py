@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
 import sqlite3
-import re
+import customtkinter
 
 class ManageCourse:
     def __init__(self, root):
@@ -47,27 +47,27 @@ class ManageCourse:
         self.txt_description.place(x=150, y=180, width=500, height=100)
 
         # Buttons
-        btn_save = tk.Button(self.root, text="Save", font=("King", 12), bg="#00c853", fg="#ffffff", command=self.save_course)
+        btn_save = tk.Button(self.root, text="Save", font=("King", 12), bg="#ffb3d2", fg="black", command=self.save_course)
         btn_save.place(x=150, y=400, width=110, height=40)
 
-        btn_update = tk.Button(self.root, text="Update", font=("King", 12), bg="#ffa000", fg="#ffffff", command=self.update_course)
+        btn_update = tk.Button(self.root, text="Update", font=("King", 12), bg="#ffb3d2", fg="black", command=self.update_course)
         btn_update.place(x=270, y=400, width=110, height=40)
 
-        btn_delete = tk.Button(self.root, text="Delete", font=("King", 12), bg="#d32f2f", fg="#ffffff", command=self.delete_course)
+        btn_delete = tk.Button(self.root, text="Delete", font=("King", 12), bg="#ffb3d2", fg="black", command=self.delete_course)
         btn_delete.place(x=390, y=400, width=110, height=40)
 
-        btn_clear = tk.Button(self.root, text="Clear", font=("King", 12), bg="#616161", fg="#ffffff", command=self.clear_fields)
+        btn_clear = tk.Button(self.root, text="Clear", font=("King", 12), bg="#ffb3d2", fg="black", command=self.clear_fields)
         btn_clear.place(x=510, y=400, width=110, height=40)
 
         # Search
-        lbl_search = tk.Label(self.root, text="Course Name", font=("King", 15), bg="#fff0f3")
+        lbl_search = tk.Label(self.root, text="Course Name", font=("King", 15), bg="#ffb3d2")
         lbl_search.place(x=720, y=60)
 
         self.var_search = tk.StringVar()
         self.txt_search = tk.Entry(self.root, textvariable=self.var_search, font=("King", 15), bg="#ffffff")
         self.txt_search.place(x=850, y=60, width=180)
 
-        btn_search = tk.Button(self.root, text="Search", font=("King", 12), bg="#ff80b4", fg="#ffffff", command=self.search_course)
+        btn_search = tk.Button(self.root, text="Search", font=("King", 12), bg="#ff80b4", fg="black", command=self.search_course)
         btn_search.place(x=1070, y=60, width=120, height=28)
 
         # Treeview to display courses
@@ -200,6 +200,6 @@ class ManageCourse:
         self.var_description.set(course_data[4])
 
 if __name__ == "__main__":
-    root = tk.Tk()
+    root = customtkinter.CTk()
     obj = ManageCourse(root)
     root.mainloop()

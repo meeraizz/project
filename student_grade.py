@@ -106,10 +106,10 @@ class gradeclass:
                 if row:
                     messagebox.showerror("Error", "Result already present", parent=self.root)
                 else:
-                    cur.execute("INSERT INTO grade (id, name, course, marks) VALUES (?, ?, ?, ?)", (
+                    cur.execute("INSERT INTO grade (cid, id, name, marks) VALUES (?, ?, ?, ?)", (
                         self.var_id.get(),
                         self.var_name.get(),
-                        self.var_course_name.get(),
+                        self.var_course.get(),
                         self.var_marks.get(),
                     ))
                     conn.commit()

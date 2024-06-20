@@ -40,7 +40,7 @@ class GradeMaster:
         btn_result = Button(M_Frame, text="Result", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_result)
         btn_result.place(x=1100, y=10, width=270, height=60)
 
-        btn_logout = Button(M_Frame, text="Logout", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2")
+        btn_logout = Button(M_Frame, text="Logout", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.logout)
         btn_logout.place(x=1400, y=10, width=270, height=60)
 
         # ===content_windows===
@@ -84,6 +84,9 @@ class GradeMaster:
         new_top.transient(self.root)  
         new_top.grab_set()  
         new_top.focus_force() 
+
+    def logout(self):
+        self.root.destroy()
 
 
 if __name__ == "__main__":
