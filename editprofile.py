@@ -135,10 +135,7 @@ class editprofile:
             con.close()
             self.root.destroy()  # Close window after submission
 
-
-
 if __name__ == "__main__":
     root = customtkinter.CTk()
     obj = editprofile(root)
     root.mainloop()
-

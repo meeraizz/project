@@ -79,7 +79,6 @@ class teachercard:
         self.root.wait_window(new_top)  # Wait for the edit window to close
         self.load_teacher_data()  # Reload data
 
-
     def display_image(self, file_path):
         if os.path.exists(file_path):
             try:
@@ -113,9 +112,7 @@ class teachercard:
         finally:
             conn.close()
 
-
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    # For testing, replace `any` with an actual teacher_id
     obj = teachercard(root, teacher_id=121)
     root.mainloop()

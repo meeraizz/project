@@ -37,14 +37,24 @@ def create_db():
         id INTEGER,
         name TEXT,
         email TEXT,
-        contact TEXT,
+        contact INETEGER,
         course TEXT,
         profile_picture BLOB,
         password TEXT
     )
     """)    
 
-
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS Attendance (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        student_id INTEGER,
+        course_id INTEGER,
+        date TEXT,
+        status TEXT,
+        FOREIGN KEY (student_id) REFERENCES student (id),
+        FOREIGN KEY (course_id) REFERENCES Courses (cid)
+    )
+    """)
 
     cur.execute('''CREATE TABLE IF NOT EXISTS Courses (
                       cid INTEGER PRIMARY KEY AUTOINCREMENT,

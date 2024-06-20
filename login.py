@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox, ttk
 import sqlite3
 import customtkinter
-from student_dashboard import GradeMaster as StudentDashboard  
+from student_dashboard import GradeMaster as StudentDashboard  # Assuming these imports are correct
 from teacher_dashboard import GradeMastertc as TeacherDashboard
 from register import RegisterClass
 
@@ -37,19 +37,23 @@ class LoginClass:
 
         lbl_id = Label(self.login_frame, text="ID", bg='#fff0f3', fg="#FF69B4", font=("Arial", 14))
         lbl_id.place(x=50, y=150)
-        self.text_id = Entry(self.login_frame, textvariable=self.var_id, font=("Arial", 16), bd=2, relief="groove", width=25)
+        self.text_id = Entry(self.login_frame, textvariable=self.var_id, font=("King", 16), bd=2, relief="groove", width=25)
         self.text_id.place(x=150, y=150)
 
-        lbl_password = Label(self.login_frame, text="Password", bg='#fff0f3', fg="#FF69B4", font=("Arial", 14))
+        lbl_password = Label(self.login_frame, text="Password", bg='#fff0f3', fg="#FF69B4", font=("King", 14))
         lbl_password.place(x=50, y=250)
-        self.text_password = Entry(self.login_frame, textvariable=self.var_password, show="*", font=("Arial", 16), bd=2, relief="groove", width=25)
+        self.text_password = Entry(self.login_frame, textvariable=self.var_password, show="*", font=("King", 16), bd=2, relief="groove", width=25)
         self.text_password.place(x=150, y=250)
 
         #==========Button Widgets==========
-        btn_login = Button(self.login_frame, text="Login", bg="#FF69B4", fg="#FFFFFF", font=("Arial", 16), command=self.login)
-        btn_login.place(x=150, y=350, width=150, height=45)
-        btn_register = Button(self.login_frame, text="Register", bg="#FF69B4", fg="#FFFFFF", font=("Arial", 16), command=self.open_register_window)
-        btn_register.place(x=350, y=350, width=150, height=45)
+        btn_login = Button(self.login_frame, text="Login", bg="#FF69B4", fg="black", font=("King", 16), command=self.login)
+        btn_login.place(x=150, y=350, width=100, height=30)
+        btn_register = Button(self.login_frame, text="Register", bg="#FF69B4", fg="black", font=("King", 16), command=self.open_register_window)
+        btn_register.place(x=350, y=350, width=120, height=30)
+
+        # Add Forgot Password button
+        btn_forgot_password = Button(self.login_frame, text="Forgot Password?", bg="#FF69B4", fg="black", font=("King", 16), command=self.open_forgot_password_window)
+        btn_forgot_password.place(x=200, y=420, width=220, height=30)
 
         #==========Logo==========
         try:
@@ -104,6 +108,56 @@ class LoginClass:
         register_window.title("Register")
         register_window.geometry("800x600")
         RegisterClass(register_window)
+
+    # Function to open the forgot password window
+    def open_forgot_password_window(self):
+        forgot_window = Toplevel(self.root)
+        forgot_window.title("Forgot Password")
+        forgot_window.geometry("900x700+200+100")
+        forgot_window.config(bg='#fff0f3')
+
+        # Variables for the forgot password window
+        var_forgot_id = StringVar()
+        var_new_password = StringVar()
+
+        Label(forgot_window, text="Enter ID", bg='#fff0f3', fg="#FF69B4", font=("Arial", 14)).place(x=200, y=150)
+        Entry(forgot_window, textvariable=var_forgot_id, font=("Arial", 14), bd=2, relief="groove", width=25).place(x=400, y=150)
+
+        Label(forgot_window, text="New Password", bg='#fff0f3', fg="#FF69B4", font=("Arial", 14)).place(x=200, y=200)
+        Entry(forgot_window, textvariable=var_new_password, font=("Arial", 14), bd=2, relief="groove", width=25, show='*').place(x=400, y=200)
+
+        Button(forgot_window, text="Submit", bg="#FF69B4", fg="black", font=("Arial", 14), command=lambda: self.reset_password(var_forgot_id.get(), var_new_password.get(), forgot_window)).place(x=400, y=250, width=100, height=30)
+
+    # Function to reset password
+    def reset_password(self, user_id, new_password, window):
+        if user_id == "" or new_password == "":
+            messagebox.showerror("Error", "All fields are required", parent=window)
+            return
+
+        conn = sqlite3.connect("GradeMaster.db")
+        cur = conn.cursor()
+        
+        try:
+            # Check if the user exists
+            cur.execute("SELECT id FROM student WHERE id = ? UNION ALL SELECT id FROM teacher WHERE id = ?", (user_id, user_id))
+            user = cur.fetchone()
+
+            if user:
+                # Update the password for the student
+                cur.execute("UPDATE student SET password = ? WHERE id = ?", (new_password, user_id))
+                # Update the password for the teacher
+                cur.execute("UPDATE teacher SET password = ? WHERE id = ?", (new_password, user_id))
+                conn.commit()
+
+                messagebox.showinfo("Success", "Password has been reset successfully", parent=window)
+                window.destroy()  # Close the forgot password window
+            else:
+                messagebox.showerror("Error", "User ID does not exist", parent=window)
+        
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}", parent=window)
+        finally:
+            conn.close()
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
