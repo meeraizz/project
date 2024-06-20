@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox, ttk
 import sqlite3
 import customtkinter
-from student_dashboard import GradeMaster as StudentDashboard
+from student_dashboard import GradeMaster as StudentDashboard  
 from teacher_dashboard import GradeMastertc as TeacherDashboard
 from register import RegisterClass
 
@@ -10,45 +10,64 @@ class LoginClass:
     def __init__(self, root):
         self.root = root
         self.root.title("Grade Master")
-        self.root.geometry("800x600")
+        self.root.geometry("1350x700+0+0")
         self.root.config(bg='#fff0f3')
+        self.root.focus_force()
 
-        # Frame
-        self.frame = Frame(self.root, bg='#fff0f3')
-        self.frame.pack(expand=True)
+        #=========Title=========
+        title = Label(self.root, text="Login", font=("King", 30, "bold"), bg="#ff80b4", fg="black")
+        title.place(x=0, y=10, width=1960, height=70)
 
-        # Login Form
-        login_label = Label(self.frame, text="User Login", bg='#FF69B4', fg="#FFFFFF", font=("Arial", 24, "bold"))
-        id_label = Label(self.frame, text="ID", bg='#fff0f3', fg="#FF69B4", font=("Arial", 14))
-        self.id_entry = Entry(self.frame, font=("Arial", 16), bd=2, relief="groove", width=25)
-        password_label = Label(self.frame, text="Password", bg='#fff0f3', fg="#FF69B4", font=("Arial", 14))
-        self.password_entry = Entry(self.frame, show="*", font=("Arial", 16), bd=2, relief="groove", width=25)
-        role_label = Label(self.frame, text="Role", bg='#fff0f3', fg="#FF69B4", font=("Arial", 14))
-        self.role = StringVar()
-        self.role_combobox = ttk.Combobox(self.frame, textvariable=self.role, values=["Teacher", "Student"], font=("Arial", 14), width=28)
-        login_button = Button(self.frame, text="Login", bg="#FF69B4", fg="#FFFFFF", font=("Arial", 16), command=self.login)
-        register_button = Button(self.frame, text="Register", bg="#FF69B4", fg="#FFFFFF", font=("Arial", 16), command=self.open_register_window)
+        #========Variables============
+        self.var_id = StringVar()
+        self.var_password = StringVar()
+        self.var_role = StringVar()
 
-        # Grid layout for UI elements
-        login_label.grid(row=0, column=1, columnspan=2, pady=10)
-        id_label.grid(row=1, column=1, sticky='e', padx=10)
-        self.id_entry.grid(row=1, column=2, pady=10)
-        password_label.grid(row=2, column=1, sticky='e', padx=10)
-        self.password_entry.grid(row=2, column=2, pady=10)
-        role_label.grid(row=3, column=1, sticky='e', padx=10)
-        self.role_combobox.grid(row=3, column=2, pady=10)
-        login_button.grid(row=4, column=1, pady=30)
-        register_button.grid(row=4, column=2, pady=30)
+        #=========Frame for Inputs=========
+        self.login_frame = Frame(self.root, bg='#fff0f3', bd=2, relief="groove")
+        self.login_frame.place(x=250, y=200, width=700, height=500)
+
+        #==========Label and Entry Widgets===========
+        lbl_role = Label(self.login_frame, text="Role", bg='#fff0f3', fg="#FF69B4", font=("Arial", 14))
+        lbl_role.place(x=50, y=50)
+        self.role_combobox = ttk.Combobox(self.login_frame, textvariable=self.var_role, font=("Arial", 14), width=23, state="readonly")
+        self.role_combobox['values'] = ("Student", "Teacher")
+        self.role_combobox.place(x=150, y=50)
+        self.role_combobox.current(0)
+
+        lbl_id = Label(self.login_frame, text="ID", bg='#fff0f3', fg="#FF69B4", font=("Arial", 14))
+        lbl_id.place(x=50, y=150)
+        self.text_id = Entry(self.login_frame, textvariable=self.var_id, font=("Arial", 16), bd=2, relief="groove", width=25)
+        self.text_id.place(x=150, y=150)
+
+        lbl_password = Label(self.login_frame, text="Password", bg='#fff0f3', fg="#FF69B4", font=("Arial", 14))
+        lbl_password.place(x=50, y=250)
+        self.text_password = Entry(self.login_frame, textvariable=self.var_password, show="*", font=("Arial", 16), bd=2, relief="groove", width=25)
+        self.text_password.place(x=150, y=250)
+
+        #==========Button Widgets==========
+        btn_login = Button(self.login_frame, text="Login", bg="#FF69B4", fg="#FFFFFF", font=("Arial", 16), command=self.login)
+        btn_login.place(x=150, y=350, width=150, height=45)
+        btn_register = Button(self.login_frame, text="Register", bg="#FF69B4", fg="#FFFFFF", font=("Arial", 16), command=self.open_register_window)
+        btn_register.place(x=350, y=350, width=150, height=45)
+
+        #==========Logo==========
+        try:
+            self.logo_img = PhotoImage(file="images/Grade-Master_Logo.png") 
+            logo_label = Label(self.root, image=self.logo_img, bg='#fff0f3')
+            logo_label.place(x=1200, y=200, width=500, height=500)
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load logo image: {e}")
 
     def login(self):
-            conn = sqlite3.connect("GradeMaster.db")
-            cur = conn.cursor()
-            
-            user_id = self.id_entry.get()
-            password = self.password_entry.get()
-            role = self.role.get()
-            
-            # Adjust the query to select from both student and teacher tables
+        conn = sqlite3.connect("GradeMaster.db")
+        cur = conn.cursor()
+        
+        user_id = self.var_id.get()
+        password = self.var_password.get()
+        role = self.var_role.get()
+        
+        try:
             cur.execute('''
                         SELECT id, password, 'Student' AS role FROM student 
                         WHERE id = ? AND password = ?
@@ -73,7 +92,10 @@ class LoginClass:
                     root.mainloop()
             else:
                 messagebox.showerror(title="Error", message="Invalid login")
-            
+        
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
+        finally:
             conn.close()
 
     # Function to open the registration window

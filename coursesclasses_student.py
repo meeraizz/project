@@ -110,7 +110,7 @@ class StudentView:
             if not course:
                 messagebox.showerror("Error", "Invalid Course")
                 return
-            cid = course[0]
+            course_id = course[0]
 
             # Check if the student is already enrolled in the course
             cursor.execute("SELECT * FROM Enrollments WHERE student_id = ? AND cid = ?", (student_id, course_id))

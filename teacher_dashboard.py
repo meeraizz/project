@@ -58,9 +58,9 @@ class GradeMastertc:
         self.lbl_bg.place(x=820, y=230, width=1000, height=600)
 
 
-        self.lbl_course = Label(self.root, text="Total Course\n[ 0 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=50, y=300, width=350, height=150)
-        self.lbl_teacher = Label(self.root, text="Total Teacher\n[ 2 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=430, y=300, width=350, height=150)
-        self.lbl_student = Label(self.root, text="Total Student\n[ 2 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=230, y=500, width=350, height=150)
+        self.lbl_course = Label(self.root, text="Total Course\n[ 0 ]", font=("King", 20), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=50, y=300, width=350, height=150)
+        self.lbl_teacher = Label(self.root, text="Total Teacher\n[ 2 ]", font=("King", 20), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=430, y=300, width=350, height=150)
+        self.lbl_student = Label(self.root, text="Total Student\n[ 2 ]", font=("King", 20), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=230, y=500, width=350, height=150)
 
 
     def add_course(self):
