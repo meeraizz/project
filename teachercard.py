@@ -117,5 +117,5 @@ class teachercard:
 if __name__ == "__main__":
     root = customtkinter.CTk()
     # For testing, replace `any` with an actual teacher_id
-    obj = teachercard(root, teacher_id=any)
+    obj = teachercard(root, teacher_id=121)
     root.mainloop()

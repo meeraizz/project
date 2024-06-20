@@ -24,7 +24,7 @@ class GradeMastertc:
 
         # ====icons=====
         self.logo_image = Image.open("images/Grade-Master_Logo.png")
-        self.logo_image = self.logo_image.resize((70, 70), Image.LANCZOS) 
+        self.logo_image = self.logo_image.resize((70, 70), Image.LANCZOS)
         self.logo_dash = ImageTk.PhotoImage(self.logo_image)
 
         # ======title==========
@@ -50,62 +50,94 @@ class GradeMastertc:
         btn_logout.place(x=1400, y=10, width=270, height=60)
 
         self.bg_img = Image.open("images/bg.jpg")
-        self.bg_img = self.bg_img.resize((1000, 600), Image.LANCZOS) 
+        self.bg_img = self.bg_img.resize((1000, 600), Image.LANCZOS)
         self.bg_img = ImageTk.PhotoImage(self.bg_img)
         self.lbl_bg = Label(self.root, image=self.bg_img)
         self.lbl_bg.place(x=820, y=230, width=1000, height=600)
 
-        self.lbl_course = Label(self.root, text="Total Course\n[ 0 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black")
+        self.lbl_course = Label(self.root, text="Total Course\n[ 0 ]", font=("King", 20), bd=10, relief="ridge", bg="#ffb3d2", fg="black")
         self.lbl_course.place(x=50, y=300, width=350, height=150)
-        
-        self.lbl_teacher = Label(self.root, text="Total Teacher\n[ 0 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black")
+        self.lbl_teacher = Label(self.root, text="Total Teacher\n[ 0 ]", font=("King", 20), bd=10, relief="ridge", bg="#ffb3d2", fg="black")
         self.lbl_teacher.place(x=430, y=300, width=350, height=150)
-        
-        self.lbl_student = Label(self.root, text="Total Student\n[ 0 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black")
+        self.lbl_student = Label(self.root, text="Total Student\n[ 0 ]", font=("King", 20), bd=10, relief="ridge", bg="#ffb3d2", fg="black")
         self.lbl_student.place(x=230, y=500, width=350, height=150)
 
+        # Call the update_counts method to set initial counts
         self.update_counts()
+        # Schedule the update_counts method to be called every 5 seconds
+        self.root.after(5000, self.update_counts)
 
-    def update_counts(self):
-        con = sqlite3.connect(database="GradeMaster.db")
-        cur = con.cursor()
+    def fetch_total_courses(self):
+        conn = sqlite3.connect(database="GradeMaster.db")
+        cur = conn.cursor()
         try:
             cur.execute("SELECT COUNT(*) FROM Courses")
             total_courses = cur.fetchone()[0]
-            self.lbl_course.config(text=f"Total Course\n[ {total_courses} ]")
+            return total_courses
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error fetching total courses: {str(ex)}")
+            return 0
+        finally:
+            conn.close()
 
+    def fetch_total_teachers(self):
+        conn = sqlite3.connect(database="GradeMaster.db")
+        cur = conn.cursor()
+        try:
             cur.execute("SELECT COUNT(*) FROM teacher")
             total_teachers = cur.fetchone()[0]
-            self.lbl_teacher.config(text=f"Total Teacher\n[ {total_teachers} ]")
-
-            cur.execute("SELECT COUNT(*) FROM student")
-            total_students = cur.fetchone()[0]
-            self.lbl_student.config(text=f"Total Student\n[ {total_students} ]")
+            return total_teachers
         except Exception as ex:
-            messagebox.showerror("Error", f"Error fetching counts: {str(ex)}")
+            messagebox.showerror("Error", f"Error fetching total teachers: {str(ex)}")
+            return 0
         finally:
-            con.close()
+            conn.close()
+
+    def fetch_total_students(self):
+        conn = sqlite3.connect(database="GradeMaster.db")
+        cur = conn.cursor()
+        try:
+            cur.execute("SELECT COUNT(*) FROM Student")
+            total_students = cur.fetchone()[0]
+            return total_students
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error fetching total students: {str(ex)}")
+            return 0
+        finally:
+            conn.close()
+
+    def update_counts(self):
+        total_courses = self.fetch_total_courses()
+        total_teachers = self.fetch_total_teachers()
+        total_students = self.fetch_total_students()
+
+        self.lbl_course.config(text=f"Total Course\n[ {total_courses} ]")
+        self.lbl_teacher.config(text=f"Total Teacher\n[ {total_teachers} ]")
+        self.lbl_student.config(text=f"Total Student\n[ {total_students} ]")
+
+        # Schedule the next update
+        self.root.after(5000, self.update_counts)
 
     def add_course(self):
         new_top = customtkinter.CTkToplevel(self.root)
         new_window = ManageCourse(new_top)
-        new_top.transient(self.root)  
-        new_top.grab_set()  
-        new_top.focus_force() 
+        new_top.transient(self.root)
+        new_top.grab_set()
+        new_top.focus_force()
 
     def add_student(self):
         new_top = customtkinter.CTkToplevel(self.root)
         new_window = detailsclasstc(new_top)
-        new_top.transient(self.root)  
-        new_top.grab_set()  
-        new_top.focus_force() 
+        new_top.transient(self.root)
+        new_top.grab_set()
+        new_top.focus_force()
 
     def add_grade(self):
         new_top = customtkinter.CTkToplevel(self.root)
         new_window = gradeclass(new_top)
-        new_top.transient(self.root)  
-        new_top.grab_set()  
-        new_top.focus_force() 
+        new_top.transient(self.root)
+        new_top.grab_set()
+        new_top.focus_force()
 
     def show_profile(self):
         new_top = customtkinter.CTkToplevel(self.root)
@@ -117,9 +149,9 @@ class GradeMastertc:
     def add_result(self):
         new_top = customtkinter.CTkToplevel(self.root)
         new_window = ReportClass(new_top, self.teacher_id)
-        new_top.transient(self.root)  
-        new_top.grab_set()  
-        new_top.focus_force() 
+        new_top.transient(self.root)
+        new_top.grab_set()
+        new_top.focus_force()
 
     def logout(self):
         self.root.destroy()
@@ -129,5 +161,5 @@ if __name__ == "__main__":
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
     root.geometry(f"{screen_width}x{screen_height}+0+0")
-    obj = GradeMastertc(root, teacher_id=any)
+    obj = GradeMastertc(root, teacher_id=1)
     root.mainloop()
