@@ -7,7 +7,7 @@ class ManageCourse:
     def __init__(self, root):
         self.root = root
         self.root.title("Course Enrollment")
-        self.root.geometry("1200x750+50+200")
+        self.root.geometry("1500x750+0+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
@@ -28,7 +28,7 @@ class ManageCourse:
         # Credit Hour
         lbl_credit_hours = tk.Label(self.root, text="Credit Hour", font=("King", 20), bg="#fff0f3")
         lbl_credit_hours.place(x=200, y=210)
-        self.var_credit_hours = tk.IntVar()
+        self.var_credit_hours = tk.StringVar()
         self.txt_credit_hours = tk.Entry(self.root, textvariable=self.var_credit_hours, font=("King", 20), bg="#ffffff")
         self.txt_credit_hours.place(x=400, y=210, width=200)
 
@@ -103,8 +103,14 @@ class ManageCourse:
             messagebox.showerror("Error", "All fields are required")
             return
 
+        try:
+            credit_hours = int(self.var_credit_hours.get())
+        except ValueError:
+            messagebox.showerror("Error", "Credit Hour must be a number")
+            return
+
         self.execute_db("INSERT INTO Courses (course_name, credit_hour, charges, description) VALUES (?, ?, ?, ?)",
-                        (self.var_name.get(), self.var_credit_hours.get(), self.var_charges.get(), self.var_description.get()))
+                        (self.var_name.get(), credit_hours, self.var_charges.get(), self.var_description.get()))
         
         messagebox.showinfo("Success", "Course added successfully!")
         self.load_course()
@@ -120,10 +126,16 @@ class ManageCourse:
             messagebox.showerror("Error", "Please select a course to update")
             return
 
+        try:
+            credit_hours = int(self.var_credit_hours.get())
+        except ValueError:
+            messagebox.showerror("Error", "Credit Hour must be a number")
+            return
+
         course_id = self.course_tree.item(selected_item)['values'][0]
 
         self.execute_db("UPDATE Courses SET course_name=?, credit_hour=?, charges=?, description=? WHERE course_id=?",
-                        (self.var_name.get(), self.var_credit_hours.get(), self.var_charges.get(), self.var_description.get(), course_id))
+                        (self.var_name.get(), credit_hours, self.var_charges.get(), self.var_description.get(), course_id))
         
         messagebox.showinfo("Success", "Course updated successfully!")
         self.load_course()
@@ -153,15 +165,15 @@ class ManageCourse:
         self.course_tree.selection_remove(self.course_tree.selection())
 
     def search_course(self):
-            name = self.var_search.get()
-            conn = sqlite3.connect('Grademaster.db')
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Courses WHERE course_name LIKE ?", ('%' + name + '%',))
-            rows = cursor.fetchall()
-            self.course_tree.delete(*self.course_tree.get_children())
-            for row in rows:
-                self.course_tree.insert('', 'end', values=row)
-            conn.close()
+        name = self.var_search.get()
+        conn = sqlite3.connect('Grademaster.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM Courses WHERE course_name LIKE ?", ('%' + name + '%',))
+        rows = cursor.fetchall()
+        self.course_tree.delete(*self.course_tree.get_children())
+        for row in rows:
+            self.course_tree.insert('', 'end', values=row)
+        conn.close()
 
     def load_course(self):
         self.course_tree.delete(*self.course_tree.get_children())

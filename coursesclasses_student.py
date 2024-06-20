@@ -8,13 +8,9 @@ class StudentView:
         self.root = root
         self.student_id = student_id
         self.root.title("Student Courses")
-        self.root.geometry("1200x750+50+200")
+        self.root.geometry("1500x750+0+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = self.root.winfo_screenheight()
-
-        self.root.geometry(f"{screen_width}x{screen_height}+0+0")
 
         # Title
         title = tk.Label(self.root, text="Student Courses", font=("King", 30, "bold"), bg="#ff80b4", fg="#262626")
@@ -138,8 +134,5 @@ class StudentView:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight()
-    root.geometry(f"{screen_width}x{screen_height}+0+0")
     StudentView(root, student_id=any)
     root.mainloop()

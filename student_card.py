@@ -9,17 +9,17 @@ class StudentCard:
     def __init__(self, root, student_id):
         self.root = root
         self.student_id = student_id
-        self.root.title("Grade Master")
-        self.root.geometry("1400x750+50+200")
+        self.root.title("Student Profile")
+        self.root.geometry("1500x750+0+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
         # =============Title==================
         title = Label(self.root, text="Student Profile", font=("King", 30, "bold"), bg="#ff80b4", fg="#262626")
-        title.place(x=0, y=10, width=1450, height=70)
+        title.place(x=0, y=10, width=1960, height=70)
 
         self.main_frame = Frame(self.root, bd=2, relief=RIDGE, bg="white")
-        self.main_frame.place(x=175, y=100, width=1000, height=500)
+        self.main_frame.place(x=500, y=100, width=1000, height=500)
         self.create_widgets()
 
     def create_widgets(self):
