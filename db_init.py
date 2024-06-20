@@ -43,19 +43,12 @@ def create_db():
     )
     """)    
 
-
-
     cur.execute('''CREATE TABLE IF NOT EXISTS Courses (
                       cid INTEGER PRIMARY KEY AUTOINCREMENT,
                       course_name TEXT,
                       credit_hour INTEGER,
                       charges TEXT,
                       description TEXT)''')
-
-    
-
-    
-
     
     cur.execute('''CREATE TABLE IF NOT EXISTS Enrollments (
                       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -63,7 +56,6 @@ def create_db():
                       cid INTEGER,
                       FOREIGN KEY (student_id) REFERENCES student (id),
                       FOREIGN KEY (cid) REFERENCES Courses (cid))''')
-
 
     con.commit()
     con.close()

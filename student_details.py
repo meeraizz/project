@@ -93,8 +93,7 @@ class DetailsClass:
         btn_save = Button(self.main_frame, text="Save", font=("king", 15, "bold"), bg="#FF0090", fg="#fff0f3", cursor="hand2", command=self.save)
         btn_save.place(x=1090, y=400, width=110, height=40)
 
-
-
+    #=========================================================================
     def populate_data(self, data):
         self.var_id.set(data.get('id', ''))
         self.var_name.set(data.get('name', ''))
@@ -125,7 +124,6 @@ class DetailsClass:
                             address TEXT)""")
 
             if self.var_id.get():
-                # Update existing student record
                 cur.execute("""UPDATE student SET name=?, email=?, gender=?, dob=?, contact=?, 
                             state=?, city=?, pin=?, address=? WHERE id=?""",
                             (self.var_name.get(), self.var_email.get(), self.var_gender.get(),
@@ -134,7 +132,6 @@ class DetailsClass:
                             self.var_pin.get(), self.txt_address.get("1.0", END), self.var_id.get()))
                 messagebox.showinfo("Success", "Student profile updated successfully")
             else:
-                # Insert new student record
                 cur.execute("""INSERT INTO student (name, email, gender, dob, contact,
                             state, city, pin, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                             (self.var_name.get(), self.var_email.get(), self.var_gender.get(),
@@ -151,8 +148,6 @@ class DetailsClass:
             print(f"Error interacting with database: {e}")
         finally:
             con.close()
-
-
 
     def close_window(self):
         self.root.destroy() 

@@ -57,9 +57,35 @@ class GradeMaster:
         self.lbl_bg = Label(self.root, image=self.bg_img)
         self.lbl_bg.place(x=820, y=230, width=1000, height=600)
 
-        self.lbl_course = Label(self.root, text="Total Course\n[ 0 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=50, y=300, width=350, height=150)
-        self.lbl_teacher = Label(self.root, text="Total Teacher\n[ 2 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=430, y=300, width=350, height=150)
-        self.lbl_student = Label(self.root, text="Total Student\n[ 2 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black").place(x=230, y=500, width=350, height=150)
+        self.lbl_course = Label(self.root, text="Total Course\n[ 0 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black")
+        self.lbl_course.place(x=50, y=300, width=350, height=150)
+        self.lbl_teacher = Label(self.root, text="Total Teacher\n[ 0 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black")
+        self.lbl_teacher.place(x=430, y=300, width=350, height=150)
+        self.lbl_student = Label(self.root, text="Total Student\n[ 0 ]", font=("King", 25), bd=10, relief="ridge", bg="#ffb3d2", fg="black")
+        self.lbl_student.place(x=230, y=500, width=350, height=150)
+
+        self.update_counts()
+
+    def update_counts(self):
+        con = sqlite3.connect(database="GradeMaster.db")
+        cur = con.cursor()
+        try:
+            cur.execute("SELECT COUNT(*) FROM Courses")
+            total_courses = cur.fetchone()[0]
+
+            cur.execute("SELECT COUNT(*) FROM teacher")
+            total_teachers = cur.fetchone()[0]
+
+            cur.execute("SELECT COUNT(*) FROM student")
+            total_students = cur.fetchone()[0]
+
+            self.lbl_course.config(text=f"Total Course\n[ {total_courses} ]")
+            self.lbl_teacher.config(text=f"Total Teacher\n[ {total_teachers} ]")
+            self.lbl_student.config(text=f"Total Student\n[ {total_students} ]")
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error fetching counts: {str(ex)}")
+        finally:
+            con.close()
 
     def add_student(self):
         print("Profile button clicked")  
@@ -71,6 +97,7 @@ class GradeMaster:
         new_window.transient(self.root)  
         new_window.grab_set()  
         self.root.wait_window(new_window)  
+        self.update_counts()  
 
     def add_course(self):
         print("Course button clicked")  
@@ -82,6 +109,7 @@ class GradeMaster:
         new_window.transient(self.root)
         new_window.grab_set()
         self.root.wait_window(new_window)
+        self.update_counts()  
 
     def add_teacher(self):
         print("Teacher button clicked")  
@@ -93,6 +121,7 @@ class GradeMaster:
         new_window.transient(self.root)
         new_window.grab_set()
         self.root.wait_window(new_window)
+        self.update_counts()  
 
     def add_result(self):
         print("Result button clicked")  
@@ -114,5 +143,5 @@ if __name__ == "__main__":
     screen_height = root.winfo_screenheight()
     root.geometry(f"{screen_width}x{screen_height}+0+0")
 
-    obj = GradeMaster(root, student_id=any)
+    obj = GradeMaster(root, student_id=any)  
     root.mainloop()
