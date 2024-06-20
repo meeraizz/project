@@ -18,14 +18,11 @@ class ReportClass:
         self.main_frame.pack(fill=BOTH, expand=True)
 
         self.create_widgets()
-        self.fetch_student_record()   # Fetch and display all records when the window opens
+        self.fetch_student_record()
 
     def create_widgets(self):
-        # =====title======
         title = Label(self.main_frame, text="View Student Results", font=("king", 23, "bold"), bg="#FFB3D2", fg="black")
         title.pack(fill=X)
-
-        # =====search======
 
         self.var_id = ""
         self.var_student_id = StringVar()
@@ -33,7 +30,6 @@ class ReportClass:
         btn_print = Button(self.main_frame, text="Print", font=("king", 15, "bold"), bg="#DE3163", fg="#fff0f3", cursor="hand2", command=self.print_as_pdf)
         btn_print.place(x=950, y=500, width=100, height=35)
 
-        # =====result_labels======
         lbl_id = Label(self.main_frame, text="ID No.", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE)
         lbl_id.place(x=300, y=180, width=150, height=50)
         
@@ -58,36 +54,9 @@ class ReportClass:
         self.name = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.name.place(x=450, y=230, width=450, height=50)
 
-        self.course1 = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
-        self.course1.place(x=300, y=330, width=150, height=50)
-        
-        self.course2 = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
-        self.course2.place(x=300, y=380, width=150, height=50)
-        
-        self.course3 = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
-        self.course3.place(x=300, y=430, width=150, height=50)
-
-        self.marks1_var = StringVar()
-        self.marks2_var = StringVar()
-        self.marks3_var = StringVar()
-        
-        self.marks1 = Label(self.main_frame, textvariable=self.marks1_var, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
-        self.marks1.place(x=450, y=330, width=150, height=50)
-        
-        self.marks2 = Label(self.main_frame, textvariable=self.marks2_var, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
-        self.marks2.place(x=450, y=380, width=150, height=50)
-        
-        self.marks3 = Label(self.main_frame, textvariable=self.marks3_var, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
-        self.marks3.place(x=450, y=430, width=150, height=50)
-
-        self.grades1 = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
-        self.grades1.place(x=600, y=330, width=150, height=50)
-        
-        self.grades2 = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
-        self.grades2.place(x=600, y=380, width=150, height=50)
-        
-        self.grades3 = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
-        self.grades3.place(x=600, y=430, width=150, height=50)
+        self.course_labels = []
+        self.marks_vars = []
+        self.grade_labels = []
 
         self.gpa = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
         self.gpa.place(x=750, y=330, width=150, height=50)
@@ -96,25 +65,35 @@ class ReportClass:
         con = sqlite3.connect(database="GradeMaster.db")
         cur = con.cursor()
         try:
-            cur.execute("SELECT * FROM grade WHERE id=?", (self.student_id,))
-            row = cur.fetchone()
-            print(row)  # Debugging statement
-            if row:
-                # Display fetched data
-                self.var_id = row[0]
-                self.id.config(text=row[1])
-                self.name.config(text=row[2])
-                self.course1.config(text=row[3])
-                self.marks1_var.set(str(row[6]))
-                self.grades1.config(text=row[9])
-                self.course2.config(text=row[4])
-                self.marks2_var.set(str(row[7]))
-                self.grades2.config(text=row[10])
-                self.course3.config(text=row[5])
-                self.marks3_var.set(str(row[8]))
-                self.grades3.config(text=row[11])
+            query = """
+                SELECT g.id, g.name, c.course_name, g.marks, g.grade, c.credit_hour
+                FROM grade g
+                JOIN Courses c ON g.course = c.cid
+                WHERE g.id=?
+            """
+            cur.execute(query, (self.student_id,))
+            rows = cur.fetchall()
+            print(rows)  # Debugging statement
+            if rows:
+                self.var_id = rows[0][0]
+                self.id.config(text=rows[0][0])
+                self.name.config(text=rows[0][1])
+
+                for i, row in enumerate(rows):
+                    course_lbl = Label(self.main_frame, text=row[2], font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+                    course_lbl.place(x=300, y=330 + i * 50, width=150, height=50)
+                    self.course_labels.append(course_lbl)
+
+                    marks_var = StringVar(value=str(row[3]))
+                    marks_lbl = Label(self.main_frame, textvariable=marks_var, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+                    marks_lbl.place(x=450, y=330 + i * 50, width=150, height=50)
+                    self.marks_vars.append(marks_var)
+
+                    grade_lbl = Label(self.main_frame, text=row[4], font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+                    grade_lbl.place(x=600, y=330 + i * 50, width=150, height=50)
+                    self.grade_labels.append(grade_lbl)
                 
-                self.calculate_gpa([row])  # Pass a list with the single row for GPA calculation
+                self.calculate_gpa(rows)  # Pass all rows for GPA calculation
             else:
                 messagebox.showinfo("Info", "No record found for this student ID", parent=self.root)
         except Exception as ex:
@@ -133,8 +112,8 @@ class ReportClass:
             grade_points = {'A+': 4.0, 'A': 4.0, 'A-': 3.7, 'B+': 3.3, 'B': 3.0, 'B-': 2.7, 'C+': 2.3, 'C': 2.0, 'C-': 1.7, 'D+': 1.3, 'D': 1.0, 'F': 0.0}
 
             for row in rows:
-                grade = row[9]  # Adjust according to the correct column index for the grade
-                credit_hours = row[6]  # Adjust according to the correct column index for the credit hours
+                grade = row[4]
+                credit_hours = row[5]  # Credit hours from the query
                 points = grade_points.get(grade, 0) * credit_hours
                 total_points += points
                 total_credits += credit_hours
@@ -161,14 +140,16 @@ class ReportClass:
             c.drawString(100, 750, f"ID No.: {self.id.cget('text')}")
             c.drawString(100, 730, f"Name: {self.name.cget('text')}")
             c.drawString(100, 710, "Courses and Marks:")
-            c.drawString(100, 690, f"Course: {self.course1.cget('text')} - Marks: {self.marks1_var.get()} - Grade: {self.grades1.cget('text')}")
-            c.drawString(100, 670, f"Course: {self.course2.cget('text')} - Marks: {self.marks2_var.get()} - Grade: {self.grades2.cget('text')}")
-            c.drawString(100, 650, f"Course: {self.course3.cget('text')} - Marks: {self.marks3_var.get()} - Grade: {self.grades3.cget('text')}")
-            c.drawString(100, 630, f"GPA: {self.gpa.cget('text')}")
+
+            for i, (course_lbl, marks_var, grade_lbl) in enumerate(zip(self.course_labels, self.marks_vars, self.grade_labels)):
+                c.drawString(100, 690 - i * 20, f"Course: {course_lbl.cget('text')} - Marks: {marks_var.get()} - Grade: {grade_lbl.cget('text')}")
+
+            c.drawString(100, 690 - len(self.course_labels) * 20, f"GPA: {self.gpa.cget('text')}")
             c.save()
             messagebox.showinfo("Success", f"Result saved as {file_path}", parent=self.root)
         except Exception as ex:
             messagebox.showerror("Error", f"Failed to generate PDF: {str(ex)}", parent=self.root)
+
 
 if __name__ == "__main__":
     root = customtkinter.CTk()

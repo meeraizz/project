@@ -113,13 +113,13 @@ class StudentView:
             cid = course[0]
 
             # Check if the student is already enrolled in the course
-            cursor.execute("SELECT * FROM Enrollments WHERE student_id = ? AND cid = ?", (student_id, cid))
+            cursor.execute("SELECT * FROM Enrollments WHERE student_id = ? AND cid = ?", (student_id, course_id))
             enrollment = cursor.fetchone()
             if enrollment:
                 messagebox.showinfo("Info", "Student already enrolled in this course")
             else:
                 # Enroll the student in the course
-                cursor.execute("INSERT INTO Enrollments (student_id, cid) VALUES (?, ?)", (student_id, cid))
+                cursor.execute("INSERT INTO Enrollments (student_id, cid) VALUES (?, ?)", (student_id, course_id))
                 conn.commit()
                 messagebox.showinfo("Success", "Enrollment successful")
 
@@ -134,5 +134,5 @@ class StudentView:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    StudentView(root, student_id="1221109568")
+    StudentView(root, student_id=any)
     root.mainloop()

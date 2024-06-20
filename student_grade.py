@@ -71,25 +71,23 @@ class gradeclass:
         finally:
             conn.close()
 
-
     def fetch_course(self, event=None):
-        conn = sqlite3.connect(database="GradeMaster.db")
-        cur = conn.cursor()
-        try:
-            cur.execute('''SELECT Courses.cid, Courses.course_name 
-                        FROM Enrollments 
-                        JOIN Courses ON Enrollments.cid = Courses.cid
-                        WHERE Enrollments.student_id = ?''', (self.var_id.get(),))
-            rows = cur.fetchall()
-            if rows:
-                self.course_list = [row[1] for row in rows]  # Fetch course names
-                self.course_dict = {row[1]: row[0] for row in rows}  # Mapping course name to course ID
-                self.txt_course['values'] = self.course_list
-        except Exception as ex:
-            messagebox.showerror("Error", f"Error fetching courses: {str(ex)}")
-        finally:
-            conn.close()
-
+            conn = sqlite3.connect(database="GradeMaster.db")
+            cur = conn.cursor()
+            try:
+                cur.execute('''SELECT Courses.cid, Courses.course_name 
+                            FROM Enrollments 
+                            JOIN Courses ON Enrollments.cid = Courses.cid
+                            WHERE Enrollments.student_id = ?''', (self.var_id.get(),))
+                rows = cur.fetchall()
+                if rows:
+                    self.course_list = [row[1] for row in rows]  # Fetch course names
+                    self.course_dict = {row[1]: row[0] for row in rows}  # Mapping course name to course ID
+                    self.txt_course['values'] = self.course_list
+            except Exception as ex:
+                messagebox.showerror("Error", f"Error fetching courses: {str(ex)}")
+            finally:
+                conn.close()
 
     def search(self):
         conn = sqlite3.connect(database="GradeMaster.db")
@@ -106,7 +104,6 @@ class gradeclass:
             messagebox.showerror("Error", f"Error searching for student: {str(ex)}")
         finally:
             conn.close()
-
 
     def course_selected(self, event=None):
         conn = sqlite3.connect(database="GradeMaster.db")
@@ -160,13 +157,10 @@ class gradeclass:
                     messagebox.showinfo("Success", "Result added successfully", parent=self.root)
 
                 conn.commit()
-
         except Exception as ex:
-            messagebox.showerror("Error", f"Error saving result: {str(ex)}")
+                    messagebox.showerror("Error", f"Error saving result: {str(ex)}")
         finally:
             conn.close()
-
-
 
     def edit(self):
         conn = sqlite3.connect(database="GradeMaster.db")
@@ -184,7 +178,6 @@ class gradeclass:
             messagebox.showerror("Error", f"Error fetching result for edit: {str(ex)}")
         finally:
             conn.close()
-
 
     def clear(self):
         self.var_id.set("")

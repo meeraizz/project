@@ -23,7 +23,6 @@ def create_db():
 
     cur.execute("""
     CREATE TABLE IF NOT EXISTS grade (
-        cid INTEGER,
         id INTEGER,
         name TEXT,
         course TEXT,
@@ -45,16 +44,7 @@ def create_db():
     )
     """)    
 
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS gpa (
-        cid INTEGER PRIMARY KEY AUTOINCREMENT,
-        id INTEGER,
-        credit_hours INTEGER,
-        grade TEXT,
-        grade_points REAL,
-        gpa BOOLEAN
-    )
-    """)
+
 
     cur.execute('''CREATE TABLE IF NOT EXISTS Courses (
                       cid INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -70,7 +60,7 @@ def create_db():
                       student_id INTEGER,
                       cid INTEGER,
                       FOREIGN KEY (student_id) REFERENCES student (id),
-                      FOREIGN KEY (course_id) REFERENCES Courses (cid))''')
+                      FOREIGN KEY (cid) REFERENCES Courses (cid))''')
 
 
     con.commit()
