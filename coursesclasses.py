@@ -7,67 +7,67 @@ class ManageCourse:
     def __init__(self, root):
         self.root = root
         self.root.title("Course Enrollment")
-        self.root.geometry("1200x480+80+170")
+        self.root.geometry("1200x750+50+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
         # Title
-        title = tk.Label(self.root, text="Manage Course Details", font=("King", 20, "bold"), bg="#ff80b4", fg="#262626")
-        title.place(x=10, y=15, width=1180, height=35)
+        title = tk.Label(self.root, text="Manage Course Details", font=("King", 30, "bold"), bg="#ff80b4", fg="#262626")
+        title.place(x=10, y=15, width=1960, height=35)
 
         # Course ID (Hidden)
         self.var_id = tk.IntVar()
 
         # Course Name
-        lbl_name = tk.Label(self.root, text="Course Name", font=("King", 15), bg="#fff0f3")
-        lbl_name.place(x=10, y=60)
+        lbl_name = tk.Label(self.root, text="Course Name", font=("King", 20), bg="#fff0f3")
+        lbl_name.place(x=200, y=150)
         self.var_name = tk.StringVar()
-        self.txt_name = tk.Entry(self.root, textvariable=self.var_name, font=("King", 15), bg="#ffffff")
-        self.txt_name.place(x=150, y=60, width=200)
+        self.txt_name = tk.Entry(self.root, textvariable=self.var_name, font=("King", 20), bg="#ffffff")
+        self.txt_name.place(x=400, y=150, width=200)
 
         # Credit Hour
-        lbl_credit_hours = tk.Label(self.root, text="Credit Hour", font=("King", 15), bg="#fff0f3")
-        lbl_credit_hours.place(x=10, y=100)
+        lbl_credit_hours = tk.Label(self.root, text="Credit Hour", font=("King", 20), bg="#fff0f3")
+        lbl_credit_hours.place(x=200, y=210)
         self.var_credit_hours = tk.IntVar()
-        self.txt_credit_hours = tk.Entry(self.root, textvariable=self.var_credit_hours, font=("King", 15), bg="#ffffff")
-        self.txt_credit_hours.place(x=150, y=100, width=200)
+        self.txt_credit_hours = tk.Entry(self.root, textvariable=self.var_credit_hours, font=("King", 20), bg="#ffffff")
+        self.txt_credit_hours.place(x=400, y=210, width=200)
 
         # Charges
-        lbl_charges = tk.Label(self.root, text="Charges", font=("King", 15), bg="#fff0f3")
-        lbl_charges.place(x=10, y=140)
+        lbl_charges = tk.Label(self.root, text="Charges", font=("King", 20), bg="#fff0f3")
+        lbl_charges.place(x=200, y=290)
         self.var_charges = tk.StringVar()
-        self.txt_charges = tk.Entry(self.root, textvariable=self.var_charges, font=("King", 15), bg="#ffffff")
-        self.txt_charges.place(x=150, y=140, width=200)
+        self.txt_charges = tk.Entry(self.root, textvariable=self.var_charges, font=("King", 20), bg="#ffffff")
+        self.txt_charges.place(x=400, y=290, width=200)
 
         # Description
-        lbl_description = tk.Label(self.root, text="Description", font=("King", 15), bg="#fff0f3")
-        lbl_description.place(x=10, y=180)
+        lbl_description = tk.Label(self.root, text="Description", font=("King", 20), bg="#fff0f3")
+        lbl_description.place(x=200, y=370)
         self.var_description = tk.StringVar()
-        self.txt_description = tk.Entry(self.root, textvariable=self.var_description, font=("King", 15), bg="#ffffff")
-        self.txt_description.place(x=150, y=180, width=500, height=100)
+        self.txt_description = tk.Entry(self.root, textvariable=self.var_description, font=("King", 20), bg="#ffffff")
+        self.txt_description.place(x=400, y=370, width=500, height=100)
 
         # Buttons
-        btn_save = tk.Button(self.root, text="Save", font=("King", 12), bg="#00c853", fg="#ffffff", command=self.save_course)
-        btn_save.place(x=150, y=400, width=110, height=40)
+        btn_save = tk.Button(self.root, text="Save", font=("King", 15), bg="#ff80b4", fg="black", command=self.save_course)
+        btn_save.place(x=400, y=500, width=110, height=40)
 
-        btn_update = tk.Button(self.root, text="Update", font=("King", 12), bg="#ffa000", fg="#ffffff", command=self.update_course)
-        btn_update.place(x=270, y=400, width=110, height=40)
+        btn_update = tk.Button(self.root, text="Update", font=("King", 15), bg="#e0d2ef", fg="black", command=self.update_course)
+        btn_update.place(x=520, y=500, width=110, height=40)
 
-        btn_delete = tk.Button(self.root, text="Delete", font=("King", 12), bg="#d32f2f", fg="#ffffff", command=self.delete_course)
-        btn_delete.place(x=390, y=400, width=110, height=40)
+        btn_delete = tk.Button(self.root, text="Delete", font=("King", 15), bg="#ff80b4", fg="black", command=self.delete_course)
+        btn_delete.place(x=640, y=500, width=110, height=40)
 
-        btn_clear = tk.Button(self.root, text="Clear", font=("King", 12), bg="#616161", fg="#ffffff", command=self.clear_fields)
-        btn_clear.place(x=510, y=400, width=110, height=40)
+        btn_clear = tk.Button(self.root, text="Clear", font=("King", 15), bg="#e0d2ef", fg="black", command=self.clear_fields)
+        btn_clear.place(x=760, y=500, width=110, height=40)
 
         # Search
         lbl_search = tk.Label(self.root, text="Search by Course Name", font=("King", 15), bg="#fff0f3")
-        lbl_search.place(x=720, y=60)
+        lbl_search.place(x=950, y=150)
         self.var_search = tk.StringVar()
         self.txt_search = tk.Entry(self.root, textvariable=self.var_search, font=("King", 15), bg="#ffffff")
-        self.txt_search.place(x=950, y=60, width=200)
+        self.txt_search.place(x=1300, y=150, width=200)
 
-        btn_search = tk.Button(self.root, text="Search", font=("King", 12), bg="#ff80b4", fg="#ffffff", command=self.search_course)
-        btn_search.place(x=1150, y=60, width=80, height=28)
+        btn_search = tk.Button(self.root, text="Search", font=("King", 12), bg="#ff80b4", fg="black", command=self.search_course)
+        btn_search.place(x=1550, y=150, width=80, height=28)
 
 
         self.course_tree = ttk.Treeview(self.root, columns=("id", "name", "credit_hour", "charges", "description"), show='headings')
@@ -81,7 +81,7 @@ class ManageCourse:
         self.course_tree.column("credit_hour", width=100)
         self.course_tree.column("charges", width=100)
         self.course_tree.column("description", width=300)
-        self.course_tree.place(x=720, y=100, width=510, height=340)
+        self.course_tree.place(x=950, y=200, width=800, height=600)
         self.course_tree.bind("<ButtonRelease-1>", self.get_selected_course)
 
         self.load_course()
