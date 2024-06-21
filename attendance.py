@@ -1,11 +1,8 @@
 from tkinter import *
 from tkinter import ttk, messagebox
-from tkcalendar import Calendar
 import sqlite3
 import customtkinter
 from datetime import datetime
-from tkcalendar import Calendar, DateEntry
-
 
 class AttendanceManager:
     def __init__(self, root):
@@ -22,33 +19,42 @@ class AttendanceManager:
         #=============variable===============
         self.student_id = None
         self.course_id = None
-        self.calendar = None
 
         # UI elements
         self.lbl_student = Label(self.root, text="Select Student", font=("King", 20, "bold"), bg="#fff0f3")
-        self.lbl_student.place(x=800, y=210)
+        self.lbl_student.place(x=800, y=150)
         self.cmb_student = ttk.Combobox(self.root, font=("King", 15), state='readonly')
-        self.cmb_student.place(x=780, y=250)
+        self.cmb_student.place(x=780, y=210)
         self.cmb_student.bind("<<ComboboxSelected>>", self.fetch_courses)
 
         self.lbl_course = Label(self.root, text="Select Course", font=("King", 20, "bold"), bg="#fff0f3")
-        self.lbl_course.place(x=800, y=300)
+        self.lbl_course.place(x=800, y=250)
         self.cmb_course = ttk.Combobox(self.root, font=("King", 15), state='readonly')
-        self.cmb_course.place(x=780, y=340)
+        self.cmb_course.place(x=780, y=300)
         self.cmb_course.bind("<<ComboboxSelected>>", self.load_calendar)
 
-        self.lbl_calendar = Label(self.root, text="Select Date for Attendance", font=("King", 20, "bold"), bg="#fff0f3")
-        self.lbl_calendar.place(x=700, y=390)
-        self.calendar = Calendar(self.root, selectmode="day", date_pattern='yyyy-mm-dd', font=("King", 15))
-        self.calendar.place(x=750, y=450)
+        self.lbl_date = Label(self.root, text="Select Date for Attendance", font=("King", 20, "bold"), bg="#fff0f3")
+        self.lbl_date.place(x=690, y=360)
+        
+        # Create comboboxes for day, month, and year
+        self.cmb_day = ttk.Combobox(self.root, values=list(range(1, 32)), font=("King", 15), state='readonly')
+        self.cmb_day.place(x=780, y=430, width=80)
+        self.cmb_day.set("Day")
+        
+        self.cmb_month = ttk.Combobox(self.root, values=list(range(1, 13)), font=("King", 15), state='readonly')
+        self.cmb_month.place(x=890, y=430, width=80)
+        self.cmb_month.set("Month")
+        
+        self.cmb_year = ttk.Combobox(self.root, values=list(range(1900, 2025)), font=("King", 15), state='readonly')
+        self.cmb_year.place(x=1000, y=430, width=100)
+        self.cmb_year.set("Year")
 
         self.btn_mark_attendance = Button(self.root, text="Mark Present", font=("King", 15), bg="#ff80b4", fg="#262626", command=self.mark_attendance)
-        self.btn_mark_attendance.place(x=750, y=750, width=190, height=35)
+        self.btn_mark_attendance.place(x=750, y=500, width=190, height=35)
 
         self.btn_mark_absent = Button(self.root, text="Mark Absent", font=("King", 15), bg="#e0d2ef", fg="#262626", command=self.mark_absent)
-        self.btn_mark_absent.place(x=960, y=750, width=190, height=35)
+        self.btn_mark_absent.place(x=960, y=500, width=190, height=35)
 
-       
         self.fetch_students()
 
     def fetch_students(self):
@@ -85,7 +91,6 @@ class AttendanceManager:
         selected_course = self.cmb_course.get().split(" - ")[0]
         self.course_id = int(selected_course)
         
-
     def mark_attendance(self):
         self.mark_status("Present")
 
@@ -97,7 +102,11 @@ class AttendanceManager:
             messagebox.showwarning("Warning", "Please select both a student and a course.")
             return
 
-        selected_date = self.calendar.get_date()
+        if self.cmb_day.get() == "Day" or self.cmb_month.get() == "Month" or self.cmb_year.get() == "Year":
+            messagebox.showwarning("Warning", "Please select a valid date.")
+            return
+
+        selected_date = f"{self.cmb_year.get()}-{self.cmb_month.get()}-{self.cmb_day.get()}"
         formatted_date = datetime.strptime(selected_date, "%Y-%m-%d").date()
         try:
             conn = sqlite3.connect(database="GradeMaster.db")

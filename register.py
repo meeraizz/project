@@ -1,9 +1,6 @@
 from tkinter import *
-from tkinter import messagebox, ttk
-import customtkinter
-from tkcalendar import DateEntry 
+from tkinter import ttk, messagebox
 import sqlite3
-from tkcalendar import Calendar, DateEntry
 
 
 class RegisterClass:
@@ -25,7 +22,9 @@ class RegisterClass:
         self.var_contact = StringVar()
         self.var_email = StringVar()
         self.var_gender = StringVar()
-        self.var_dob = StringVar()
+        self.var_dob_day = StringVar()
+        self.var_dob_month = StringVar()
+        self.var_dob_year = StringVar()
         self.var_address = StringVar()
         self.var_city = StringVar()
         self.var_state = StringVar()
@@ -56,8 +55,12 @@ class RegisterClass:
         self.cmb_gender.set("Select")
         
         lbl_dob = Label(self.root, text="Date of Birth", font=("king", 15, "bold"), bg="#fff0f3").place(x=50, y=300)
-        self.entry_dob = DateEntry(self.root, textvariable=self.var_dob, font=("king", 15), date_pattern='y-mm-dd')
-        self.entry_dob.place(x=250, y=300, width=200)
+        self.cmb_dob_day = ttk.Combobox(self.root, textvariable=self.var_dob_day, values=list(range(1, 32)), font=("king", 15), state='readonly')
+        self.cmb_dob_day.place(x=250, y=300, width=60)
+        self.cmb_dob_month = ttk.Combobox(self.root, textvariable=self.var_dob_month, values=list(range(1, 13)), font=("king", 15), state='readonly')
+        self.cmb_dob_month.place(x=320, y=300, width=60)
+        self.cmb_dob_year = ttk.Combobox(self.root, textvariable=self.var_dob_year, values=list(range(1900, 2025)), font=("king", 15), state='readonly')
+        self.cmb_dob_year.place(x=390, y=300, width=80)
 
         # Right column labels and entries
         lbl_address = Label(self.root, text="Address", font=("king", 15, "bold"), bg="#fff0f3").place(x=500, y=100)
@@ -100,6 +103,8 @@ class RegisterClass:
             cursor = conn.cursor()
             print("Database connection successful")  # Debugging statement
             
+            dob = f"{self.var_dob_year.get()}-{self.var_dob_month.get()}-{self.var_dob_day.get()}"
+            
             if self.var_user_type.get() == "Student":
                 cursor.execute('''INSERT INTO student
                                 (id, name, contact, email, gender, dob, address, state, city, pin, password)
@@ -109,7 +114,7 @@ class RegisterClass:
                                 self.var_contact.get(),
                                 self.var_email.get(),
                                 self.var_gender.get(),
-                                self.var_dob.get(),
+                                dob,
                                 self.var_address.get(),
                                 self.var_state.get(),
                                 self.var_city.get(),
@@ -154,7 +159,9 @@ class RegisterClass:
         self.var_contact.set("")
         self.var_email.set("")
         self.var_gender.set("Select")
-        self.var_dob.set("")
+        self.var_dob_day.set("")
+        self.var_dob_month.set("")
+        self.var_dob_year.set("")
         self.var_address.set("")
         self.var_city.set("")
         self.var_state.set("")
@@ -163,6 +170,6 @@ class RegisterClass:
         self.var_user_type.set("Select")
 
 if __name__ == "__main__":
-    root = customtkinter.CTk()
-    register_obj = RegisterClass(root)
+    root = Tk()
+    obj = RegisterClass(root)
     root.mainloop()
