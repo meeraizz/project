@@ -17,9 +17,11 @@ class LoginClass:
         screen_height = self.root.winfo_screenheight()
 
         self.root.geometry(f"{screen_width}x{screen_height}+0+0")
+        self.root.config(bg='#fff0f3')
+
         #=========Title=========
-        title = Label(self.root, text="Login", font=("King", 30, "bold"), bg="#ff80b4", fg="black")
-        title.place(x=0, y=10, width=1960, height=70)
+        title = Label(self.root, text="Login", padx=10, compound=LEFT, font=("King", 40, "bold"), bg="#ffb3d2", fg="black")
+        title.place(x=0, y=0, relwidth=1, height=70)
 
         #========Variables============
         self.var_id = StringVar()

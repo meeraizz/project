@@ -31,7 +31,7 @@ class GradeMaster:
         self.logo_dash = ImageTk.PhotoImage(self.logo_image)
 
         # ======title==========
-        title = Label(self.root, text="Grade Master", padx=10, compound=LEFT, image=self.logo_dash, font=("King", 40, "bold"), bg="#ffb3d2", fg="black")
+        title = Label(self.root, text="Grade Master", padx=10, compound=LEFT, image=self.logo_dash, font=("King", 30, "bold"), bg="#ffb3d2", fg="black")
         title.place(x=0, y=0, relwidth=1, height=70)
 
         M_Frame = LabelFrame(self.root, text="Menu", font=("King", 15), bg="#fff0f3")
