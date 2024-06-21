@@ -42,7 +42,7 @@ class GradeMastertc:
         btn_student.place(x=350, y=10, width=270, height=60)
 
         btn_profile = Button(M_Frame, text="Profile", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.show_profile)
-        btn_profile.place(x=6500, y=10, width=270, height=60)
+        btn_profile.place(x=650, y=10, width=270, height=60)
 
         btn_grade = Button(M_Frame, text="Grade", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_grade)
         btn_grade.place(x=950, y=10, width=270, height=60)
@@ -180,5 +180,5 @@ if __name__ == "__main__":
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
     root.geometry(f"{screen_width}x{screen_height}+0+0")
-    obj = GradeMastertc(root, teacher_id=1)
+    obj = GradeMastertc(root, teacher_id=any)
     root.mainloop()
