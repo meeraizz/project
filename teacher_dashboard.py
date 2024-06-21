@@ -53,6 +53,7 @@ class GradeMastertc:
         btn_logout = Button(M_Frame, text="Logout", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.logout)
         btn_logout.place(x=1550, y=10, width=270, height=60)
 
+
         self.bg_img = Image.open("images/bg.jpg")
         self.bg_img = self.bg_img.resize((1000, 600), Image.LANCZOS)
         self.bg_img = ImageTk.PhotoImage(self.bg_img)
@@ -143,6 +144,13 @@ class GradeMastertc:
         new_top.grab_set()
         new_top.focus_force()
 
+    def attendance(self):
+        new_top = customtkinter.CTkToplevel(self.root)
+        new_window = AttendanceManager(new_top)
+        new_top.transient(self.root)
+        new_top.grab_set()
+        new_top.focus_force()
+
     def show_profile(self):
         new_top = customtkinter.CTkToplevel(self.root)
         profile_window = teachercard(new_top, self.teacher_id)
@@ -157,28 +165,13 @@ class GradeMastertc:
         new_top.grab_set()
         new_top.focus_force()
 
-    def attendance(self):
-        new_top = customtkinter.CTkToplevel(self.root)
-        new_window = AttendanceManager(new_top)
-        new_top.transient(self.root)
-        new_top.grab_set()
-        new_top.focus_force()
-
     def logout(self):
-        messagebox.showinfo("Logout", "You have logged out")
         self.root.destroy()
-        self.open_login_page()
-
-    def open_login_page(self):
-        import login
-        login_root = customtkinter.CTk()
-        login.LoginClass(login_root)
-        login_root.mainloop()
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
     root.geometry(f"{screen_width}x{screen_height}+0+0")
-    obj = GradeMastertc(root, teacher_id=any)
+    obj = GradeMastertc(root, teacher_id=1)
     root.mainloop()

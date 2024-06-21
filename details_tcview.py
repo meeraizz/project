@@ -8,18 +8,18 @@ class detailsclasstc:
     def __init__(self,root):
         self.root=root
         self.root.title("Grade Master")
-        self.root.geometry("1200x750+0+200")
+        self.root.geometry("1500x750+0+200")
         self.root.config(bg="#fff0f3")
         self.root.focus_force()
 
-        #=======main frame=============
+        # Create a main frame to contain all widgets
         self.main_frame = Frame(self.root, bg="#fff0f3")
         self.main_frame.pack(fill=BOTH, expand=True)  
 
         title=Label(self.main_frame, text="Manage Student Details", font=("king",23,"bold"), bg="#ff80b4", fg="black")
         title.place(x=0, y=10, width=1960, height=70)
 
-        #=======Variables=======
+        # Variables
         self.var_id = StringVar()
         self.var_name = StringVar()
         self.var_email = StringVar()
