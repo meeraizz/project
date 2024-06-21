@@ -154,7 +154,15 @@ class GradeMastertc:
         new_top.focus_force()
 
     def logout(self):
+        messagebox.showinfo("Logout", "You have logged out")
         self.root.destroy()
+        self.open_login_page()
+
+    def open_login_page(self):
+        import login
+        login_root = customtkinter.CTk()
+        login.LoginClass(login_root)
+        login_root.mainloop()
 
 if __name__ == "__main__":
     root = customtkinter.CTk()

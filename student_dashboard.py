@@ -9,7 +9,6 @@ from student_details import DetailsClass
 from report import ReportClass
 from coursesclasses_student import StudentView
 from student_card import StudentCard
-import os
 
 class GradeMaster:
     def __init__(self, root, student_id):
@@ -26,7 +25,7 @@ class GradeMaster:
 
         # ====icons=====
         self.logo_image = Image.open("images/Grade-Master_Logo.png")
-        self.logo_image = self.logo_image.resize((70, 70), Image.LANCZOS) 
+        self.logo_image = self.logo_image.resize((70, 70), Image.LANCZOS)
         self.logo_dash = ImageTk.PhotoImage(self.logo_image)
 
         # ======title==========
@@ -52,7 +51,7 @@ class GradeMaster:
         btn_logout.place(x=1400, y=10, width=270, height=60)
 
         self.bg_img = Image.open("images/bg.jpg")
-        self.bg_img = self.bg_img.resize((1000, 600), Image.LANCZOS) 
+        self.bg_img = self.bg_img.resize((1000, 600), Image.LANCZOS)
         self.bg_img = ImageTk.PhotoImage(self.bg_img)
         self.lbl_bg = Label(self.root, image=self.bg_img)
         self.lbl_bg.place(x=820, y=230, width=1000, height=600)
@@ -90,50 +89,57 @@ class GradeMaster:
     def add_student(self):
         print("Profile button clicked")  
         new_window = customtkinter.CTkToplevel(self.root)
-        new_window.geometry("1600x640+0+200")  
+        new_window.geometry("1600x640+0+200")
         StudentCard(new_window, self.student_id)
-        new_window.transient(self.root)  
-        new_window.grab_set()  
-        self.root.wait_window(new_window)  
+        new_window.transient(self.root)
+        new_window.grab_set()
+        self.root.wait_window(new_window)
         self.update_counts()
 
     def add_course(self):
-        print("Course button clicked")  
+        print("Course button clicked")
         new_window = customtkinter.CTkToplevel(self.root)
         new_window.geometry("1600x640+0+200")
         StudentView(new_window, self.student_id)
         new_window.transient(self.root)
         new_window.grab_set()
         self.root.wait_window(new_window)
-        self.update_counts()  
+        self.update_counts()
 
     def add_teacher(self):
-        print("Teacher button clicked")  
+        print("Teacher button clicked")
         new_window = customtkinter.CTkToplevel(self.root)
         new_window.geometry("1600x640+0+200")
-        teacherprofile(new_window)  
+        teacherprofile(new_window)
         new_window.transient(self.root)
         new_window.grab_set()
         self.root.wait_window(new_window)
-        self.update_counts()  
+        self.update_counts()
 
     def add_result(self):
-        print("Result button clicked")  
+        print("Result button clicked")
         new_window = customtkinter.CTkToplevel(self.root)
         new_window.geometry("1600x640+0+200")
-        ReportClass(new_window, self.student_id)  
+        ReportClass(new_window, self.student_id)
         new_window.transient(self.root)
         new_window.grab_set()
         self.root.wait_window(new_window)
 
     def logout(self):
+        messagebox.showinfo("Logout", "You have logged out")
         self.root.destroy()
+        self.open_login_page()
+
+    def open_login_page(self):
+        import login
+        login_root = customtkinter.CTk()
+        login.LoginClass(login_root)
+        login_root.mainloop()
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
     root.geometry(f"{screen_width}x{screen_height}+0+0")
-
     obj = GradeMaster(root, student_id=any)  
     root.mainloop()
