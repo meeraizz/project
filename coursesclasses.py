@@ -99,8 +99,14 @@ class ManageCourse:
             conn.close()
 
     def save_course(self):
-        if self.var_name.get() == "" or self.var_credit_hours.get() == "" or self.var_charges.get() == "" or self.var_description.get() == "":
-            messagebox.showerror("Error", "All fields are required")
+        if self.var_name.get() == "" or self.var_credit_hours.get() <= 0 or self.var_charges.get() == "" or self.var_description.get() == "":
+            messagebox.showerror("Error", "All fields are required and credit hours must be greater than 0")
+            return
+
+        try:
+            credit_hours = int(self.var_credit_hours.get())
+        except ValueError:
+            messagebox.showerror("Error", "Credit Hour must be a number")
             return
 
         try:
@@ -117,8 +123,8 @@ class ManageCourse:
         self.clear_fields()
 
     def update_course(self):
-        if self.var_name.get() == "" or self.var_credit_hours.get() == "" or self.var_charges.get() == "" or self.var_description.get() == "":
-            messagebox.showerror("Error", "All fields are required")
+        if self.var_name.get() == "" or self.var_credit_hours.get() <= 0 or self.var_charges.get() == "" or self.var_description.get() == "":
+            messagebox.showerror("Error", "All fields are required and credit hours must be greater than 0")
             return
 
         selected_item = self.course_tree.selection()
@@ -140,6 +146,7 @@ class ManageCourse:
         messagebox.showinfo("Success", "Course updated successfully!")
         self.load_course()
         self.clear_fields()
+
 
     def delete_course(self):
         selected_item = self.course_tree.selection()
@@ -182,14 +189,17 @@ class ManageCourse:
         cursor.execute("SELECT * FROM Courses")
         rows = cursor.fetchall()
         for row in rows:
+            print(f"Loaded Course: {row}")  # Debug print
             self.course_tree.insert('', 'end', values=row)
         conn.close()
+
 
     def get_selected_course(self, event):
         selected_item = self.course_tree.selection()
         if not selected_item:
             return
         course_data = self.course_tree.item(selected_item)['values']
+        print(f"Selected Course Data: {course_data}")  # Debug print
         self.var_id.set(course_data[0])
         self.var_name.set(course_data[1])
         self.var_credit_hours.set(course_data[2])
