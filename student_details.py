@@ -31,7 +31,6 @@ class DetailsClass:
         self.var_gender = StringVar()
         self.var_dob = StringVar()
         self.var_contact = StringVar()
-        self.var_course = StringVar()
         self.var_state = StringVar()
         self.var_city = StringVar()
         self.var_pin = StringVar()
@@ -69,11 +68,6 @@ class DetailsClass:
         txt_contact = Entry(self.main_frame, textvariable=self.var_contact, font=("king", 15, "bold"), bg="lightyellow")
         txt_contact.place(x=1000, y=100, width=200)
 
-        lbl_course = Label(self.main_frame, text="Course", font=("king", 15, "bold"), bg="#fff0f3")
-        lbl_course.place(x=840, y=140)
-        self.txt_course = ttk.Combobox(self.main_frame, textvariable=self.var_course, values=[], font=("king", 15, "bold"),
-                                       state='readonly', justify=CENTER)
-        self.txt_course.place(x=1000, y=140, width=200)
 
         lbl_state = Label(self.main_frame, text="State", font=("king", 15, "bold"), bg="#fff0f3")
         lbl_state.place(x=450, y=220)
@@ -99,9 +93,7 @@ class DetailsClass:
         btn_save = Button(self.main_frame, text="Save", font=("king", 15, "bold"), bg="#FF0090", fg="#fff0f3", cursor="hand2", command=self.save)
         btn_save.place(x=1090, y=400, width=110, height=40)
 
-        # Fetch courses from database
-        self.fetch_courses()
-
+    #=========================================================================
     def populate_data(self, data):
         self.var_id.set(data.get('id', ''))
         self.var_name.set(data.get('name', ''))
@@ -126,28 +118,25 @@ class DetailsClass:
                             gender TEXT,
                             dob TEXT,
                             contact INTEGER,
-                            course TEXT,
                             state TEXT,
                             city TEXT,
                             pin INTEGER,
                             address TEXT)""")
 
             if self.var_id.get():
-                # Update existing student record
                 cur.execute("""UPDATE student SET name=?, email=?, gender=?, dob=?, contact=?, 
-                            course=?, state=?, city=?, pin=?, address=? WHERE id=?""",
+                            state=?, city=?, pin=?, address=? WHERE id=?""",
                             (self.var_name.get(), self.var_email.get(), self.var_gender.get(),
                             self.var_dob.get(), self.var_contact.get(),
-                            self.var_course.get(), self.var_state.get(), self.var_city.get(),
+                             self.var_state.get(), self.var_city.get(),
                             self.var_pin.get(), self.txt_address.get("1.0", END), self.var_id.get()))
                 messagebox.showinfo("Success", "Student profile updated successfully")
             else:
-                # Insert new student record
-                cur.execute("""INSERT INTO student (name, email, gender, dob, contact, course, 
+                cur.execute("""INSERT INTO student (name, email, gender, dob, contact,
                             state, city, pin, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                             (self.var_name.get(), self.var_email.get(), self.var_gender.get(),
                             self.var_dob.get(), self.var_contact.get(), 
-                            self.var_course.get(), self.var_state.get(), self.var_city.get(),
+                             self.var_state.get(), self.var_city.get(),
                             self.var_pin.get(), self.txt_address.get("1.0", END)))
                 messagebox.showinfo("Success", "Student profile submitted successfully")
 
@@ -157,20 +146,6 @@ class DetailsClass:
         except sqlite3.Error as e:
             messagebox.showerror("Database Error", f"Error interacting with database: {e}")
             print(f"Error interacting with database: {e}")
-        finally:
-            con.close()
-
-    def fetch_courses(self):
-        try:
-            con = sqlite3.connect('GradeMaster.db')
-            cur = con.cursor()
-            cur.execute("SELECT name FROM Courses")
-            rows = cur.fetchall()
-            if rows:
-                self.course_list = [row[0] for row in rows]
-                self.txt_course.config(values=self.course_list)
-        except sqlite3.Error as e:
-            messagebox.showerror("Database Error", f"Error interacting with database: {e}")
         finally:
             con.close()
 

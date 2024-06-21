@@ -7,7 +7,7 @@ class gradeclass:
     def __init__(self, root):
         self.root = root
         self.root.title("Grade Master")
-        self.root.geometry("1200x750+50+200")
+        self.root.geometry("1500x750+0+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
@@ -41,21 +41,20 @@ class gradeclass:
 
         # ===widgets===
         lbl_select = Label(self.root, text="Select Student", font=("king", 20, "bold"), bg="#fff0f3").place(x=600, y=150)
-        lbl_name = Label(self.root, text="Name", font=("king", 25, "bold"), bg="#fff0f3").place(x=600, y=230)
+        lbl_name = Label(self.root, text="Name", font=("king", 20, "bold"), bg="#fff0f3").place(x=600, y=230)
         lbl_course = Label(self.root, text="Select Course", font=("king", 20, "bold"), bg="#fff0f3").place(x=600, y=310)
-        lbl_marks = Label(self.root, text="Marks", font=("king", 25, "bold"), bg="#fff0f3").place(x=600, y=390)
-        lbl_grade = Label(self.root, text="Grade", font=("king", 25, "bold"), bg="#fff0f3").place(x=600, y=480)
+        lbl_marks = Label(self.root, text="Marks", font=("king", 20, "bold"), bg="#fff0f3").place(x=600, y=390)
+        lbl_grade = Label(self.root, text="Grade", font=("king", 20, "bold"), bg="#fff0f3").place(x=600, y=530)
 
         btn_search = Button(self.root, text='Search', font=("King", 20), bg="#e0d2ef", fg="black", cursor="hand2", command=self.search).place(x=1100, y=150, width=150, height=45)
         txt_name = Entry(self.root, textvariable=self.var_name, font=("king", 20, "bold"), bg="lightyellow", state='readonly').place(x=880, y=230, width=370, height=45)
         txt_marks = Entry(self.root, textvariable=self.var_marks, font=("king", 20, "bold"), bg="lightyellow").place(x=880, y=390, width=370, height=45)
-        txt_grade = Entry(self.root, textvariable=self.var_grade, font=("king", 20, "bold"), bg="lightyellow").place(x=880, y=480, width=370, height=45)
+        txt_grade = Entry(self.root, textvariable=self.var_grade, font=("king", 20, "bold"), bg="lightyellow", state='readonly').place(x=880, y=530, width=370, height=45)
 
         # =====button======
-        btn_save = Button(self.root, text="Save", font=("King", 20), bg="#e0d2ef", activebackground="lightgreen", cursor="hand2", command=self.save).place(x=880, y=550, width=150, height=45)
-        btn_clear = Button(self.root, text="Clear", font=("King", 20), bg="#ffb3d2", activebackground="lightgrey", cursor="hand2", command=self.clear).place(x=1100, y=550, width=150, height=45)
-
-        # ==========================================================
+        btn_save = Button(self.root, text="Save", font=("King", 20), bg="#e0d2ef", activebackground="lightgreen", cursor="hand2", command=self.save).place(x=880, y=620, width=150, height=45)
+        btn_clear = Button(self.root, text="Clear", font=("King", 20), bg="#ffb3d2", activebackground="lightgrey", cursor="hand2", command=self.clear).place(x=1100, y=620, width=150, height=45)
+        btn_calculate_grade = Button(self.root, text="Calculate", font=("King", 20), bg="#e0d2ef", cursor="hand2", command=self.calculate_grade).place(x=970, y=450, width=200, height=45)
 
     def fetch_id(self):
         conn = sqlite3.connect(database="GradeMaster.db")
@@ -72,22 +71,22 @@ class gradeclass:
             conn.close()
 
     def fetch_course(self, event=None):
-            conn = sqlite3.connect(database="GradeMaster.db")
-            cur = conn.cursor()
-            try:
-                cur.execute('''SELECT Courses.cid, Courses.course_name 
-                            FROM Enrollments 
-                            JOIN Courses ON Enrollments.cid = Courses.cid
-                            WHERE Enrollments.student_id = ?''', (self.var_id.get(),))
-                rows = cur.fetchall()
-                if rows:
-                    self.course_list = [row[1] for row in rows]  # Fetch course names
-                    self.course_dict = {row[1]: row[0] for row in rows}  # Mapping course name to course ID
-                    self.txt_course['values'] = self.course_list
-            except Exception as ex:
-                messagebox.showerror("Error", f"Error fetching courses: {str(ex)}")
-            finally:
-                conn.close()
+        conn = sqlite3.connect(database="GradeMaster.db")
+        cur = conn.cursor()
+        try:
+            cur.execute('''SELECT Courses.cid, Courses.course_name 
+                        FROM Enrollments 
+                        JOIN Courses ON Enrollments.cid = Courses.cid
+                        WHERE Enrollments.student_id = ?''', (self.var_id.get(),))
+            rows = cur.fetchall()
+            if rows:
+                self.course_list = [row[1] for row in rows]  # Fetch course names
+                self.course_dict = {row[1]: row[0] for row in rows}  # Mapping course name to course ID
+                self.txt_course['values'] = self.course_list
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error fetching courses: {str(ex)}")
+        finally:
+            conn.close()
 
     def search(self):
         conn = sqlite3.connect(database="GradeMaster.db")
@@ -123,7 +122,6 @@ class gradeclass:
         finally:
             conn.close()
 
-
     def save(self):
         conn = sqlite3.connect(database="GradeMaster.db")
         cur = conn.cursor()
@@ -158,7 +156,7 @@ class gradeclass:
 
                 conn.commit()
         except Exception as ex:
-                    messagebox.showerror("Error", f"Error saving result: {str(ex)}")
+            messagebox.showerror("Error", f"Error saving result: {str(ex)}")
         finally:
             conn.close()
 
@@ -187,6 +185,37 @@ class gradeclass:
         self.txt_student.set("Select")
         self.txt_course.set("Select")
         self.var_grade.set("")
+
+    def calculate_grade(self):
+        try:
+            marks = float(self.var_marks.get())
+            if marks >= 90:
+                grade = "A+"
+            elif 80 <= marks < 90:
+                grade = "A"
+            elif 75 <= marks < 80:
+                grade = "A-"
+            elif 70 <= marks < 75:
+                grade = "B+"
+            elif 65 <= marks < 70:
+                grade = "B"
+            elif 60 <= marks < 65:
+                grade = "B-"
+            elif 55 <= marks < 60:
+                grade = "C+"
+            elif 50 <= marks < 55:
+                grade = "C"
+            elif 45 <= marks < 50:
+                grade = "C-"
+            elif 40 <= marks < 45:
+                grade = "D+"
+            elif 35 <= marks < 40:
+                grade = "D"
+            else:
+                grade = "E"
+            self.var_grade.set(grade)
+        except ValueError:
+            messagebox.showerror("Error", "Invalid marks. Please enter a valid number.")
 
 if __name__ == "__main__":
     root = customtkinter.CTk()

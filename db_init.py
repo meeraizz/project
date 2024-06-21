@@ -12,7 +12,6 @@ def create_db():
         gender TEXT,
         dob TEXT,
         contact INTEGER,
-        course TEXT,
         state TEXT,
         city TEXT,
         pin INTEGER,
@@ -37,14 +36,24 @@ def create_db():
         id INTEGER,
         name TEXT,
         email TEXT,
-        contact TEXT,
+        contact INTEGER,
         course TEXT,
         profile_picture BLOB,
         password TEXT
     )
     """)    
 
-
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS Attendance (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        student_id INTEGER,
+        course_id INTEGER,
+        date TEXT,
+        status TEXT,
+        FOREIGN KEY (student_id) REFERENCES student (id),
+        FOREIGN KEY (course_id) REFERENCES Courses (cid)
+    )
+    """)
 
     cur.execute('''CREATE TABLE IF NOT EXISTS Courses (
                       cid INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -52,11 +61,6 @@ def create_db():
                       credit_hour INTEGER,
                       charges TEXT,
                       description TEXT)''')
-
-    
-
-    
-
     
     cur.execute('''CREATE TABLE IF NOT EXISTS Enrollments (
                       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -64,7 +68,6 @@ def create_db():
                       cid INTEGER,
                       FOREIGN KEY (student_id) REFERENCES student (id),
                       FOREIGN KEY (cid) REFERENCES Courses (cid))''')
-
 
     con.commit()
     con.close()

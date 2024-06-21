@@ -69,15 +69,15 @@ class teachercard:
             'email': self.var_teacher_email.get(),
             'contact': self.var_teacher_contact.get(),
             'course': self.var_teacher_course.get(),
-            'profile_picture': self.default_image_path  # Update this to fetch the actual path from the database if necessary
+            'profile_picture': self.default_image_path 
         }
         new_top = customtkinter.CTkToplevel(self.root)
         new_window = editprofile(new_top, teacher_data=teacher_data)
         new_top.transient(self.root)
         new_top.grab_set()
         new_top.focus_force()
-        self.root.wait_window(new_top)  # Wait for the edit window to close
-        self.load_teacher_data()  # Reload data
+        self.root.wait_window(new_top)  
+        self.load_teacher_data() 
 
 
     def display_image(self, file_path):
@@ -116,6 +116,5 @@ class teachercard:
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    # For testing, replace `any` with an actual teacher_id
     obj = teachercard(root, teacher_id=any)
     root.mainloop()

@@ -8,7 +8,7 @@ class detailsclasstc:
     def __init__(self,root):
         self.root=root
         self.root.title("Grade Master")
-        self.root.geometry("1200x750+50+200")
+        self.root.geometry("1500x750+0+200")
         self.root.config(bg="#fff0f3")
         self.root.focus_force()
 
@@ -16,7 +16,7 @@ class detailsclasstc:
         self.main_frame = Frame(self.root, bg="#fff0f3")
         self.main_frame.pack(fill=BOTH, expand=True)  
 
-        title=Label(self.main_frame, text="Manage Student Details", font=("king",23,"bold"), bg="#FFB3D2", fg="black")
+        title=Label(self.main_frame, text="Manage Student Details", font=("king",23,"bold"), bg="#ff80b4", fg="black")
         title.place(x=0, y=10, width=1960, height=70)
 
         # Variables
@@ -39,7 +39,7 @@ class detailsclasstc:
 
         #=====content========
         self.C_Frame=Frame(self.root,bd=2,relief=RIDGE)
-        self.C_Frame.place(x=600,y=230,width=650,height=500)
+        self.C_Frame.place(x=500,y=230,width=800,height=600)
 
         scrolly=Scrollbar(self.C_Frame,orient=VERTICAL)
         scrollx=Scrollbar(self.C_Frame,orient=HORIZONTAL)
