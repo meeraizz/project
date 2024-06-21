@@ -10,16 +10,16 @@ class StudentCard:
         self.root = root
         self.student_id = student_id
         self.root.title("Grade Master")
-        self.root.geometry("1400x750+0+200")
+        self.root.geometry("1500x750+0+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
         # =============Title==================
         title = Label(self.root, text="Student Profile", font=("King", 30, "bold"), bg="#ff80b4", fg="#262626")
-        title.place(x=0, y=10, width=1450, height=70)
+        title.place(x=0, y=10, width=1960, height=70)
 
         self.main_frame = Frame(self.root, bd=2, relief=RIDGE, bg="white")
-        self.main_frame.place(x=175, y=100, width=1000, height=500)
+        self.main_frame.place(x=500, y=100, width=1000, height=500)
         self.create_widgets()
 
     def create_widgets(self):
@@ -30,7 +30,6 @@ class StudentCard:
         self.var_gender = StringVar()
         self.var_dob = StringVar()
         self.var_contact = StringVar()
-        self.var_course = StringVar()
         self.var_state = StringVar()
         self.var_city = StringVar()
         self.var_pin = StringVar()
@@ -75,24 +74,19 @@ class StudentCard:
         self.txt_dob.place(x=670, y=60, width=250)
 
         lbl_state = Label(self.main_frame, text="State", font=("King", 15, "bold"), bg="white")
-        lbl_state.place(x=500, y=140)
+        lbl_state.place(x=500, y=100)
         self.txt_state = Label(self.main_frame, textvariable=self.var_state, font=("King", 15, "bold"), bg="#fff0f3", anchor='w')
-        self.txt_state.place(x=670, y=140, width=250)
+        self.txt_state.place(x=670, y=100, width=250)
 
         lbl_city = Label(self.main_frame, text="City", font=("King", 15, "bold"), bg="white")
-        lbl_city.place(x=500, y=180)
+        lbl_city.place(x=500, y=140)
         self.txt_city = Label(self.main_frame, textvariable=self.var_city, font=("King", 15, "bold"), bg="#fff0f3", anchor='w')
-        self.txt_city.place(x=670, y=180, width=250)
+        self.txt_city.place(x=670, y=140, width=250)
 
         lbl_pin = Label(self.main_frame, text="Pin", font=("King", 15, "bold"), bg="white")
-        lbl_pin.place(x=500, y=220)
+        lbl_pin.place(x=500, y=180)
         self.txt_pin = Label(self.main_frame, textvariable=self.var_pin, font=("King", 15, "bold"), bg="#fff0f3", anchor='w')
-        self.txt_pin.place(x=670, y=220, width=250)
-
-        lbl_course = Label(self.main_frame, text="Course", font=("King", 15, "bold"), bg="white")
-        lbl_course.place(x=500, y=100)
-        self.txt_course = Label(self.main_frame, textvariable=self.var_course, font=("King", 15, "bold"), bg="#fff0f3", anchor='w')
-        self.txt_course.place(x=670, y=100, width=250)
+        self.txt_pin.place(x=670, y=180, width=250)
 
         # ============= Button ================
         btn_edit = Button(self.main_frame, text="Edit", font=("King", 15, "bold"), bg="#ff80b4", fg="#262626", command=self.edit)
@@ -108,7 +102,6 @@ class StudentCard:
             'gender': self.var_gender.get(),
             'dob': self.var_dob.get(),
             'contact': self.var_contact.get(),
-            'course':self.var_course.get(),
             'state': self.var_state.get(),
             'city': self.var_city.get(),
             'pin': self.var_pin.get(),
@@ -135,12 +128,11 @@ class StudentCard:
                 self.var_gender.set(row[3])
                 self.var_dob.set(row[4])
                 self.var_contact.set(row[5])
-                self.var_course.set(row[6])
-                self.var_state.set(row[7])
-                self.var_city.set(row[8])
-                self.var_pin.set(row[9])
+                self.var_state.set(row[6])
+                self.var_city.set(row[7])
+                self.var_pin.set(row[8])
                 self.txt_address.delete("1.0", END)
-                self.txt_address.insert("1.0", row[10])
+                self.txt_address.insert("1.0", row[9])
 
             else:
                 messagebox.showerror("Error", "Student data not found.")

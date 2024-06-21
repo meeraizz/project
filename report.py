@@ -12,7 +12,7 @@ class ReportClass:
         self.root = root
         self.student_id = student_id
         self.root.title("Grade Master")
-        self.root.geometry("1600x770+0+200")
+        self.root.geometry("1500x750+0+200")
         self.root.config(bg="#fff0f3")
         self.root.focus_force()
 
@@ -23,8 +23,8 @@ class ReportClass:
         self.fetch_student_record()
 
     def create_widgets(self):
-        title = tk.Label(self.main_frame, text="View Student Results", font=("king", 23, "bold"), bg="#FFB3D2", fg="black")
-        title.pack(fill=tk.X)
+        title = tk.Label(self.main_frame, text="View Student Results", font=("king", 30, "bold"), bg="#ff80b4", fg="black")
+        title.place(x=0, y=10, width=1960, height=70)
 
         self.var_id = ""
         self.var_student_id = tk.StringVar()
