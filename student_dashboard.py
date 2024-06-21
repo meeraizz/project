@@ -179,6 +179,17 @@ class GradeMaster:
         new_window.grab_set()
         self.root.wait_window(new_window)
 
+    def logout(self):
+        messagebox.showinfo("Logout", "You have logged out")
+        self.root.destroy()
+        self.open_login_page()
+
+    def open_login_page(self):
+        import login
+        login_root = customtkinter.CTk()
+        login.LoginClass(login_root)
+        login_root.mainloop()
+
 
         
 
