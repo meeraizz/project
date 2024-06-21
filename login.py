@@ -10,10 +10,13 @@ class LoginClass:
     def __init__(self, root):
         self.root = root
         self.root.title("Grade Master")
-        self.root.geometry("1350x700+0+0")
+        self.root.geometry("1350x640+0+0")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
 
+        self.root.geometry(f"{screen_width}x{screen_height}+0+0")
         #=========Title=========
         title = Label(self.root, text="Login", font=("King", 30, "bold"), bg="#ff80b4", fg="black")
         title.place(x=0, y=10, width=1960, height=70)
@@ -37,25 +40,21 @@ class LoginClass:
 
         lbl_id = Label(self.login_frame, text="ID", bg='#fff0f3', fg="#FF69B4", font=("Arial", 14))
         lbl_id.place(x=50, y=150)
-        self.text_id = Entry(self.login_frame, textvariable=self.var_id, font=("King", 16), bd=2, relief="groove", width=25)
+        self.text_id = Entry(self.login_frame, textvariable=self.var_id, font=("Arial", 16), bd=2, relief="groove", width=25)
         self.text_id.place(x=150, y=150)
 
-        lbl_password = Label(self.login_frame, text="Password", bg='#fff0f3', fg="#FF69B4", font=("King", 14))
+        lbl_password = Label(self.login_frame, text="Password", bg='#fff0f3', fg="#FF69B4", font=("Arial", 14))
         lbl_password.place(x=50, y=250)
-        self.text_password = Entry(self.login_frame, textvariable=self.var_password, show="*", font=("King", 16), bd=2, relief="groove", width=25)
+        self.text_password = Entry(self.login_frame, textvariable=self.var_password, show="*", font=("Arial", 16), bd=2, relief="groove", width=25)
         self.text_password.place(x=150, y=250)
 
         #==========Button Widgets==========
-        btn_login = Button(self.login_frame, text="Login", bg="#FF69B4", fg="black", font=("King", 16), command=self.login)
-        btn_login.place(x=150, y=350, width=100, height=30)
-        btn_register = Button(self.login_frame, text="Register", bg="#FF69B4", fg="black", font=("King", 16), command=self.open_register_window)
-        btn_register.place(x=350, y=350, width=120, height=30)
-
-        # Add Forgot Password button
-        btn_forgot_password = Button(self.login_frame, text="Forgot Password?", bg="#FF69B4", fg="black", font=("King", 12), command=self.open_forgot_password_window)
-        btn_forgot_password.place(x=150, y=420, width=100, height=30)
-        btn_logout = Button(self.logout, text="Logout", bg="#FF69B4", fg="black", font=("King", 16), command=self.logout)
-        btn_logout.place(x=350, y=420, width=100, height=30)
+        btn_login = Button(self.login_frame, text="Login", bg="#FF69B4", fg="#FFFFFF", font=("Arial", 16), command=self.login)
+        btn_login.place(x=150, y=350, width=150, height=45)
+        btn_register = Button(self.login_frame, text="Register", bg="#FF69B4", fg="#FFFFFF", font=("Arial", 16), command=self.open_register_window)
+        btn_register.place(x=350, y=350, width=150, height=45)
+        btn_forgot_password = Button(self.login_frame, text="Forgot Password?", bg="#FF69B4", fg="#FFFFFF", font=("Arial", 16), command=self.open_forgot_password_window)
+        btn_forgot_password.place(x=250, y=420, width=200, height=45)
 
         #==========Logo==========
         try:
@@ -64,11 +63,6 @@ class LoginClass:
             logo_label.place(x=1200, y=200, width=500, height=500)
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load logo image: {e}")
-
-    def logout(self):
-        self.root.destroy
-
-
 
     def login(self):
         conn = sqlite3.connect("GradeMaster.db")
@@ -91,11 +85,11 @@ class LoginClass:
             
             if user_data:
                 messagebox.showinfo(title="Login Success", message="You successfully logged in.")
-                self.root.destroy()  
+                self.root.destroy()  # Close the login window
                 
                 if user_data[2] == "Student":
                     root = customtkinter.CTk()
-                    app = StudentDashboard(root, student_id=user_id)  
+                    app = StudentDashboard(root, student_id=user_id)
                     root.mainloop()
                 elif user_data[2] == "Teacher":
                     root = customtkinter.CTk()
@@ -109,22 +103,12 @@ class LoginClass:
         finally:
             conn.close()
 
-
-    
-    def open_register_window(self):
-        register_window = Toplevel(self.root)
-        register_window.title("Register")
-        register_window.geometry("800x600")
-        RegisterClass(register_window)
-
-    
     def open_forgot_password_window(self):
         forgot_window = Toplevel(self.root)
         forgot_window.title("Forgot Password")
         forgot_window.geometry("900x700+200+100")
         forgot_window.config(bg='#fff0f3')
 
-        
         var_forgot_id = StringVar()
         var_new_password = StringVar()
 
@@ -136,7 +120,6 @@ class LoginClass:
 
         Button(forgot_window, text="Submit", bg="#FF69B4", fg="black", font=("Arial", 14), command=lambda: self.reset_password(var_forgot_id.get(), var_new_password.get(), forgot_window)).place(x=400, y=250, width=100, height=30)
 
-    
     def reset_password(self, user_id, new_password, window):
         if user_id == "" or new_password == "":
             messagebox.showerror("Error", "All fields are required", parent=window)
@@ -146,19 +129,16 @@ class LoginClass:
         cur = conn.cursor()
         
         try:
-            
             cur.execute("SELECT id FROM student WHERE id = ? UNION ALL SELECT id FROM teacher WHERE id = ?", (user_id, user_id))
             user = cur.fetchone()
 
             if user:
-                
                 cur.execute("UPDATE student SET password = ? WHERE id = ?", (new_password, user_id))
-                
                 cur.execute("UPDATE teacher SET password = ? WHERE id = ?", (new_password, user_id))
                 conn.commit()
 
                 messagebox.showinfo("Success", "Password has been reset successfully", parent=window)
-                window.destroy()  
+                window.destroy()
             else:
                 messagebox.showerror("Error", "User ID does not exist", parent=window)
         
@@ -167,7 +147,16 @@ class LoginClass:
         finally:
             conn.close()
 
+    def open_register_window(self):
+        register_window = Toplevel(self.root)
+        register_window.title("Register")
+        register_window.geometry("800x600")
+        RegisterClass(register_window)
+
 if __name__ == "__main__":
     root = customtkinter.CTk()
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    root.geometry(f"{screen_width}x{screen_height}+0+0")
     obj = LoginClass(root)
     root.mainloop()
