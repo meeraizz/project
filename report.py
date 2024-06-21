@@ -1,65 +1,70 @@
-from tkinter import *
-from tkinter import ttk, messagebox, filedialog
+import tkinter as tk
+from tkinter import messagebox, filedialog
 import sqlite3
+import customtkinter
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-import customtkinter
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 class ReportClass:
     def __init__(self, root, student_id):
         self.root = root
         self.student_id = student_id
         self.root.title("Grade Master")
-        self.root.geometry("1200x750+50+200")
+        self.root.geometry("1600x770+0+200")
         self.root.config(bg="#fff0f3")
         self.root.focus_force()
 
-        self.main_frame = Frame(self.root, bg="#fff0f3")
-        self.main_frame.pack(fill=BOTH, expand=True)
+        self.main_frame = tk.Frame(self.root, bg="#fff0f3")
+        self.main_frame.pack(fill=tk.BOTH, expand=True)
 
         self.create_widgets()
         self.fetch_student_record()
 
     def create_widgets(self):
-        title = Label(self.main_frame, text="View Student Results", font=("king", 23, "bold"), bg="#FFB3D2", fg="black")
-        title.pack(fill=X)
+        title = tk.Label(self.main_frame, text="View Student Results", font=("king", 23, "bold"), bg="#FFB3D2", fg="black")
+        title.pack(fill=tk.X)
 
         self.var_id = ""
-        self.var_student_id = StringVar()
+        self.var_student_id = tk.StringVar()
         
-        btn_print = Button(self.main_frame, text="Print", font=("king", 15, "bold"), bg="#DE3163", fg="#fff0f3", cursor="hand2", command=self.print_as_pdf)
-        btn_print.place(x=950, y=500, width=100, height=35)
+        btn_print = tk.Button(self.main_frame, text="Print", font=("king", 15, "bold"), bg="#DE3163", fg="#fff0f3", cursor="hand2", command=self.print_as_pdf)
+        btn_print.place(x=800, y=500, width=100, height=35)
 
-        lbl_id = Label(self.main_frame, text="ID No.", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE)
+        lbl_id = tk.Label(self.main_frame, text="ID No.", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=tk.GROOVE)
         lbl_id.place(x=300, y=180, width=150, height=50)
         
-        lbl_name = Label(self.main_frame, text="Name", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE)
+        lbl_name = tk.Label(self.main_frame, text="Name", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=tk.GROOVE)
         lbl_name.place(x=300, y=230, width=150, height=50)
         
-        lbl_course = Label(self.main_frame, text="Course", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE)
+        lbl_course = tk.Label(self.main_frame, text="Course", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=tk.GROOVE)
         lbl_course.place(x=300, y=280, width=150, height=50)
         
-        lbl_marks = Label(self.main_frame, text="Marks", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE)
+        lbl_marks = tk.Label(self.main_frame, text="Marks", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=tk.GROOVE)
         lbl_marks.place(x=450, y=280, width=150, height=50)
         
-        lbl_grades = Label(self.main_frame, text="Grades", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE)
+        lbl_grades = tk.Label(self.main_frame, text="Grades", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=tk.GROOVE)
         lbl_grades.place(x=600, y=280, width=150, height=50)
         
-        lbl_gpa = Label(self.main_frame, text="GPA", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=GROOVE)
+        lbl_gpa = tk.Label(self.main_frame, text="GPA", font=("king", 15, "bold"), bg="#FFB3D2", bd=2, relief=tk.GROOVE)
         lbl_gpa.place(x=750, y=280, width=150, height=50)
 
-        self.id = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        self.id = tk.Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=tk.GROOVE)
         self.id.place(x=450, y=180, width=450, height=50)
         
-        self.name = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        self.name = tk.Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=tk.GROOVE)
         self.name.place(x=450, y=230, width=450, height=50)
 
         self.course_labels = []
         self.marks_vars = []
         self.grade_labels = []
 
-        self.gpa = Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+        self.gpa = tk.Label(self.main_frame, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=tk.GROOVE)
         self.gpa.place(x=750, y=330, width=150, height=50)
+
+        self.graph_frame = tk.Frame(self.main_frame, bg="#fff0f3", bd=2, relief=tk.GROOVE)
+        self.graph_frame.place(x=1000, y=180, width=500, height=300)
 
     def fetch_student_record(self):
         con = sqlite3.connect(database="GradeMaster.db")
@@ -73,27 +78,28 @@ class ReportClass:
             """
             cur.execute(query, (self.student_id,))
             rows = cur.fetchall()
-            print(rows)  # Debugging statement
+            print(rows)  
             if rows:
                 self.var_id = rows[0][0]
                 self.id.config(text=rows[0][0])
                 self.name.config(text=rows[0][1])
 
                 for i, row in enumerate(rows):
-                    course_lbl = Label(self.main_frame, text=row[2], font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+                    course_lbl = tk.Label(self.main_frame, text=row[2], font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=tk.GROOVE)
                     course_lbl.place(x=300, y=330 + i * 50, width=150, height=50)
                     self.course_labels.append(course_lbl)
 
-                    marks_var = StringVar(value=str(row[3]))
-                    marks_lbl = Label(self.main_frame, textvariable=marks_var, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+                    marks_var = tk.StringVar(value=str(row[3]))
+                    marks_lbl = tk.Label(self.main_frame, textvariable=marks_var, font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=tk.GROOVE)
                     marks_lbl.place(x=450, y=330 + i * 50, width=150, height=50)
                     self.marks_vars.append(marks_var)
 
-                    grade_lbl = Label(self.main_frame, text=row[4], font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=GROOVE)
+                    grade_lbl = tk.Label(self.main_frame, text=row[4], font=("king", 15, "bold"), bg="#fff0f3", bd=2, relief=tk.GROOVE)
                     grade_lbl.place(x=600, y=330 + i * 50, width=150, height=50)
                     self.grade_labels.append(grade_lbl)
                 
-                self.calculate_gpa(rows)  # Pass all rows for GPA calculation
+                self.calculate_gpa(rows)  
+                self.plot_graph(rows)  
             else:
                 messagebox.showinfo("Info", "No record found for this student ID", parent=self.root)
         except Exception as ex:
@@ -113,7 +119,7 @@ class ReportClass:
 
             for row in rows:
                 grade = row[4]
-                credit_hours = row[5]  # Credit hours from the query
+                credit_hours = row[5]  
                 points = grade_points.get(grade, 0) * credit_hours
                 total_points += points
                 total_credits += credit_hours
@@ -125,6 +131,37 @@ class ReportClass:
                 self.gpa.config(text="N/A")
         except Exception as ex:
             messagebox.showerror("Error", f"Error calculating GPA: {str(ex)}")
+
+    def plot_graph(self, rows):
+        if not rows:
+            return
+
+        courses = [row[2] for row in rows]
+        marks = [row[3] for row in rows]
+        
+        # Calculate average marks
+        average_marks = sum(marks) / len(marks) if len(marks) > 0 else 0
+
+        # Plotting
+        fig, ax = plt.subplots(figsize=(5, 3))  
+        bar_width = 0.35
+        index = range(len(courses))
+        bar1 = ax.bar(index, marks, bar_width, label='Student Marks')
+        ax.axhline(y=average_marks, color='r', linestyle='-', label='Average Marks')
+
+        ax.set_xlabel('Courses')
+        ax.set_ylabel('Marks')
+        ax.set_title('Comparison of Student Marks with Average Marks')
+        ax.set_xticks(index)
+        ax.set_xticklabels(courses, rotation=45)
+        ax.legend()
+
+        self.graph_canvas = FigureCanvasTkAgg(fig, master=self.graph_frame)
+        self.graph_canvas.draw()
+
+        self.graph_canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+        self.root.update()
 
     def print_as_pdf(self):
         if not self.var_id:
@@ -150,8 +187,7 @@ class ReportClass:
         except Exception as ex:
             messagebox.showerror("Error", f"Failed to generate PDF: {str(ex)}", parent=self.root)
 
-
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    obj = ReportClass(root, student_id=any)  # Replace with actual student ID
+    obj = ReportClass(root, student_id=any) 
     root.mainloop()

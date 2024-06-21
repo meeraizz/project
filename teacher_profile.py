@@ -9,7 +9,7 @@ class teacherprofile:
     def __init__(self, root):
         self.root = root
         self.root.title("Grade Master")
-        self.root.geometry("1550x700+80+170")
+        self.root.geometry("1550x700+50+170")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
         
@@ -42,7 +42,7 @@ class teacherprofile:
         self.txt_teacher.place(x=880, y=150, width=200, height=45)
         self.txt_teacher.set("Select")
         self.txt_name = Entry(self.root, textvariable=self.var_teacher_name, font=("king", 25, "bold"), bg="lightyellow", state='readonly')
-        self.txt_name.placec
+        self.txt_name.place(x=880, y=230, width=200, height=45)
         self.txt_email = Entry(self.root, textvariable=self.var_teacher_email, font=("king", 25, "bold"), bg="lightyellow", state='readonly')
         self.txt_email.place(x=880, y=310, width=370, height=45)
         self.txt_contact = Entry(self.root, textvariable=self.var_teacher_contact, font=("king", 25, "bold"), bg="lightyellow", state='readonly')
@@ -62,7 +62,7 @@ class teacherprofile:
         btn_search = Button(self.root, text='Search', font=("King", 20), bg="#e0d2ef", fg="black", cursor="hand2", command=self.search)
         btn_search.place(x=1100, y=150, width=150, height=45)
 
-        # Fetch teacher data from database and populate combo box
+        #==============Fetch data=============
         self.fetch_teachers()
         self.txt_teacher.bind("<<ComboboxSelected>>", self.update_teacher_id)
 
@@ -116,7 +116,7 @@ class teacherprofile:
                     if teacher_data[4]:
                         self.display_image(teacher_data[4])
                     else:
-                        self.display_image(self.default_image_path)  # Show default image if no profile picture is available
+                        self.display_image(self.default_image_path)
                 else:
                     messagebox.showerror("Error", "No record found", parent=self.root)
             except Exception as ex:

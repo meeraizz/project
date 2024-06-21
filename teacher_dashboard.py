@@ -8,6 +8,7 @@ from teachercard import teachercard
 from details_tcview import detailsclasstc
 from report import ReportClass
 from coursesclasses import ManageCourse
+from attendance import AttendanceManager
 
 class GradeMastertc:
     def __init__(self, root, teacher_id):
@@ -22,12 +23,12 @@ class GradeMastertc:
         self.root.geometry(f"{screen_width}x{screen_height}+0+0")
         self.root.focus_force()
 
-        # ====icons=====
+        # ===========icons===============
         self.logo_image = Image.open("images/Grade-Master_Logo.png")
         self.logo_image = self.logo_image.resize((70, 70), Image.LANCZOS)
         self.logo_dash = ImageTk.PhotoImage(self.logo_image)
 
-        # ======title==========
+        # ============title================
         title = Label(self.root, text="Grade Master", padx=10, compound=LEFT, image=self.logo_dash, font=("King", 40, "bold"), bg="#ffb3d2", fg="black")
         title.place(x=0, y=0, relwidth=1, height=70)
 
@@ -35,20 +36,22 @@ class GradeMastertc:
         M_Frame.place(x=10, y=70, width=1860, height=100)
 
         btn_course = Button(M_Frame, text="Course", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_course)
-        btn_course.place(x=200, y=10, width=270, height=60)
+        btn_course.place(x=50, y=10, width=270, height=60)
 
         btn_student = Button(M_Frame, text="Student", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_student)
-        btn_student.place(x=500, y=10, width=270, height=60)
+        btn_student.place(x=350, y=10, width=270, height=60)
 
         btn_profile = Button(M_Frame, text="Profile", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.show_profile)
-        btn_profile.place(x=800, y=10, width=270, height=60)
+        btn_profile.place(x=650, y=10, width=270, height=60)
 
         btn_grade = Button(M_Frame, text="Grade", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.add_grade)
-        btn_grade.place(x=1100, y=10, width=270, height=60)
+        btn_grade.place(x=950, y=10, width=270, height=60)
 
+        btn_attendance = Button(M_Frame, text="Attendance", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.attendance)
+        btn_attendance.place(x=1250, y=10, width=270, height=60)
 
         btn_logout = Button(M_Frame, text="Logout", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.logout)
-        btn_logout.place(x=1400, y=10, width=270, height=60)
+        btn_logout.place(x=1550, y=10, width=270, height=60)
 
 
         self.bg_img = Image.open("images/bg.jpg")
@@ -64,9 +67,9 @@ class GradeMastertc:
         self.lbl_student = Label(self.root, text="Total Student\n[ 0 ]", font=("King", 20), bd=10, relief="ridge", bg="#ffb3d2", fg="black")
         self.lbl_student.place(x=230, y=500, width=350, height=150)
 
-        # Call the update_counts method to set initial counts
+        
         self.update_counts()
-        # Schedule the update_counts method to be called every 5 seconds
+        
         self.root.after(5000, self.update_counts)
 
     def fetch_total_courses(self):
@@ -117,7 +120,7 @@ class GradeMastertc:
         self.lbl_teacher.config(text=f"Total Teacher\n[ {total_teachers} ]")
         self.lbl_student.config(text=f"Total Student\n[ {total_students} ]")
 
-        # Schedule the next update
+        
         self.root.after(5000, self.update_counts)
 
     def add_course(self):
@@ -141,6 +144,13 @@ class GradeMastertc:
         new_top.grab_set()
         new_top.focus_force()
 
+    def attendance(self):
+        new_top = customtkinter.CTkToplevel(self.root)
+        new_window = AttendanceManager(new_top)
+        new_top.transient(self.root)
+        new_top.grab_set()
+        new_top.focus_force()
+
     def show_profile(self):
         new_top = customtkinter.CTkToplevel(self.root)
         profile_window = teachercard(new_top, self.teacher_id)
@@ -156,7 +166,18 @@ class GradeMastertc:
         new_top.focus_force()
 
     def logout(self):
+        messagebox.showinfo("Logout", "You have logged out")
         self.root.destroy()
+        self.open_login_page()
+
+    def open_login_page(self):
+        import login
+        login_root = customtkinter.CTk()
+        login.LoginClass(login_root)
+        login_root.mainloop()
+
+
+
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
