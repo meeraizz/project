@@ -9,7 +9,7 @@ class AttendanceManager:
     def __init__(self, root):
         self.root = root
         self.root.title("Attendance Management")
-        self.root.geometry("1200x750+0+200")
+        self.root.geometry("1500x750+0+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 

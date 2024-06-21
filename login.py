@@ -85,7 +85,7 @@ class LoginClass:
             
             if user_data:
                 messagebox.showinfo(title="Login Success", message="You successfully logged in.")
-                self.root.destroy()  # Close the login window
+                self.root.destroy()  
                 
                 if user_data[2] == "Student":
                     root = customtkinter.CTk()
