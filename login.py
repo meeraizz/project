@@ -10,7 +10,7 @@ class LoginClass:
     def __init__(self, root):
         self.root = root
         self.root.title("Grade Master")
-        self.root.geometry("1350x700+0+0")
+        self.root.geometry("1350x640+0+0")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
         screen_width = self.root.winfo_screenwidth()

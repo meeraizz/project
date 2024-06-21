@@ -89,8 +89,8 @@ class GradeMaster:
 
     def add_student(self):
         print("Profile button clicked")  
-        new_window = Toplevel(self.root)
-        new_window.geometry("1500x750+0+200")  
+        new_window = customtkinter.CTkToplevel(self.root)
+        new_window.geometry("1600x640+0+200")  
         StudentCard(new_window, self.student_id)
         new_window.transient(self.root)  
         new_window.grab_set()  
@@ -99,8 +99,8 @@ class GradeMaster:
 
     def add_course(self):
         print("Course button clicked")  
-        new_window = Toplevel(self.root)
-        new_window.geometry("1500x750+0+200")
+        new_window = customtkinter.CTkToplevel(self.root)
+        new_window.geometry("1600x640+0+200")
         StudentView(new_window, self.student_id)
         new_window.transient(self.root)
         new_window.grab_set()
@@ -109,8 +109,8 @@ class GradeMaster:
 
     def add_teacher(self):
         print("Teacher button clicked")  
-        new_window = Toplevel(self.root)
-        new_window.geometry("1500x750+0+200")
+        new_window = customtkinter.CTkToplevel(self.root)
+        new_window.geometry("1600x640+0+200")
         teacherprofile(new_window)  
         new_window.transient(self.root)
         new_window.grab_set()
@@ -119,8 +119,8 @@ class GradeMaster:
 
     def add_result(self):
         print("Result button clicked")  
-        new_window = Toplevel(self.root)
-        new_window.geometry("1500x750+0+200")
+        new_window = customtkinter.CTkToplevel(self.root)
+        new_window.geometry("1600x640+0+200")
         ReportClass(new_window, self.student_id)  
         new_window.transient(self.root)
         new_window.grab_set()

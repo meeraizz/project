@@ -9,7 +9,7 @@ class teacherprofile:
     def __init__(self, root):
         self.root = root
         self.root.title("Teacher Profile")
-        self.root.geometry("1500x700+0+200")
+        self.root.geometry("1600x640+0+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
         
