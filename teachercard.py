@@ -11,7 +11,7 @@ class teachercard:
         self.root = root
         self.teacher_id = teacher_id
         self.root.title("Grade Master")
-        self.root.geometry("1200x750+0+200")
+        self.root.geometry("1200x750+50+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
@@ -50,7 +50,7 @@ class teachercard:
         btn_edit = Button(self.root, text="Edit", font=("King", 15, "bold"), bg="#ff80b4", fg="#262626", command=self.edit)
         btn_edit.place(x=1320, y=700, width=150, height=35)
 
-        #==============Entry=================
+        # Text fields to display the fetched data
         self.txt_name = Label(self.root, textvariable=self.var_teacher_name, font=("times new roman", 25, "bold"), bg="white", anchor='w', justify=LEFT)
         self.txt_name.place(x=1000, y=230, width=370, height=45)
         self.txt_email = Label(self.root, textvariable=self.var_teacher_email, font=("times new roman", 25, "bold"), bg="white", anchor='w', justify=LEFT)
@@ -69,7 +69,7 @@ class teachercard:
             'email': self.var_teacher_email.get(),
             'contact': self.var_teacher_contact.get(),
             'course': self.var_teacher_course.get(),
-            'profile_picture': self.default_image_path  
+            'profile_picture': self.default_image_path 
         }
         new_top = customtkinter.CTkToplevel(self.root)
         new_window = editprofile(new_top, teacher_data=teacher_data)
@@ -77,6 +77,8 @@ class teachercard:
         new_top.grab_set()
         new_top.focus_force()
         self.root.wait_window(new_top)  
+        self.load_teacher_data() 
+
 
     def display_image(self, file_path):
         if os.path.exists(file_path):
@@ -111,7 +113,8 @@ class teachercard:
         finally:
             conn.close()
 
+
 if __name__ == "__main__":
     root = customtkinter.CTk()
-    obj = teachercard(root, teacher_id=121)
+    obj = teachercard(root, teacher_id=any)
     root.mainloop()

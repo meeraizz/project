@@ -7,7 +7,7 @@ class gradeclass:
     def __init__(self, root):
         self.root = root
         self.root.title("Grade Master")
-        self.root.geometry("1200x750+0+200")
+        self.root.geometry("1500x750+0+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
@@ -23,9 +23,9 @@ class gradeclass:
         self.var_full_marks = StringVar(value="100") 
         self.id_list = []
         self.course_list = []
-        self.course_dict = {}  
+        self.course_dict = {}  # Dictionary to map course names to course IDs
 
-        #==============Initialize comboboxe=============
+        # Initialize comboboxes before fetching data
         self.txt_student = ttk.Combobox(self.root, textvariable=self.var_id, values=self.id_list, font=("king", 20, "bold"), state='readonly', justify=CENTER)
         self.txt_student.place(x=880, y=150, width=200, height=45)
         self.txt_student.set("Select")
@@ -36,10 +36,10 @@ class gradeclass:
         self.txt_course.set("Select")
         self.txt_course.bind("<<ComboboxSelected>>", self.course_selected)
 
-        
+        # Fetching data after initializing comboboxes
         self.fetch_id()
 
-        #===============widgets===================
+        # ===widgets===
         lbl_select = Label(self.root, text="Select Student", font=("king", 20, "bold"), bg="#fff0f3").place(x=600, y=150)
         lbl_name = Label(self.root, text="Name", font=("king", 20, "bold"), bg="#fff0f3").place(x=600, y=230)
         lbl_course = Label(self.root, text="Select Course", font=("king", 20, "bold"), bg="#fff0f3").place(x=600, y=310)
@@ -80,8 +80,8 @@ class gradeclass:
                         WHERE Enrollments.student_id = ?''', (self.var_id.get(),))
             rows = cur.fetchall()
             if rows:
-                self.course_list = [row[1] for row in rows]  
-                self.course_dict = {row[1]: row[0] for row in rows}  
+                self.course_list = [row[1] for row in rows]  # Fetch course names
+                self.course_dict = {row[1]: row[0] for row in rows}  # Mapping course name to course ID
                 self.txt_course['values'] = self.course_list
         except Exception as ex:
             messagebox.showerror("Error", f"Error fetching courses: {str(ex)}")
@@ -96,7 +96,7 @@ class gradeclass:
             row = cur.fetchone()
             if row:
                 self.var_name.set(row[0])
-                self.fetch_course()  
+                self.fetch_course()  # Fetch courses for the selected student
             else:
                 messagebox.showerror("Error", "No record found", parent=self.root)
         except Exception as ex:
@@ -112,11 +112,11 @@ class gradeclass:
             cur.execute("SELECT marks, grade FROM grade WHERE id=? AND course=?", (self.var_id.get(), course_id))
             row = cur.fetchone()
             if row:
-                self.var_marks.set(row[0])  
-                self.var_grade.set(row[1])  
+                self.var_marks.set(row[0])  # Populate the marks field with the existing value
+                self.var_grade.set(row[1])  # Populate the grade field with the existing value
             else:
-                self.var_marks.set("")  
-                self.var_grade.set("")  
+                self.var_marks.set("")  # Clear the marks field if no data is found
+                self.var_grade.set("")  # Clear the grade field if no data is found
         except Exception as ex:
             messagebox.showerror("Error", f"Error fetching course data: {str(ex)}")
         finally:
@@ -130,12 +130,12 @@ class gradeclass:
                 messagebox.showerror("Error", "Please first search for a student record", parent=self.root)
             else:
                 course_id = self.course_dict.get(self.var_course_name.get())
-                
+                # Check if the record exists
                 cur.execute("SELECT * FROM grade WHERE id=? AND course=?", (self.var_id.get(), course_id))
                 row = cur.fetchone()
 
                 if row:
-                    
+                    # Update the existing record
                     cur.execute("UPDATE grade SET marks=?, grade=? WHERE id=? AND course=?", (
                         self.var_marks.get(),
                         self.var_grade.get(),
@@ -144,7 +144,7 @@ class gradeclass:
                     ))
                     messagebox.showinfo("Success", "Result updated successfully", parent=self.root)
                 else:
-                    
+                    # Insert a new record
                     cur.execute("INSERT INTO grade (id, name, course, marks, grade) VALUES (?, ?, ?, ?, ?)", (
                         self.var_id.get(),
                         self.var_name.get(),
@@ -168,8 +168,8 @@ class gradeclass:
             cur.execute("SELECT marks, grade FROM grade WHERE id=? AND course=?", (self.var_id.get(), course_id))
             row = cur.fetchone()
             if row:
-                self.var_marks.set(row[0])  
-                self.var_grade.set(row[1])  
+                self.var_marks.set(row[0])  # Populate the marks field with the existing value
+                self.var_grade.set(row[1])  # Populate the grade field with the existing value
             else:
                 messagebox.showerror("Error", "No record found to edit", parent=self.root)
         except Exception as ex:

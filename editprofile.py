@@ -9,7 +9,7 @@ class editprofile:
     def __init__(self, root, teacher_data=None):
         self.root = root
         self.root.title("Grade Master")
-        self.root.geometry("1200x750+0+350")
+        self.root.geometry("1200x750+50+350")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
 
@@ -65,7 +65,7 @@ class editprofile:
         btn_submit = Button(self.root, text="Submit", font=("times new roman", 20, "bold"), bg="#ff80b4", fg="#262626", command=self.submit_data)
         btn_submit.place(x=1100, y=600, width=150, height=40)
 
-       
+        
         if teacher_data:
             self.populate_data(teacher_data)
 
@@ -134,6 +134,8 @@ class editprofile:
         finally:
             con.close()
             self.root.destroy()  
+
+
 
 if __name__ == "__main__":
     root = customtkinter.CTk()

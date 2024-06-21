@@ -10,6 +10,7 @@ from report import ReportClass
 from coursesclasses_student import StudentView
 from student_card import StudentCard
 from attendancereport import AttendanceReport
+from login import LoginClass
 import os
 
 class GradeMaster:
@@ -180,13 +181,17 @@ class GradeMaster:
         self.root.wait_window(new_window)
 
     def logout(self):
-        self.root.destroy()
+        new_top = customtkinter.CTkToplevel(self.root)
+        new_window = LoginClass(new_top)
+        new_top.transient(self.root)
+        new_top.grab_set()
+        new_top.focus_force()
+        
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
     root.geometry(f"{screen_width}x{screen_height}+0+0")
-
     obj = GradeMaster(root, student_id=any)
     root.mainloop()

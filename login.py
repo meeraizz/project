@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox, ttk
 import sqlite3
 import customtkinter
-from student_dashboard import GradeMaster as StudentDashboard  # Assuming these imports are correct
+from student_dashboard import GradeMaster as StudentDashboard  
 from teacher_dashboard import GradeMastertc as TeacherDashboard
 from register import RegisterClass
 
@@ -52,8 +52,10 @@ class LoginClass:
         btn_register.place(x=350, y=350, width=120, height=30)
 
         # Add Forgot Password button
-        btn_forgot_password = Button(self.login_frame, text="Forgot Password?", bg="#FF69B4", fg="black", font=("King", 16), command=self.open_forgot_password_window)
-        btn_forgot_password.place(x=200, y=420, width=220, height=30)
+        btn_forgot_password = Button(self.login_frame, text="Forgot Password?", bg="#FF69B4", fg="black", font=("King", 12), command=self.open_forgot_password_window)
+        btn_forgot_password.place(x=150, y=420, width=100, height=30)
+        btn_logout = Button(self.logout, text="Logout", bg="#FF69B4", fg="black", font=("King", 16), command=self.logout)
+        btn_logout.place(x=350, y=420, width=100, height=30)
 
         #==========Logo==========
         try:
@@ -63,7 +65,11 @@ class LoginClass:
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load logo image: {e}")
 
-    # In LoginClass login method
+    def logout(self):
+        self.root.destroy
+
+
+
     def login(self):
         conn = sqlite3.connect("GradeMaster.db")
         cur = conn.cursor()

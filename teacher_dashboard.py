@@ -9,6 +9,7 @@ from details_tcview import detailsclasstc
 from report import ReportClass
 from coursesclasses import ManageCourse
 from attendance import AttendanceManager
+from login import LoginClass
 
 class GradeMastertc:
     def __init__(self, root, teacher_id):
@@ -165,13 +166,18 @@ class GradeMastertc:
         new_top.grab_set()
         new_top.focus_force()
 
+
     def logout(self):
-        self.root.destroy()
+        new_top = customtkinter.CTkToplevel(self.root)
+        new_window = LoginClass(new_top)
+        new_top.transient(self.root)
+        new_top.grab_set()
+        new_top.focus_force()
 
 if __name__ == "__main__":
     root = customtkinter.CTk()
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
     root.geometry(f"{screen_width}x{screen_height}+0+0")
-    obj = GradeMastertc(root, teacher_id=1)
+    obj = GradeMastertc(root, teacher_id=any)
     root.mainloop()
