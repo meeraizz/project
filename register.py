@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk, messagebox
 import sqlite3
-
+import customtkinter
 
 class RegisterClass:
     def __init__(self, root):
@@ -57,10 +57,13 @@ class RegisterClass:
         lbl_dob = Label(self.root, text="Date of Birth", font=("king", 15, "bold"), bg="#fff0f3").place(x=50, y=300)
         self.cmb_dob_day = ttk.Combobox(self.root, textvariable=self.var_dob_day, values=list(range(1, 32)), font=("king", 15), state='readonly')
         self.cmb_dob_day.place(x=250, y=300, width=60)
+        self.cmb_dob_day.set("Day")
         self.cmb_dob_month = ttk.Combobox(self.root, textvariable=self.var_dob_month, values=list(range(1, 13)), font=("king", 15), state='readonly')
         self.cmb_dob_month.place(x=320, y=300, width=60)
+        self.cmb_dob_month.set("Month")
         self.cmb_dob_year = ttk.Combobox(self.root, textvariable=self.var_dob_year, values=list(range(1900, 2025)), font=("king", 15), state='readonly')
         self.cmb_dob_year.place(x=390, y=300, width=80)
+        self.cmb_dob_year.set("Year")
 
         # Right column labels and entries
         lbl_address = Label(self.root, text="Address", font=("king", 15, "bold"), bg="#fff0f3").place(x=500, y=100)
@@ -170,6 +173,6 @@ class RegisterClass:
         self.var_user_type.set("Select")
 
 if __name__ == "__main__":
-    root = Tk()
+    root = customtkinter.CTk()
     obj = RegisterClass(root)
     root.mainloop()
