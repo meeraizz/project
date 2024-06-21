@@ -3,6 +3,8 @@ from tkinter import messagebox, ttk
 import customtkinter
 from tkcalendar import DateEntry 
 import sqlite3
+from tkcalendar import Calendar, DateEntry
+
 
 class RegisterClass:
     def __init__(self, root):

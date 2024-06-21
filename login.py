@@ -20,7 +20,7 @@ class LoginClass:
         self.root.config(bg='#fff0f3')
 
         #=========Title=========
-        title = Label(self.root, text="Login", padx=10, compound=LEFT, font=("King", 40, "bold"), bg="#ffb3d2", fg="black")
+        title = Label(self.root, text="Login", padx=10, compound=LEFT, font=("King", 30, "bold"), bg="#ffb3d2", fg="black")
         title.place(x=0, y=0, relwidth=1, height=70)
 
         #========Variables============
