@@ -53,7 +53,6 @@ class GradeMastertc:
         btn_logout = Button(M_Frame, text="Logout", font=("King", 20, "bold"), bg="#ffb3d2", fg="black", cursor="hand2", command=self.logout)
         btn_logout.place(x=1550, y=10, width=270, height=60)
 
-
         self.bg_img = Image.open("images/bg.jpg")
         self.bg_img = self.bg_img.resize((1000, 600), Image.LANCZOS)
         self.bg_img = ImageTk.PhotoImage(self.bg_img)
@@ -175,9 +174,6 @@ class GradeMastertc:
         login_root = customtkinter.CTk()
         login.LoginClass(login_root)
         login_root.mainloop()
-
-
-
 
 if __name__ == "__main__":
     root = customtkinter.CTk()

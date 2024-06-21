@@ -8,8 +8,8 @@ import customtkinter
 class teacherprofile:
     def __init__(self, root):
         self.root = root
-        self.root.title("Grade Master")
-        self.root.geometry("1550x700+50+170")
+        self.root.title("Teacher Profile")
+        self.root.geometry("1600x640+0+200")
         self.root.config(bg='#fff0f3')
         self.root.focus_force()
         
