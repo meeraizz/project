@@ -67,7 +67,6 @@ class GradeMaster:
         self.lbl_teacher.place(x=430, y=300, width=350, height=150)
         self.lbl_student = Label(self.root, text="Total Student\n[ 0 ]", font=("King", 20), bd=10, relief="ridge", bg="#ffb3d2", fg="black")
         self.lbl_student.place(x=230, y=500, width=350, height=150)
-
         
         self.update_counts()
         
@@ -121,59 +120,38 @@ class GradeMaster:
         self.lbl_teacher.config(text=f"Total Teacher\n[ {total_teachers} ]")
         self.lbl_student.config(text=f"Total Student\n[ {total_students} ]")
 
-        
         self.root.after(5000, self.update_counts)
-    def add_student(self):
-        print("Profile button clicked")  
-        new_window = Toplevel(self.root)
-        new_window.title("Student Profile")
-        new_window.geometry("800x600")
-        new_window.config(bg='#fff0f3')
+
+    def add_student(self): 
+        new_window = customtkinter.CTkToplevel(self.root)
         StudentCard(new_window, self.student_id)
         new_window.transient(self.root)  
         new_window.grab_set()  
         self.root.wait_window(new_window)  
 
     def add_course(self):
-        print("Course button clicked")  
-        new_window = Toplevel(self.root)
-        new_window.title("Course Details")
-        new_window.geometry("800x600")
-        new_window.config(bg='#fff0f3')
+        new_window = customtkinter.CTkToplevel(self.root)
         StudentView(new_window, self.student_id)
         new_window.transient(self.root)
         new_window.grab_set()
         self.root.wait_window(new_window)
 
     def add_teacher(self):
-        print("Teacher button clicked")  
-        new_window = Toplevel(self.root)
-        new_window.title("Teacher Profile")
-        new_window.geometry("800x600")
-        new_window.config(bg='#fff0f3')
+        new_window = customtkinter.CTkToplevel(self.root)
         teacherprofile(new_window)  
         new_window.transient(self.root)
         new_window.grab_set()
         self.root.wait_window(new_window)
 
     def add_result(self):
-        print("Result button clicked")  
-        new_window = Toplevel(self.root)
-        new_window.title("Result Details")
-        new_window.geometry("800x600")
-        new_window.config(bg='#fff0f3')
+        new_window = customtkinter.CTkToplevel(self.root)
         ReportClass(new_window, self.student_id)  
         new_window.transient(self.root)
         new_window.grab_set()
         self.root.wait_window(new_window)
 
-
     def attendance(self):
-        print("Result button clicked")  
-        new_window = Toplevel(self.root)
-        new_window.title("Attendance Report")
-        new_window.geometry("800x600")
-        new_window.config(bg='#fff0f3')
+        new_window = customtkinter.CTkToplevel(self.root)
         AttendanceReport(new_window, self.student_id)  
         new_window.transient(self.root)
         new_window.grab_set()
@@ -189,9 +167,6 @@ class GradeMaster:
         login_root = customtkinter.CTk()
         login.LoginClass(login_root)
         login_root.mainloop()
-
-
-        
 
 if __name__ == "__main__":
     root = customtkinter.CTk()

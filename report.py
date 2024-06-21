@@ -23,8 +23,8 @@ class ReportClass:
         self.fetch_student_record()
 
     def create_widgets(self):
-        title = tk.Label(self.main_frame, text="View Student Results", font=("king", 23, "bold"), bg="#FFB3D2", fg="black")
-        title.pack(fill=tk.X)
+        title = tk.Label(self.main_frame, text="View Student Results", font=("king", 30, "bold"), bg="#ff80b4", fg="black")
+        title.place(x=0, y=10, width=1960, height=70)
 
         self.var_id = ""
         self.var_student_id = tk.StringVar()
